@@ -24,9 +24,12 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+//Joystick deadband.  Filters out stick drift
   public static final class Swerve {
     public static final double stickDeadband = 0.1;
 
+    // Declare Gyro location on CANbus
     public static final int gyroId = 6;
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
@@ -67,6 +70,14 @@ public final class Constants {
     public static final int driveContinuousCurrentLimit = 80;
 
     /* Angle Motor PID Values */
+
+  /*
+   * KP = Propotional Gain constant of the PIDF controller
+   * KI = Integral Gain constant of the PIDF controller
+   * KD = Derivitive Gain constant of the PIDF controller
+   * KFF = Feed-forward gain of the PIDF controller
+   * Use SPARKMAX GUI to tune and save paremeters
+   */
     public static final double angleKP = 0.01;
     public static final double angleKI = 0.0;
     public static final double angleKD = 0.0;
