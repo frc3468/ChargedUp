@@ -36,13 +36,13 @@ public final class Constants {
      *
      * Should be measured from center to center.
      */
-    public static final double trackWidth = 0.6223; //Units.inchesToMeters(21.73);
+    public static final double trackWidth = 0.5334; //Units.inchesToMeters(21.73);
     /**
      * The front-to-back distance between the drivetrain wheels.
      *
      * Should be measured from center to center.
      */
-    public static final double wheelBase = 0.62865;
+    public static final double wheelBase = 0.5334;
     public static final double wheelDiameter = Units.inchesToMeters(4.0);
     public static final double wheelCircumference = wheelDiameter * Math.PI;
 
@@ -52,7 +52,7 @@ public final class Constants {
     public static final double driveGearRatio = (6.75 / 1.0); // 6.75:1
     public static final double angleGearRatio = (21.42857 / 1.0); // 12.8:1
 
-    public static final SwerveDriveKinematics swerveKinematics =
+    public static final SwerveDriveKinematics swerveKinematics = 
         new SwerveDriveKinematics(
             new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
             new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
