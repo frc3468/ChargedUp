@@ -24,7 +24,7 @@ import frc.robot.autos.*;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Joystick driver = new Joystick(0);
+  private final XboxController driver = new XboxController(0);
 
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
