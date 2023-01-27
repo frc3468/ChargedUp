@@ -64,6 +64,7 @@ public final class Constants {
 
     /* Swerve Voltage Compensation */
     public static final double voltageComp = 12.0;
+    //public static final double driveYeet = 6.0;
 
     /* Swerve Current Limiting */
     public static final int angleContinuousCurrentLimit = 20;
@@ -101,8 +102,8 @@ public final class Constants {
     public static final double angleConversionFactor = 360.0 / angleGearRatio;
 
     /* Swerve Profiling Values */
-    public static final double maxSpeed = 1; // meters per second
-    public static final double maxAngularVelocity = 1;//11.5
+    public static final double maxSpeed = 2.25; // meters per second
+    public static final double maxAngularVelocity = 11.5;//11.5
 
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;
