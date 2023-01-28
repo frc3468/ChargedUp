@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-//jeremy testdfsfsd
+
 
 package frc.robot;
 
@@ -31,7 +31,7 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
 
     // Declare Gyro location on CANbus
-    public static final int gyroId = 0;
+    public static final int gyroId = 6;
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
     /* Drivetrain Constants */
@@ -103,7 +103,7 @@ public final class Constants {
     public static final double angleConversionFactor = 360.0 / angleGearRatio;
 
     /* Swerve Profiling Values */
-    public static final double maxSpeed = 2.25; // meters per second
+    public static final double maxSpeed = 4.5; // 4.5 meters per second
     public static final double maxAngularVelocity = 11.5;//11.5
 
     /* Neutral Modes */
