@@ -30,7 +30,7 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
 
     // Declare Gyro location on CANbus
-    public static final int gyroId = 6;
+    public static final int gyroId = 0;
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
     /* Drivetrain Constants */
