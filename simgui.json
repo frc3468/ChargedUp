@@ -13,5 +13,12 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Field": "Field2d"
     }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "LiveWindow": {
+        "open": true
+      }
+    }
   }
 }

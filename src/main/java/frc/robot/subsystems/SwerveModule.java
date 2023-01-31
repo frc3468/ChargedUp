@@ -162,7 +162,7 @@ public class SwerveModule {
   }
   public SwerveModulePosition getPosition(){
     return new SwerveModulePosition(
-        driveEncoder.getPosition() * (Constants.Swerve.wheelCircumference / (Constants.Swerve.driveGearRatio * 2048.0)), //TODO this line is kinda sus, its for falcons might need to change for neos
+        driveEncoder.getPosition() * (Constants.Swerve.wheelCircumference / (Constants.Swerve.driveGearRatio * 42.0)), //TODO this line is kinda sus, its for falcons might need to change for neos
         getAngle()
     );
 }

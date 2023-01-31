@@ -17,7 +17,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 public class SwerveDrive extends SubsystemBase {
-  private final AHRS gyro;
+  private final Pigeon2 gyro;
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
@@ -25,7 +25,7 @@ public class SwerveDrive extends SubsystemBase {
   private Field2d field;
 
   public SwerveDrive() {
-    gyro = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
+    gyro = new Pigeon2(0); // NavX connected over MXP
     //gyro.restoreFactoryDefaults(); //for Pigeon
     zeroGyro();
     
@@ -83,7 +83,22 @@ public class SwerveDrive extends SubsystemBase {
 //   }
 
   public void zeroGyro() {
-    gyro.zeroYaw();
+    System.out.println("Y Button Pressed");
+    System.out.println(gyro);
+    gyro.setYaw(0);
+  }
+
+  public void GetGyroReading() {
+    System.out.println("x Button Pressed");
+    System.out.println(gyro.getYaw());
+  }
+  public void SetFieldDrive() {
+    System.out.println("Left bumper Button Pressed, Field Drive Enabled");
+
+  }public void SetRobotCentric() {
+    System.out.println("Right bumper Button Pressed, Robot Centric Drive Enabled");
+    
+//this is where you would change a setting... so like.. no gyro
   }
 
   public SwerveModulePosition[] getModulePositions(){ //TODO this is new, might need to double check
@@ -98,11 +113,12 @@ public class SwerveDrive extends SubsystemBase {
     // return (Constants.Swerve.invertGyro)
     //     ? Rotation2d.fromDegrees(360 - gyro.getYaw())
     //     : Rotation2d.fromDegrees(gyro.getYaw());
+//Brittany commented this out because it is not called
 
-    if (gyro.isMagnetometerCalibrated()) {
-        // We will only get valid fused headings if the magnetometer is calibrated
-        return Rotation2d.fromDegrees(gyro.getFusedHeading());
-        }
+    // if (gyro.isMagnetometerCalibrated()) {
+    //     // We will only get valid fused headings if the magnetometer is calibrated
+    //     return Rotation2d.fromDegrees(gyro.getFusedHeading());
+    //     }
     //
     //    // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
         return Rotation2d.fromDegrees(360.0 - gyro.getYaw());
