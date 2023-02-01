@@ -106,6 +106,7 @@ public final class Constants {
     /* Swerve Profiling Values */
     public static final double maxSpeed = 4.5; // 4.5 meters per second
     public static final double maxAngularVelocity = 11.5;//11.5
+    var speeds = new chassisspeeds(3.0,-2.0, Math.pi);
 
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;
@@ -120,7 +121,7 @@ public final class Constants {
 
     /* Module Specific Constants */
     /* Front Left Module - Module 0 */
-        /*Endcoder pos 71.367 degrees */
+        /*Encoder pos 71.367 degrees */
     public static final class Mod0 {
       public static final int driveMotorID = 1;
       public static final int angleMotorID = 2;

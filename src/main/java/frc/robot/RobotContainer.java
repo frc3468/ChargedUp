@@ -27,27 +27,33 @@ import frc.robot.autos.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final XboxController driver = new XboxController(0);
+ // private final xMotionLimiter xMotionLimiter = new xMotionLimiter();
 
-  /* Drive Controls */
-  private final int translationAxis = XboxController.Axis.kLeftY.value;
-  private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
+/*Joystick and Controller assignments   */
+    /* Drive Controls */
+      private final int translationAxis = XboxController.Axis.kLeftY.value;
+      private final int strafeAxis = XboxController.Axis.kLeftX.value;
+      private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  /* Driver Buttons */
-  private final JoystickButton zeroGyro =
-      new JoystickButton(driver, XboxController.Button.kY.value);
-  //test binding to get GyroPosition
-  private final JoystickButton getGyroReading = 
-      new JoystickButton(driver, XboxController.Button.kX.value);  //test binding to get GyroPosition
-  private final JoystickButton FieldDrive = 
-       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    /* Driver Buttons - Xbox Controller*/
+    //zero gyro
+      private final JoystickButton zeroGyro =
+        new JoystickButton(driver, XboxController.Button.kY.value);
+    //test binding to get GyroPosition
+      private final JoystickButton getGyroReading = 
+        new JoystickButton(driver, XboxController.Button.kX.value);  
+    // Set to field drive - Robot will default to this upon startup
+      private final JoystickButton FieldDrive = 
+        new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    // Set to Robot Centric
       private final JoystickButton robotCentric =
-      new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-      // does the this act as a switch between robotCentric and FieldDrive? 
+        new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    /* Co-Driver Buttons Dual Joysticks */
+
+/*End of Joystick and Controller assignments   */
 
 
-
-  /* Subsystems */
+/* Subsystems */
   private final SwerveDrive s_Swerve = new SwerveDrive();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -63,17 +69,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
   }
-
-  //Button Bindings
-  private void configureButtonBindings() {
-    /* Driver Buttons */
-  //  if zeroGyro.onTrue
-    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    getGyroReading.onTrue(new InstantCommand(() -> s_Swerve.GetGyroReading()));
-    robotCentric.onTrue(new InstantCommand(() -> s_Swerve.SetRobotCentric()));
-    FieldDrive.onTrue(new InstantCommand(() -> s_Swerve.SetFieldDrive()));
-  }
- 
   
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -85,4 +80,30 @@ public class RobotContainer {
    // return new exampleAuto(s_Swerve);
    return new BaseAuto(); //TODO place holder for now, replace once we have auto modes
   }
+/* End Subsystems */
+
+/* Button Bindings - Actions taken upon button press or hold */
+  private void configureButtonBindings() {
+    /* Driver Buttons */
+  //  if zeroGyro.onTrue
+    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    getGyroReading.onTrue(new InstantCommand(() -> s_Swerve.GetGyroReading()));
+    robotCentric.onTrue(new InstantCommand(() -> s_Swerve.SetRobotCentric()));
+    FieldDrive.onTrue(new InstantCommand(() -> s_Swerve.SetFieldDrive()));
+  }
+    // Swerve speed Override
+    setLauncherSpeedOverrideButton.whileHeld(new SetLauncherVelocity(launcher,
+    () -> map(overrideController.getRawAxis(OverrideControllerConstants.launcherSpeedAxis), -1.0, 1.0, 0.0, 3000.0)));
+    /*sset
+ .whileHeld(new SetLauncherVelocity(launcher, () -> Launcher.distanceToVelocity(camera.getDistanceFromGoal())));
+setLauncherSpeedOverrideButton.whileHeld(new SetLauncherVelocity(launcher,
+ () -> map(overrideController.getRawAxis(OverrideControllerConstants.launcherSpeedAxis), -1.0, 1.0, 0.0, 3000.0)));
+*/
+private double map(double x, double in_min, double in_max, double out_min, double out_max) {
+
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+
+
+
+} 
 }
