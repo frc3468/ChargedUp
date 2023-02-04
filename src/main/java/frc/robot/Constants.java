@@ -36,18 +36,17 @@ public final class Constants {
     
 
     /* Drivetrain Constants */
-    /**
+    /** WHEELBASE
      * The left-to-right distance between the drivetrain wheels
-     *
      * Should be measured from center to center.
      */
     public static final double trackWidth = 0.5334; //Units.inchesToMeters(21.73);
-    /**
+    /** 
      * The front-to-back distance between the drivetrain wheels.
-     *
      * Should be measured from center to center.
      */
     public static final double wheelBase = 0.5334;
+
     public static final double wheelDiameter = Units.inchesToMeters(4.0);
     public static final double wheelCircumference = wheelDiameter * Math.PI;
 
@@ -66,7 +65,6 @@ public final class Constants {
 
     /* Swerve Voltage Compensation */
     public static final double voltageComp = 12.0;
-    //public static final double driveYeet = 6.0;
 
     /* Swerve Current Limiting */
     public static final int angleContinuousCurrentLimit = 20;
@@ -102,11 +100,18 @@ public final class Constants {
         (wheelDiameter * Math.PI) / driveGearRatio;
     public static final double driveConversionVelocityFactor = driveConversionPositionFactor / 60.0;
     public static final double angleConversionFactor = 360.0 / angleGearRatio;
-
+ 
+  
     /* Swerve Profiling Values */
     public static final double maxSpeed = 4.5; // 4.5 meters per second
     public static final double maxAngularVelocity = 11.5;//11.5
-    var speeds = new chassisspeeds(3.0,-2.0, Math.pi);
+   // var speeds = new chassisspeeds(3.0,-2.0, Math.pi);
+
+   /*  Controller offset.  Alters the max output of joysticks to throttle X,Y,Turn */
+    // TODO not called yet
+    public static final double j_maxXController = .5;//forward/rev
+    public static final double j_maxYController = .5; // strafe left/right
+    public static final double j_maxTurnController = .8;// turn (right Joystick)
 
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;
@@ -163,5 +168,6 @@ public final class Constants {
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
-  }
+  
+}
 }

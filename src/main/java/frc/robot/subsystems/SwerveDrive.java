@@ -1,3 +1,6 @@
+/*This subsystem takes from ServeModule and treats the drive system as a whole.  Drive based methods
+ * exist here
+*/
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
@@ -8,27 +11,31 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import frc.robot.Constants.Swerve;
 
+//import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
+wpilibj.
 public class SwerveDrive extends SubsystemBase {
   private final Pigeon2 gyro;
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
-
+  private SwerveDriveKinematics swerveDriveKinematics;
   private Field2d field;
-
+  
   public SwerveDrive() {
+      
+    
     gyro = new Pigeon2(0); // NavX connected over MXP
     //gyro.restoreFactoryDefaults(); //for Pigeon
+   
     zeroGyro();
-    
 
     mSwerveMods =
         new SwerveModule[] {
@@ -37,7 +44,11 @@ public class SwerveDrive extends SubsystemBase {
           new SwerveModule(2, Constants.Swerve.Mod2.constants),
           new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
-    swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+    swerveOdometry = new SwerveDriveOdometry(
+    Constants.Swerve.swerveKinematics
+    , getYaw()
+    , getModulePositions()
+    );
     field = new Field2d();
     SmartDashboard.putData("Field", field);
   }
@@ -82,6 +93,39 @@ public class SwerveDrive extends SubsystemBase {
 //     return states;
 //   }
 
+/**
+   * Method to drive the robot using joystick info.
+   *
+   * @param xSpeed        Speed of the robot in the x direction (forward).
+   * @param ySpeed        Speed of the robot in the y direction (sideways).
+   * @param rot           Angular rate of the robot.
+   * @param fieldRelative Whether the provided x and y speeds are relative to the
+   *                      field.
+   */
+  public void drive(Translation2d translation, double rot, boolean fieldRelative) {
+
+    double fieldRelativeXVelocity = translation.getX() * Math.cos(-gyro.getYaw() * (Math.PI/180)) + translation.getY() * Math.sin(-gyro.getYaw() * (Math.PI/180));
+    double fieldRelativeYVelocity = -translation.getX() * Math.sin(-gyro.getYaw() * (Math.PI/180)) + translation.getY() * Math.cos(-gyro.getYaw() * (Math.PI/180));
+
+    double XVelocity = translation.getX();
+    double YVelocity = translation.getY(); 
+
+
+ // Constants.Swerve.swerveKinematics
+ // TODO JB this code may not work
+    var swerveModuleStates = swerveDriveKinematics.toSwerveModuleStates(
+      fieldRelative
+          ? ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeXVelocity, fieldRelativeYVelocity, rot, Rotation2d.fromDegrees(gyro.getYaw()))
+          : new ChassisSpeeds(XVelocity, YVelocity, rot));
+  SwerveDriveKinematics.desaturateWheelSpeeds(
+      swerveModuleStates,Swerve.maxSpeed);
+      mSwerveMods[0].setDesiredState(swerveModuleStates[0],true);
+      mSwerveMods[1].setDesiredState(swerveModuleStates[1],true);
+      mSwerveMods[2].setDesiredState(swerveModuleStates[2],true);
+      mSwerveMods[3].setDesiredState(swerveModuleStates[3],true);
+  
+  }
+
   public void zeroGyro() {
     System.out.println("Y Button Pressed");
     System.out.println(gyro);
@@ -98,7 +142,6 @@ public class SwerveDrive extends SubsystemBase {
   }public void SetRobotCentric() {
     System.out.println("Right bumper Button Pressed, Robot Centric Drive Enabled");
     
-//this is where you would change a setting... so like.. no gyro
   }
 
   public SwerveModulePosition[] getModulePositions(){ //TODO this is new, might need to double check

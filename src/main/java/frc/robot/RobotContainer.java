@@ -27,8 +27,8 @@ import frc.robot.autos.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final XboxController driver = new XboxController(0);
- // private final xMotionLimiter xMotionLimiter = new xMotionLimiter();
-
+ // private final SwerveDrive xSpeed = new xSpeed();
+ // private final SwerveDrive yMotionLimiter = new yMotionLimiter();
 /*Joystick and Controller assignments   */
     /* Drive Controls */
       private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -92,8 +92,13 @@ public class RobotContainer {
     FieldDrive.onTrue(new InstantCommand(() -> s_Swerve.SetFieldDrive()));
   }
     // Swerve speed Override
-    setLauncherSpeedOverrideButton.whileHeld(new SetLauncherVelocity(launcher,
-    () -> map(overrideController.getRawAxis(OverrideControllerConstants.launcherSpeedAxis), -1.0, 1.0, 0.0, 3000.0)));
+    // variables from constants
+    // j_maxXController 
+    // double j_maxYController
+    // j_maxTurnController
+   //setXSpeedOverride.whileHeld(new setXSpeedVelocity)
+   // setLauncherSpeedOverrideButton.whileHeld(new SetLauncherVelocity(launcher,
+   // () -> map(overrideController.getRawAxis(OverrideControllerConstants.launcherSpeedAxis), -1.0, 1.0, 0.0, 3000.0)));
     /*sset
  .whileHeld(new SetLauncherVelocity(launcher, () -> Launcher.distanceToVelocity(camera.getDistanceFromGoal())));
 setLauncherSpeedOverrideButton.whileHeld(new SetLauncherVelocity(launcher,
