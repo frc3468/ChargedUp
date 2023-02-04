@@ -33,7 +33,8 @@ public final class Constants {
     // Declare Gyro location on CANbus
     public static final int gyroid = 0;
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
-    
+    // TODO not sure we want to zero the gyro out the gate
+    //public static final int gyro = 0;
 
     /* Drivetrain Constants */
     /** WHEELBASE
@@ -127,7 +128,7 @@ public final class Constants {
     /* Module Specific Constants */
     /* Front Left Module - Module 0 */
         /*Encoder pos 71.367 degrees */
-    public static final int gyro = 0;
+
     public static final class Mod0 {
       public static final int driveMotorID = 1;
       public static final int angleMotorID = 2;
