@@ -26,7 +26,10 @@ import frc.robot.autos.*;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final XboxController driver = new XboxController(0);
+  private final XboxController primaryDriver = new XboxController(0);
+  private final Joystick coDriverLeft = new Joystick(1);
+  private final Joystick coDriverRight = new Joystick(2);
+
  // private final SwerveDrive xSpeed = new xSpeed();
  // private final SwerveDrive yMotionLimiter = new yMotionLimiter();
 /*Joystick and Controller assignments   */
@@ -34,21 +37,23 @@ public class RobotContainer {
       private final int translationAxis = XboxController.Axis.kLeftY.value;
       private final int strafeAxis = XboxController.Axis.kLeftX.value;
       private final int rotationAxis = XboxController.Axis.kRightX.value;
-
-    /* Driver Buttons - Xbox Controller*/
+      
+//
+    /* Driver Buttons - Xbox Controller */
     //zero gyro
       private final JoystickButton zeroGyro =
-        new JoystickButton(driver, XboxController.Button.kY.value);
+        new JoystickButton(primaryDriver, XboxController.Button.kY.value);
     //test binding to get GyroPosition
       private final JoystickButton getGyroReading = 
-        new JoystickButton(driver, XboxController.Button.kX.value);  
+        new JoystickButton(primaryDriver, XboxController.Button.kX.value);  
     // Set to field drive - Robot will default to this upon startup
       private final JoystickButton FieldDrive = 
-        new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+        new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);
     // Set to Robot Centric
       private final JoystickButton robotCentric =
-        new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-    /* Co-Driver Buttons Dual Joysticks */
+        new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);
+    
+    /* Co-Driver Buttons - Dual Joysticks */
 
 /*End of Joystick and Controller assignments   */
 
@@ -61,9 +66,9 @@ public class RobotContainer {
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
             s_Swerve,
-            () -> -driver.getRawAxis(translationAxis),
-            () -> -driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis),
+            () -> -primaryDriver.getRawAxis(translationAxis),
+            () -> -primaryDriver.getRawAxis(strafeAxis),
+            () -> -primaryDriver.getRawAxis(rotationAxis),
             () -> robotCentric.getAsBoolean()));
         
     // Configure the button bindings

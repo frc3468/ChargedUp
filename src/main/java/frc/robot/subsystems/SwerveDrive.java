@@ -103,9 +103,12 @@ public class SwerveDrive extends SubsystemBase {
    *                      field.
    */
   public void drive(Translation2d translation, double rot, boolean fieldRelative) {
-
+//TODO THIS MIGHT BE THE 180 FLIP ERROR WE SEE IN FIELD CENTRIC MODE
     double fieldRelativeXVelocity = translation.getX() * Math.cos(-gyro.getYaw() * (Math.PI/180)) + translation.getY() * Math.sin(-gyro.getYaw() * (Math.PI/180));
     double fieldRelativeYVelocity = -translation.getX() * Math.sin(-gyro.getYaw() * (Math.PI/180)) + translation.getY() * Math.cos(-gyro.getYaw() * (Math.PI/180));
+
+   // double fieldRelativeXVelocity = translation.getX() * Math.cos(-gyro.getYaw() * (Math.PI)) + translation.getY() * Math.sin(-gyro.getYaw() * (Math.PI));
+   // double fieldRelativeYVelocity = -translation.getX() * Math.sin(-gyro.getYaw() * (Math.PI)) + translation.getY() * Math.cos(-gyro.getYaw() * (Math.PI));
 
     double XVelocity = translation.getX();
     double YVelocity = translation.getY(); 
@@ -164,7 +167,9 @@ public class SwerveDrive extends SubsystemBase {
     //     }
     //
     //    // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
-        return Rotation2d.fromDegrees(360.0 - gyro.getYaw());
+      //  return Rotation2d.fromDegrees(360.0 - gyro.getYaw());
+        return Rotation2d.fromDegrees(gyro.getYaw());
+
   }
 
   @Override

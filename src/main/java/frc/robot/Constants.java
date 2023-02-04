@@ -29,11 +29,11 @@ public final class Constants {
 //Joystick deadband.  Filters out stick drift
   public static final class Swerve {
     public static final double stickDeadband = 0.1;
-
+    /* GYRO Constants */
     // Declare Gyro location on CANbus
     public static final int gyroid = 0;
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
-    // TODO not sure we want to zero the gyro out the gate
+    // TODO not sure we want to zero the gyro out the gate (upon init)
     //public static final int gyro = 0;
 
     /* Drivetrain Constants */
