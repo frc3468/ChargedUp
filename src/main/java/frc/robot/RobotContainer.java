@@ -36,8 +36,9 @@ public class RobotContainer {
     /* Drive Controls */
       private final int translationAxis = XboxController.Axis.kLeftY.value;
       private final int strafeAxis = XboxController.Axis.kLeftX.value;
-      private final int rotationAxis = XboxController.Axis.kRightX.value;
-      
+      //private final int rotationAxis = XboxController.Axis.kRightX.value;
+      private final int rotationAxis = 0;
+
 //
     /* Driver Buttons - Xbox Controller */
     //zero gyro
