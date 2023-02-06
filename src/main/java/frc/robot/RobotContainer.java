@@ -4,11 +4,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
-//import edu.wpi.first.wpilibj.PS4Controller;''
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -16,6 +14,8 @@ import frc.robot.autos.BaseAuto;
 //import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.autos.*;
 
 /**
@@ -36,9 +36,8 @@ public class RobotContainer {
     /* Drive Controls */
       private final int translationAxis = XboxController.Axis.kLeftY.value;
       private final int strafeAxis = XboxController.Axis.kLeftX.value;
-      //private final int rotationAxis = XboxController.Axis.kRightX.value;
-      private final int rotationAxis = 0;
-
+      private final int rotationAxis = XboxController.Axis.kRightX.value;
+      
 //
     /* Driver Buttons - Xbox Controller */
     //zero gyro
@@ -47,13 +46,16 @@ public class RobotContainer {
     //test binding to get GyroPosition
       private final JoystickButton getGyroReading = 
         new JoystickButton(primaryDriver, XboxController.Button.kX.value);  
+    // BRAKES!!!
+      private final JoystickButton setWheelsToX = 
+        new JoystickButton(primaryDriver, XboxController.Button.kB.value);
     // Set to field drive - Robot will default to this upon startup
       private final JoystickButton FieldDrive = 
         new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);
     // Set to Robot Centric
       private final JoystickButton robotCentric =
         new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);
-    
+
     /* Co-Driver Buttons - Dual Joysticks */
 
 /*End of Joystick and Controller assignments   */
@@ -96,6 +98,7 @@ public class RobotContainer {
     getGyroReading.onTrue(new InstantCommand(() -> s_Swerve.GetGyroReading()));
     robotCentric.onTrue(new InstantCommand(() -> s_Swerve.SetRobotCentric()));
     FieldDrive.onTrue(new InstantCommand(() -> s_Swerve.SetFieldDrive()));
+    setWheelsToX.onTrue(new InstantCommand(() -> s_Swerve.GetsetWheelsToX()));
   }
     // Swerve speed Override
     // variables from constants

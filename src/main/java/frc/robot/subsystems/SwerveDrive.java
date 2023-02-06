@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import frc.robot.Constants.Swerve;
-import frc.robot.Constants.Swerve.Mod0;
 //import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import com.ctre.phoenix.sensors.WPI_CANCoder;
@@ -113,7 +112,8 @@ public class SwerveDrive extends SubsystemBase {
    * @param fieldRelative Whether the provided x and y speeds are relative to the
    *                      field.
    */
-  public void drive(Translation2d translation, double rot, boolean fieldRelative) {
+  
+   public void drive(Translation2d translation, double rot, boolean fieldRelative) {
 //TODO THIS MIGHT BE THE 180 FLIP ERROR WE SEE IN FIELD CENTRIC MODE
     double fieldRelativeXVelocity = translation.getX() * Math.cos(-gyro.getYaw() * (Math.PI/180)) + translation.getY() * Math.sin(-gyro.getYaw() * (Math.PI/180));
     double fieldRelativeYVelocity = -translation.getX() * Math.sin(-gyro.getYaw() * (Math.PI/180)) + translation.getY() * Math.cos(-gyro.getYaw() * (Math.PI/180));
@@ -139,29 +139,66 @@ public class SwerveDrive extends SubsystemBase {
       mSwerveMods[3].setDesiredState(swerveModuleStates[3],true);
   
   }
+// Set the wheels to an X pattern to plant the robot
+   public void setWheelsToX(){
+    setModuleStates(new SwerveModuleState[]{
+      //front left
+      new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)),
+      //front right
+      new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
+      //rear left
+      new SwerveModuleState(0.0, Rotation2d.fromDegrees(0.0)),
+      //rear right
+      new SwerveModuleState(0.0, Rotation2d.fromDegrees(0.0))
+    });
+  }
+    
+    
+    ;
 
+/*  CONTROLLER OUTPUTS  */
   public void zeroGyro() {
     System.out.println("Y Button Pressed");
     System.out.println(gyro);
     gyro.setYaw(0);
   }
+
+  //declared here for testing, but got a firmware error upon readout
   CANcoder canCode0 = new CANcoder(3);
   CANcoder canCode1 = new CANcoder(6);
   CANcoder canCode2 = new CANcoder(9);
   CANcoder canCode3 = new CANcoder(12);
 
   public void GetGyroReading() {
-    System.out.println("x Button Pressed");
+    System.out.println("X Button Pressed");
     System.out.println(gyro.getYaw());
+  }
+    public void GetsetWheelsToX() {
+      System.out.println("B Button Pressed");
+      setWheelsToX();
+  }
+     //System.out.println(gyro.getYaw());
     // TODO The system out is producing an error -10022 and -1003
-    /*System.out.println("Front Right position");
+   // System.out.println()
+    
+    /*     "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+    for (SwerveModule mod : mSwerveMods) {
+      SmartDashboard.putNumber(
+        "Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
+        SmartDashboard.putNumber(
+          "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+          */
+      //System.out.println(modulenumber + "Cancoder", getCancoder().getDegrees)
+    
+    /*
+    System.out.println("Front Right position");
     System.out.println(canCode1.getPosition());
     System.out.println("Rear Left position");
     System.out.println(canCode2.getPosition());
     System.out.println("Rear Right position");
     System.out.println(canCode3.getPosition());
     */
-  }
+  
   public void SetFieldDrive() {
     System.out.println("Left bumper Button Pressed, Field Drive Enabled");
 

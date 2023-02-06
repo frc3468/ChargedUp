@@ -12,6 +12,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.config.SwerveModuleConstants;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
+import frc.robot.subsystems.TheCamera;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -25,7 +32,12 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
-
+  
+  public static class CameraConstants{
+    // keeps distance from the camera to the robot in meter. 
+    //Metric forever
+    public static Transform3d camToRobot = new Transform3d(new Translation3d(0, 0,0), new Rotation3d(0, 0, 0));
+  }
 //Joystick deadband.  Filters out stick drift
   public static final class Swerve {
     public static final double stickDeadband = 0.1;
@@ -101,7 +113,6 @@ public final class Constants {
         (wheelDiameter * Math.PI) / driveGearRatio;
     public static final double driveConversionVelocityFactor = driveConversionPositionFactor / 60.0;
     public static final double angleConversionFactor = 360.0 / angleGearRatio;
- 
   
     /* Swerve Profiling Values */
     public static final double maxSpeed = 4.5; // 4.5 meters per second
@@ -113,7 +124,43 @@ public final class Constants {
     public static final double j_maxXController = .5;//forward/rev
     public static final double j_maxYController = .5; // strafe left/right
     public static final double j_maxTurnController = .8;// turn (right Joystick)
+/*   Saw this and liked it. 
+ *      public static final class TeleopDriveConstants {
 
+    public static final double DEADBAND = 0.1;
+
+    public static final double X_RATE_LIMIT = 6.0;
+    public static final double Y_RATE_LIMIT = 6.0;
+    public static final double ROTATION_RATE_LIMIT = 5.0 * PI;
+
+    public static final double HEADING_MAX_VELOCITY = PI * 2;
+    public static final double HEADING_MAX_ACCELERATION = PI * 2;
+    
+    public static final double HEADING_kP = 2.0;
+    public static final double HEADING_kI = 0.0;
+    public static final double HEADING_kD = 0.0;
+
+    public static final double HEADING_TOLERANCE = degreesToRadians(1.5);
+
+  }
+
+    public static class AutoConstants {
+    public static TrapezoidProfile.Constraints THETA_CONSTRAINTS = new TrapezoidProfile.Constraints(PI, 2 / PI);
+    public static double THETA_kP = 5.0;
+    public static double THETA_kI = 0.0;
+    public static double THETA_kD = 0.0;
+    
+    public static double X_kP = 16.0;
+    public static double X_kI = 0.0;
+    public static double X_kD = 0.0;
+
+    public static double Y_kP = 16.0;
+    public static double Y_kI = 0.0;
+    public static double Y_kD = 0.0;
+
+  }
+ * 
+ */
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;
     public static final IdleMode driveNeutralMode = IdleMode.kBrake;
