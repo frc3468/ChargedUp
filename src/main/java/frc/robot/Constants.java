@@ -11,6 +11,11 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.config.SwerveModuleConstants;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -25,6 +30,11 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
+  public static class CameraConstants{
+    // keeps distance from the camera to the robot in meter. 
+    //Metric forever
+    public static Transform3d camToRobot = new Transform3d(new Translation3d(0, 0,0), new Rotation3d(0, 0, 0));
+  }
 //Joystick deadband.  Filters out stick drift
   public static final class Swerve {
     public static final double stickDeadband = 0.1;
