@@ -13,17 +13,14 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.config.CANCoderUtil;
 import frc.config.CANSparkMaxUtil;
 import frc.config.OnboardModuleStates;
 import frc.config.SwerveModuleConstants;
 import frc.config.CANCoderUtil.CCUsage;
 import frc.config.CANSparkMaxUtil.Usage;
-import frc.config.CTREConfigs;
 
 public class SwerveModule {
   public int moduleNumber;
