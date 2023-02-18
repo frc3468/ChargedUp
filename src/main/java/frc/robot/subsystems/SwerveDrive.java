@@ -4,10 +4,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
-import com.ctre.phoenixpro.configs.CANcoderConfiguration;
-import com.ctre.phoenixpro.hardware.CANcoder;
-import com.ctre.phoenixpro.sim.CANcoderSimState;
-import com.ctre.phoenix.sensors.WPI_CANCoder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -21,10 +17,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import frc.robot.Constants.Swerve;
-import frc.robot.Constants.Swerve.Mod0;
-//import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
-import com.ctre.phoenix.sensors.WPI_CANCoder;
 
 public class SwerveDrive extends SubsystemBase {
   private final Pigeon2 gyro;
@@ -35,16 +27,10 @@ public class SwerveDrive extends SubsystemBase {
   private Field2d field;
 
   public SwerveDrive() {
-      
-      
-     // public static final int canCoderID = 9;
-            
 
+    gyro = new Pigeon2(0); // NavX connected over MXP
+    // gyro.restoreFactoryDefaults(); //for Pigeon
 
-
-
-    gyro = new Pigeon2(0); //for Pigeon
-    //gyro.restoreFactoryDefaults(); //for Pigeon
     zeroGyro();
 
     mSwerveMods = new SwerveModule[] {
@@ -129,22 +115,10 @@ public class SwerveDrive extends SubsystemBase {
     System.out.println(gyro);
     gyro.setYaw(0);
   }
-  CANcoder canCode0 = new CANcoder(3);
-  CANcoder canCode1 = new CANcoder(6);
-  CANcoder canCode2 = new CANcoder(9);
-  CANcoder canCode3 = new CANcoder(12);
 
   public void GetGyroReading() {
     System.out.println("x Button Pressed");
     System.out.println(gyro.getYaw());
-    // TODO The system out is producing an error -10022 and -1003
-    /*System.out.println("Front Right position");
-    System.out.println(canCode1.getPosition());
-    System.out.println("Rear Left position");
-    System.out.println(canCode2.getPosition());
-    System.out.println("Rear Right position");
-    System.out.println(canCode3.getPosition());
-    */
   }
 
   public void SetFieldDrive() {
@@ -166,12 +140,19 @@ public class SwerveDrive extends SubsystemBase {
   }
 
   public Rotation2d getYaw() {
+    // return (Constants.Swerve.invertGyro)
+    // ? Rotation2d.fromDegrees(360 - gyro.getYaw())
+    // : Rotation2d.fromDegrees(gyro.getYaw());
+    // Brittany commented this out because it is not called
 
     // if (gyro.isMagnetometerCalibrated()) {
-    //     // We will only get valid fused headings if the magnetometer is calibrated
-    //     return Rotation2d.fromDegrees(gyro.getFusedHeading());
-    //     }
-
+    // // We will only get valid fused headings if the magnetometer is calibrated
+    // return Rotation2d.fromDegrees(gyro.getFusedHeading());
+    // }
+    //
+    // // We have to invert the angle of the NavX so that rotating the robot
+    // counter-clockwise makes the angle increase.
+    // return Rotation2d.fromDegrees(360.0 - gyro.getYaw());
     return Rotation2d.fromDegrees(gyro.getYaw());
 
   }
