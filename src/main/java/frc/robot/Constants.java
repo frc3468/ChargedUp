@@ -138,7 +138,7 @@ public final class Constants {
     /* Front Left Module - Module 0 */
         /*Encoder pos 71.367 degrees */
 
-    public static final class Mod0 {
+    public static final class FrontLeftSwerveMod {
       public static final int driveMotorID = 1;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 3;
@@ -149,7 +149,7 @@ public final class Constants {
 
     /* Front Right Module - Module 1 */
         /*Encoder pos 105.469 degrees */
-    public static final class Mod1 {
+    public static final class FrontRightSwerveMod {
       public static final int driveMotorID = 4;
       public static final int angleMotorID = 5;
       public static final int canCoderID = 6;
@@ -160,7 +160,7 @@ public final class Constants {
 
     /* Back Left Module - Module 2 */
         /* Encoder 288.105 degrees */
-    public static final class Mod2 {
+    public static final class RearLeftSwerveMod {
       public static final int driveMotorID = 7;
       public static final int angleMotorID = 8;
       public static final int canCoderID = 9;
@@ -171,7 +171,7 @@ public final class Constants {
 
     /* Back Right Module - Module 3 */
         /* Endoder 338.730 degrees */
-    public static final class Mod3 {
+    public static final class RearRightSwerveMod {
       public static final int driveMotorID = 10;
       public static final int angleMotorID = 11;
       public static final int canCoderID = 12;
