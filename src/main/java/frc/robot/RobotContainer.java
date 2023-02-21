@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -29,20 +30,30 @@ public class RobotContainer {
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  // private final int rotationAxis = XboxController.Axis.kRightX.value;
-  private final int rotationAxis = 0;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   //
   /* Driver Buttons - Xbox Controller */
-  // zero gyro
-  private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kY.value);
-  // test binding to get GyroPosition
-  private final JoystickButton getGyroReading = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
-  // Set to field drive - Robot will default to this upon startup
-  private final JoystickButton FieldDrive = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);
-  // Set to Robot Centric
-  private final JoystickButton robotCentric = new JoystickButton(primaryDriver,
-      XboxController.Button.kRightBumper.value);
+  // ABXY buttons
+  // A - Bottom shelf position
+  private final JoystickButton bottomShelf = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
+  // B - Middle shelf position
+  private final JoystickButton middleShelf = new JoystickButton(primaryDriver, XboxController.Button.kB.value);
+  // Y - Top shelf position
+  private final JoystickButton topShelf = new JoystickButton(primaryDriver, XboxController.Button.kY.value);
+  // X - toggle between robot- and field-centric - true is robot-centric
+  private final JoystickButton centricToggle = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+
+  // BACK/SELECT - Zero Gyro reading
+  private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kBack.value);
+  // START - Hard brake/ auto-level for balance board
+  private final JoystickButton autoLevel = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);
+
+  // Bumpers and Triggers
+  // Left Bumper - auto-load
+  private final JoystickButton autoLoad = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);
+  // Right bumper - Open/Close the claw
+  private final JoystickButton clawMovement = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);
 
   /* Co-Driver Buttons - Dual Joysticks */
 
@@ -61,7 +72,7 @@ public class RobotContainer {
             () -> -primaryDriver.getRawAxis(translationAxis),
             () -> -primaryDriver.getRawAxis(strafeAxis),
             () -> -primaryDriver.getRawAxis(rotationAxis),
-            () -> robotCentric.getAsBoolean()));
+            () -> centricToggle.getAsBoolean()));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -83,8 +94,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    getGyroReading.onTrue(new InstantCommand(() -> s_Swerve.GetGyroReading()));
-    robotCentric.onTrue(new InstantCommand(() -> s_Swerve.SetRobotCentric()));
-    FieldDrive.onTrue(new InstantCommand(() -> s_Swerve.SetFieldDrive()));
+    // TODO : configure the rest of the buttons to do stuff
   }
 }
