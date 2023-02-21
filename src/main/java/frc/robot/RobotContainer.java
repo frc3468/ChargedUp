@@ -60,8 +60,8 @@ public class RobotContainer {
   private final JoystickButton FieldDrive = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value); // Set to Field Centric
   private final JoystickButton robotCentric = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);   // Set to Robot Centric
   /* Co-Driver Buttons - Dual Joysticks */
-  private final int OuterArmAxis = Joystick.AxisType.kY.value;
-  private final int InnerArmAxis = Joystick.AxisType.kY.value;
+  private final double OuterArmAxis = Joystick.AxisType.kY.value;
+  private final double InnerArmAxis = Joystick.AxisType.kY.value;
 //TODO dual joystick commands to be entered here
  
   /* Button Bindings - Actions taken upon button press or hold */
