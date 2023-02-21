@@ -45,7 +45,7 @@ public final class Constants {
     // TODO not sure we want to zero the gyro out the gate (upon init)
     //public static final int gyro = 0;
 
-    /* Drivetrain Constants */
+    /* SWERVE DRIVETRAIN CONSTANTS */
     /** WHEELBASE
      * The left-to-right distance between the drivetrain wheels
      * Should be measured from center to center.
@@ -81,14 +81,13 @@ public final class Constants {
     public static final int driveContinuousCurrentLimit = 80;
 
     /* Angle Motor PID Values */
-
-  /*
-   * KP = Propotional Gain constant of the PIDF controller
-   * KI = Integral Gain constant of the PIDF controller
-   * KD = Derivitive Gain constant of the PIDF controller
-   * KFF = Feed-forward gain of the PIDF controller
-   * Use SPARKMAX GUI to tune and save paremeters
-   */
+    /*
+    * KP = Propotional Gain constant of the PIDF controller
+    * KI = Integral Gain constant of the PIDF controller
+    * KD = Derivitive Gain constant of the PIDF controller
+    * KFF = Feed-forward gain of the PIDF controller
+    * Use SPARKMAX GUI to tune and save paremeters
+    */
     public static final double angleKP = 0.01;
     public static final double angleKI = 0.0;
     public static final double angleKD = 0.0;
@@ -115,9 +114,9 @@ public final class Constants {
     /* Swerve Profiling Values */
     public static final double maxSpeed = 4.5; // 4.5 meters per second
     public static final double maxAngularVelocity = 11.5;//11.5
-   // var speeds = new chassisspeeds(3.0,-2.0, Math.pi);
+    // var speeds = new chassisspeeds(3.0,-2.0, Math.pi);
 
-   /*  Controller offset.  Alters the max output of joysticks to throttle X,Y,Turn */
+    /*  Controller offset.  Alters the max output of joysticks to throttle X,Y,Turn */
     // TODO not called yet
     public static final double j_maxXController = .5;//forward/rev
     public static final double j_maxYController = .5; // strafe left/right
@@ -179,6 +178,36 @@ public final class Constants {
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
-  
+      /* END SWERVE DRIVETRAIN CONSTANTS */
+}
+public static final class OuterArmConstants {
+
+
+  public static final class OuterArmMotor {
+   
+  }
+  /*
+   *driveMotor.restoreFactoryDefaults();
+    CANSparkMaxUtil.setCANSparkMaxBusUsage(driveMotor, Usage.kAll);
+    driveMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
+    driveMotor.setInverted(Constants.Swerve.driveInvert);
+    driveMotor.setIdleMode(Constants.Swerve.driveNeutralMode);
+    driveEncoder.setVelocityConversionFactor(Constants.Swerve.driveConversionVelocityFactor);
+    driveEncoder.setPositionConversionFactor(Constants.Swerve.driveConversionPositionFactor);
+    driveController.setP(Constants.Swerve.angleKP);
+    driveController.setI(Constants.Swerve.angleKI);
+    driveController.setD(Constants.Swerve.angleKD);
+    driveController.setFF(Constants.Swerve.angleKFF);
+    driveMotor.enableVoltageCompensation(Constants.Swerve.voltageComp);
+    driveMotor.burnFlash();
+    driveEncoder.setPosition(0.0);
+   * 
+   */
+
+}
+
+public static final class InnerArm {
+
+
 }
 }
