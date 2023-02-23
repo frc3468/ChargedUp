@@ -21,10 +21,5 @@ public final class Constants {
     public static final int CloseClaw = 1;
 
   }
-  public static class Humerousconstants {
-    public static final int Humerousmotor = 13;
-    public static final int raiseSpeed = 1;
-    public static final int lowerSpeed = -1;
-    public static final int stopSpeed = 0;
+  
   }
-}
