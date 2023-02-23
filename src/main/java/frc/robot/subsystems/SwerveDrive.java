@@ -20,6 +20,7 @@ import frc.robot.Constants.Swerve;
 
 public class SwerveDrive extends SubsystemBase {
   private final Pigeon2 gyro;
+  private final Field2d mField;
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
@@ -27,6 +28,8 @@ public class SwerveDrive extends SubsystemBase {
   private Field2d field;
 
   public SwerveDrive() {
+    mField = new Field2d();
+    SmartDashboard.putData("Field", mField);
 
     gyro = new Pigeon2(0); // NavX connected over MXP
     // gyro.restoreFactoryDefaults(); //for Pigeon
@@ -170,5 +173,7 @@ public class SwerveDrive extends SubsystemBase {
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
+
+    mField.setRobotPose(getPose());
   }
 }
