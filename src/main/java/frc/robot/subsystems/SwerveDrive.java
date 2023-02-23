@@ -20,6 +20,7 @@ import frc.robot.Constants.Swerve;
 
 public class SwerveDrive extends SubsystemBase {
   private final Pigeon2 gyro;
+  private boolean robotCentricEnabled = false;
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
@@ -110,26 +111,64 @@ public class SwerveDrive extends SubsystemBase {
 
   }
 
-  public void zeroGyro() {
+  // BOTTOM SHELF - 'A' BUTTON
+  public void bottomShelf() {
+    System.out.println("A Button Pressed");
+    System.out.println("Bottom Shelf");
+  }
+
+  // MIDDLE SHELF - 'B' BUTTON
+  public void middleShelf() {
+    System.out.println("B Button Pressed");
+    System.out.println("Middle Shelf");
+  }
+
+  // TOP SHELF - 'Y' BUTTON
+  public void topShelf() {
     System.out.println("Y Button Pressed");
-    System.out.println(gyro);
-    gyro.setYaw(0);
+    System.out.println("Top Shelf");
   }
 
-  public void GetGyroReading() {
-    System.out.println("x Button Pressed");
-    System.out.println(gyro.getYaw());
+  // CENTRIC TOGGLE - 'X' BUTTON
+  public void centricToggle() {
+    if(robotCentricEnabled == false)
+      {
+        robotCentricEnabled = true;
+        System.out.println("Robot Centric is True");
+      } 
+    else
+      {
+        robotCentricEnabled = false; 
+        System.out.println("Robot Centric is False");
+      }
   }
 
-  public void SetFieldDrive() {
-    System.out.println("Left bumper Button Pressed, Field Drive Enabled");
 
+  // ZERO GYRO - 'BACK' BUTTON
+  public void zeroGyro() {
+    System.out.println("Back Button Pressed");
+    System.out.println("GYRO BEFORE: " + gyro.getYaw());
+    gyro.setYaw(0);System.out.println("GYRO AFTER: " + gyro.getYaw());
   }
 
-  public void SetRobotCentric() {
-    System.out.println("Right bumper Button Pressed, Robot Centric Drive Enabled");
-
+  // AUTO LEVEL - 'START' BUTTON
+  public void autoLevel(){
+    System.out.println("Start Button Pressed");
+    System.out.println("Auto Level");
   }
+
+  // AUTO LOAD - LEFT BUMPER
+  public void autoLoad(){
+    System.out.println("Left Bumper Pressed");
+    System.out.println("Auto Load");
+  }
+
+  // CLAW MOVEMENT - RIGHT BUMPER
+  public void clawMovement(){
+    System.out.println("Right Bumper Pressed");
+    System.out.println("Claw Movement");
+  }
+
 
   public SwerveModulePosition[] getModulePositions() { // TODO this is new, might need to double check
     SwerveModulePosition[] positions = new SwerveModulePosition[4];

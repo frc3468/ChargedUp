@@ -14,7 +14,7 @@ public class OuterArm extends SubsystemBase {
   public OuterArm() {
 
     final CANSparkMax m_OuterMotor;
-    m_OuterMotor.
+    //m_OuterMotor.
   }
 
   @Override

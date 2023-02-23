@@ -33,8 +33,8 @@ public class RobotContainer {
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  //
   /* Driver Buttons - Xbox Controller */
+
   // ABXY buttons
   // A - Bottom shelf position
   private final JoystickButton bottomShelf = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
@@ -85,10 +85,17 @@ public class RobotContainer {
 
   /* Button Bindings - Actions taken upon button press or hold */
   private void configureButtonBindings() { 
-    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); //Y
-    centricToggle.onTrue(new InstantCommand(() -> s_Swerve.GetGyroReading()));  //X
-    autoLoad.onTrue(new InstantCommand(() -> s_Swerve.SetRobotCentric()));  //LEFT BUMPER
-    clawMovement.onTrue(new InstantCommand(() -> s_Swerve.SetFieldDrive()));  //RIGHT BUMPER
+
+    bottomShelf.onTrue(new InstantCommand(() -> s_Swerve.bottomShelf())); // A
+    middleShelf.onTrue(new InstantCommand(() -> s_Swerve.middleShelf())); // B
+    topShelf.onTrue(new InstantCommand(() -> s_Swerve.topShelf())); // Y
+    centricToggle.onTrue(new InstantCommand(() -> s_Swerve.centricToggle()));  // X
+
+    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); // BACK BUTTON
+    autoLevel.onTrue(new InstantCommand(() -> s_Swerve.autoLevel())); // START BUTTON
+
+    autoLoad.onTrue(new InstantCommand(() -> s_Swerve.autoLoad()));  // LEFT BUMPER
+    clawMovement.onTrue(new InstantCommand(() -> s_Swerve.clawMovement()));  // RIGHT BUMPER
     
   }
    /**
