@@ -16,4 +16,15 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static class Clawconstants {
+    public static final int OpenClaw = 0;
+    public static final int CloseClaw = 1;
+
+  }
+  public static class Humerousconstants {
+    public static final int Humerousmotor = 13;
+    public static final int raiseSpeed = 1;
+    public static final int lowerSpeed = -1;
+    public static final int stopSpeed = 0;
+  }
 }
