@@ -131,16 +131,12 @@ public class SwerveDrive extends SubsystemBase {
 
   // CENTRIC TOGGLE - 'X' BUTTON
   public void centricToggle() {
-    if(robotCentricEnabled == false)
-      {
-        robotCentricEnabled = true;
-        System.out.println("Robot Centric is True");
-      } 
-    else
-      {
-        robotCentricEnabled = false; 
-        System.out.println("Robot Centric is False");
-      }
+    robotCentricEnabled = !robotCentricEnabled;
+    if(robotCentricEnabled){
+      System.out.println("Robot Centric Enabled");
+    }else{
+      System.out.println("Robot Centric Disabled");
+    }
   }
 
 
