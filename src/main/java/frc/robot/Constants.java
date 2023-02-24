@@ -182,11 +182,22 @@ public final class Constants {
       /* END SWERVE DRIVETRAIN CONSTANTS */
 }
 public static final class OuterArmConstants {
-
-
-  public static final class OuterArmMotor {
-   
-  }
+    public static final int outermotor = 13;
+    public static final int raiseSpeed = 1;
+    public static final int lowerSpeed = -1;
+    public static final int stopSpeed = 0;
+    public static final double outerP = 10.0;
+    public static final double outerI = 0.0;
+    public static final double outerD = 0.0;
+    public static final double outerIZone = 0.0;
+    public static final double outerFF = 0.0;
+    public static final double outerMin = -1.0;
+    public static final double outerMax = 1.0;
+    public static final double upPIDReference = 2.6;
+    public static final double downPIDReference = 0.165;
+    public static final double startingConfig = 2.5;
+    public static final double outerPIDTolorence = 0.001;
+  
   /*
    *driveMotor.restoreFactoryDefaults();
     CANSparkMaxUtil.setCANSparkMaxBusUsage(driveMotor, Usage.kAll);
@@ -207,8 +218,22 @@ public static final class OuterArmConstants {
 
 }
 
-public static final class InnerArm {
-
+public static final class InnerArmConstants {
+  public static final int innermotor = 14;
+  public static final int raiseSpeed = 1;
+  public static final int lowerSpeed = -1;
+  public static final int stopSpeed = 0;
+  public static final double innerP = 10.0;
+  public static final double innerI = 0.0;
+  public static final double innerD = 0.0;
+  public static final double innerIZone = 0.0;
+  public static final double innerFF = 0.0;
+  public static final double innerMin = -1.0;
+  public static final double innerMax = 1.0;
+  public static final double upPIDReference = 2.6;
+  public static final double downPIDReference = 0.165;
+  public static final double startingConfig = 2.5;
+  public static final double innerPIDTolorence = 0.001;
 
 }
 }
