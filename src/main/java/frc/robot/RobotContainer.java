@@ -43,7 +43,7 @@ public class RobotContainer {
   // Y - Top shelf position
   private final JoystickButton topShelf = new JoystickButton(primaryDriver, XboxController.Button.kY.value);
   // X - toggle between robot- and field-centric - true is robot-centric
-  private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+  private final JoystickButton centricToggle = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
 
   // BACK/SELECT - Zero Gyro reading
   private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kBack.value);
@@ -75,7 +75,7 @@ public class RobotContainer {
             () -> -primaryDriver.getRawAxis(translationAxis),
             () -> -primaryDriver.getRawAxis(strafeAxis),
             () -> -primaryDriver.getRawAxis(rotationAxis),
-            () -> zeroGyro.getAsBoolean()));
+            () -> centricToggle.getAsBoolean()));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -89,7 +89,7 @@ public class RobotContainer {
     bottomShelf.onTrue(new InstantCommand(() -> s_Swerve.bottomShelf())); // A
     middleShelf.onTrue(new InstantCommand(() -> s_Swerve.middleShelf())); // B
     topShelf.onTrue(new InstantCommand(() -> s_Swerve.topShelf())); // Y
-    turtleMode.onTrue(new InstantCommand(() -> s_Swerve.turtleMode()));  // X
+    centricToggle.onTrue(new InstantCommand(() -> s_Swerve.centricToggle()));  // X
 
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); // BACK BUTTON
     autoLevel.onTrue(new InstantCommand(() -> s_Swerve.autoLevel())); // START BUTTON
