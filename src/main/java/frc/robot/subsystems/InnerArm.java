@@ -41,16 +41,16 @@ public class InnerArm extends SubsystemBase {
     m_outerMotor.set(InnerArmConstants.raiseSpeed);
   }
   public void raiseETier() {
-    m_outerPIDController.setReference(InnerArmConstants.upPIDReference, CANSparkMax.ControlType.kPosition);
-    m_setPoint = InnerArmConstants.upPIDReference;
+    m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceM, CANSparkMax.ControlType.kPosition);
+    m_setPoint = InnerArmConstants.upPIDReferenceM;
   }
   public void raiseMid() {
-    m_outerPIDController.setReference(InnerArmConstants.upPIDReference, CANSparkMax.ControlType.kPosition);
-    m_setPoint = InnerArmConstants.upPIDReference;
+    m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceM, CANSparkMax.ControlType.kPosition);
+    m_setPoint = InnerArmConstants.upPIDReferenceM;
   }
   public void raiseSTier() {
-    m_outerPIDController.setReference(InnerArmConstants.upPIDReference, CANSparkMax.ControlType.kPosition);
-    m_setPoint = InnerArmConstants.upPIDReference;
+    m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceS, CANSparkMax.ControlType.kPosition);
+    m_setPoint = InnerArmConstants.upPIDReferenceS;
   }
   public void lower(){
     m_outerMotor.set(InnerArmConstants.lowerSpeed);
@@ -61,6 +61,9 @@ public class InnerArm extends SubsystemBase {
   }
   public void stop(){
     m_outerMotor.set(InnerArmConstants.stopSpeed);
+  }
+  public boolean isAtSetPoint() {
+    return (Math.abs(m_setPoint - m_potentiometor.getPosition()) <= InnerArmConstants.innerPIDTolorence);
   }
 
   @Override

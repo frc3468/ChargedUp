@@ -192,7 +192,9 @@ public static final class OuterArmConstants {
     public static final double outerFF = 0.0;
     public static final double outerMin = -1.0;
     public static final double outerMax = 1.0;
-    public static final double upPIDReference = 2.6;
+    public static final double upPIDReferenceE = 2.6;
+    public static final double upPIDReferenceM = 2.6;
+    public static final double upPIDReferenceS = 2.6;
     public static final double downPIDReference = 0.165;
     public static final double startingConfig = 2.5;
     public static final double outerPIDTolorence = 0.001;
@@ -229,7 +231,9 @@ public static final class InnerArmConstants {
   public static final double innerFF = 0.0;
   public static final double innerMin = -1.0;
   public static final double innerMax = 1.0;
-  public static final double upPIDReference = 2.6;
+  public static final double upPIDReferenceE = 2.6;
+  public static final double upPIDReferenceM = 2.6;
+  public static final double upPIDReferenceS = 2.6;
   public static final double downPIDReference = 0.165;
   public static final double startingConfig = 2.5;
   public static final double innerPIDTolorence = 0.001;
