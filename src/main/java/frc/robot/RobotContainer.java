@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.BaseAuto;
 import frc.robot.commands.*;
@@ -24,6 +25,10 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+  private final InnerArm m_InnerArm = new InnerArm();
+  private final OuterArm m_OuterArm = new OuterArm();
+
   // The robot's subsystems and commands are defined here...
   private final XboxController primaryDriver = new XboxController(0);
 
@@ -37,13 +42,19 @@ public class RobotContainer {
   /* Driver Buttons - Xbox Controller */
   // ABXY buttons
   // A - Bottom shelf position
-  private final JoystickButton bottomShelf = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
+  //private final JoystickButton eTier = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
   // B - Middle shelf position
-  private final JoystickButton middleShelf = new JoystickButton(primaryDriver, XboxController.Button.kB.value);
+  //private final JoystickButton midTier = new JoystickButton(primaryDriver, XboxController.Button.kB.value);
   // Y - Top shelf position
-  private final JoystickButton topShelf = new JoystickButton(primaryDriver, XboxController.Button.kY.value);
+ // private final JoystickButton sTeir = new JoystickButton(primaryDriver, XboxController.Button.kY.value);
   // X - toggle between robot- and field-centric - true is robot-centric
-  private final JoystickButton centricToggle = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+  // private final JoystickButton centricToggle = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+  // X - Home position
+  //private final JoystickButton home = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+  private final JoystickButton outerRaise = new JoystickButton(primaryDriver, XboxController.Button.kY.value);
+  private final JoystickButton outerLower = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
+  private final JoystickButton innerRaise = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+  private final JoystickButton innerLower = new JoystickButton(primaryDriver, XboxController.Button.kB.value);
 
   // BACK/SELECT - Zero Gyro reading
   private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kBack.value);
@@ -69,13 +80,14 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    s_Swerve.setDefaultCommand(
-        new TeleopSwerve(
-            s_Swerve,
-            () -> -primaryDriver.getRawAxis(translationAxis),
-            () -> -primaryDriver.getRawAxis(strafeAxis),
-            () -> -primaryDriver.getRawAxis(rotationAxis),
-            () -> centricToggle.getAsBoolean()));
+
+  //  s_Swerve.setDefaultCommand(
+  //      new TeleopSwerve(
+  //        s_Swerve,
+  //          () -> -primaryDriver.getRawAxis(translationAxis),
+  //          () -> -primaryDriver.getRawAxis(strafeAxis),
+  //          () -> -primaryDriver.getRawAxis(rotationAxis)
+  //          () -> centricToggle.getAsBoolean()));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -86,9 +98,26 @@ public class RobotContainer {
   /* Button Bindings - Actions taken upon button press or hold */
   private void configureButtonBindings() { 
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); //Y
-    centricToggle.onTrue(new InstantCommand(() -> s_Swerve.GetGyroReading()));  //X
+   // centricToggle.onTrue(new InstantCommand(() -> s_Swerve.GetGyroReading()));  //X
     autoLoad.onTrue(new InstantCommand(() -> s_Swerve.SetRobotCentric()));  //LEFT BUMPER
     clawMovement.onTrue(new InstantCommand(() -> s_Swerve.SetFieldDrive()));  //RIGHT BUMPER
+
+  //  eTier.onTrue(new ParallelCommandGroup(
+  //    new OuterArmRaiseE(m_OuterArm),
+  //    new InnerArmRaiseE(m_InnerArm)));
+  //  midTier.onTrue(new ParallelCommandGroup(
+  //    new OuterArmRaiseM(m_OuterArm),
+  //    new InnerArmRaiseM(m_InnerArm)));
+  //  sTeir.onTrue(new ParallelCommandGroup(
+  //    new OuterArmRaiseS(m_OuterArm),
+  //    new InnerArmRaiseS(m_InnerArm)));
+    outerRaise.whileTrue(new OuterArmRaise(m_OuterArm));
+    outerLower.whileTrue(new OuterArmLower(m_OuterArm));
+    innerRaise.whileTrue(new InnerArmRaise(m_InnerArm));
+    innerLower.whileTrue(new InnerArmLower(m_InnerArm));
+      
+
+    
     
   }
    /**
