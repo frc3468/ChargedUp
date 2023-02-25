@@ -3,6 +3,8 @@
 */
 package frc.robot.subsystems;
 
+import javax.print.event.PrintJobListener;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -21,12 +23,14 @@ import frc.robot.Constants.Swerve;
 public class SwerveDrive extends SubsystemBase {
   private final Pigeon2 gyro;
   private final Field2d mField;
-  private boolean robotCentricEnabled = false;
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
   private SwerveDriveKinematics swerveDriveKinematics;
   private Field2d field;
+
+  private boolean toggleTurtle = false;
+  private double speed = Constants.Swerve.maxSpeed;
 
   public SwerveDrive() {
     mField = new Field2d();
@@ -56,7 +60,7 @@ public class SwerveDrive extends SubsystemBase {
             ? ChassisSpeeds.fromFieldRelativeSpeeds(
                 translation.getX(), translation.getY(), rotation, getYaw())
             : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, speed);
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
@@ -65,7 +69,7 @@ public class SwerveDrive extends SubsystemBase {
 
   /* Used by SwerveControllerCommand in Auto */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, speed);
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(desiredStates[mod.moduleNumber], false);
@@ -133,12 +137,16 @@ public class SwerveDrive extends SubsystemBase {
   }
 
   // CENTRIC TOGGLE - 'X' BUTTON
-  public void centricToggle() {
-    robotCentricEnabled = !robotCentricEnabled;
-    if(robotCentricEnabled){
-      System.out.println("Robot Centric Enabled");
-    }else{
-      System.out.println("Robot Centric Disabled");
+  public void turtleMode() {
+    System.out.println("X Button Pressed");
+    toggleTurtle = !toggleTurtle;
+
+    if (toggleTurtle) {
+      speed = Constants.Swerve.turtleSpeed;
+      System.out.println("Turtle mode active, speed is now " + speed);
+    } else {
+      speed = Constants.Swerve.maxSpeed;
+      System.out.println("Turtle mode deactivated, speed is now " + speed);
     }
   }
 
