@@ -32,7 +32,7 @@ public class Claw extends SubsystemBase {
   solenoid.set(Value.kReverse);
  }
  public boolean getLazerSenser() {
-  return !lazerSensor.get();
+  return lazerSensor.get();
 }
   @Override
   public void periodic() {
