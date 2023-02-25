@@ -21,7 +21,9 @@ import frc.robot.Constants.Swerve;
 public class SwerveDrive extends SubsystemBase {
   private final Pigeon2 gyro;
   private final Field2d mField;
-  private boolean robotCentricEnabled = false;
+
+  private boolean turtleToggle = false;
+  private double speed = Constants.Swerve.maxSpeed;
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
@@ -56,7 +58,7 @@ public class SwerveDrive extends SubsystemBase {
             ? ChassisSpeeds.fromFieldRelativeSpeeds(
                 translation.getX(), translation.getY(), rotation, getYaw())
             : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, speed);
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
@@ -65,7 +67,7 @@ public class SwerveDrive extends SubsystemBase {
 
   /* Used by SwerveControllerCommand in Auto */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, speed);
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(desiredStates[mod.moduleNumber], false);
@@ -133,12 +135,15 @@ public class SwerveDrive extends SubsystemBase {
   }
 
   // CENTRIC TOGGLE - 'X' BUTTON
-  public void centricToggle() {
-    robotCentricEnabled = !robotCentricEnabled;
-    if(robotCentricEnabled){
-      System.out.println("Robot Centric Enabled");
+  public void turtleMode() {
+    System.out.println("Y Button Pressed");
+    turtleToggle = !turtleToggle;
+    if(turtleToggle){
+      speed = Constants.Swerve.turtleSpeed;
+      System.out.println("Turtle mode enabled, speed is now " + speed + " meters per second." );
     }else{
-      System.out.println("Robot Centric Disabled");
+      speed = Constants.Swerve.maxSpeed;
+      System.out.println("Turtle mode disabled, speed is now " + speed + " meters per second." );
     }
   }
 
