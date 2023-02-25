@@ -19,6 +19,8 @@ public final class Constants {
   public static class Clawconstants {
     public static final int OpenClaw = 0;
     public static final int CloseClaw = 1;
+    public static final int lazersensor = 2;
+
 
   }
   
