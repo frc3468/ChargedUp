@@ -31,6 +31,7 @@ public class camera extends SubsystemBase {
   boolean didISucceed;
   AprilTagFieldLayout aLayout;
   boolean layoutfailed;
+  Pose3d lastpose3d;
   
   
 
@@ -40,6 +41,7 @@ public class camera extends SubsystemBase {
     currentfilter = "AprilTag";
     machineCamera = new PhotonCamera("3468"); 
     machineCamera.setDriverMode(!didISucceed);
+    changeFilter(currentfilter);
 
     try {
       aLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
@@ -65,7 +67,6 @@ public class camera extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // Comment this out probably but could be useful. Essentially  just displays camera latency 
-    SmartDashboard.putNumber("Latency", getResult().getLatencyMillis());
   }
   public PhotonPipelineResult getResult(){
      PhotonPipelineResult results =  machineCamera.getLatestResult();
