@@ -29,7 +29,15 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static class Clawconstants {
+    public static final int OpenClaw = 0;
+    public static final int CloseClaw = 1;
+    public static final int lazersensor = 2;
 
+
+  }
+  
+  
   public static class CameraConstants{
     // keeps distance from the camera to the robot in meter. 
     //Metric forever

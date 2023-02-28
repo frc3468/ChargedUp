@@ -4,12 +4,19 @@
 
 package frc.robot;
 
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autos;
+import frc.robot.commands.CloseClaw;
+import frc.robot.commands.OpenClaw;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.BaseAuto;
 import frc.robot.commands.*;
@@ -64,7 +71,9 @@ public class RobotContainer {
   // Bumpers and Triggers
   // Left Bumper - auto-load
   private final JoystickButton autoLoad = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);
-  // Right bumper - Open/Close the claw
+  private final Claw m_Claw = new Claw();
+  private final JoystickButton openClaw = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);
+  private final JoystickButton closeClaw = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);  // Right bumper - Open/Close the claw
   private final JoystickButton clawMovement = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);
 
   /* Co-Driver Buttons - Dual Joysticks */
@@ -115,9 +124,29 @@ public class RobotContainer {
     outerLower.whileTrue(new OuterArmLower(m_OuterArm));
     innerRaise.whileTrue(new InnerArmRaise(m_InnerArm));
     innerLower.whileTrue(new InnerArmLower(m_InnerArm));
+  }
       
 
     
+    
+
+  /**
+   * Use this method to define your trigger->command mappings. Triggers can be created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * predicate, or via the named factories in {@link
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
+   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * joysticks}.
+   */
+  private void configureBindings() {
+
+    Trigger lasersense = new Trigger(m_Claw::getLazerSenser);
+    
+    lasersense.onFalse(new CloseClaw(m_Claw));
+
+    openClaw.onTrue(new OpenClaw(m_Claw));
+    closeClaw.onTrue(new CloseClaw(m_Claw));
     
   }
    /**
