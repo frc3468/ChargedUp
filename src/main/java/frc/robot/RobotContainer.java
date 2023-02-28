@@ -125,11 +125,6 @@ public class RobotContainer {
     innerRaise.whileTrue(new InnerArmRaise(m_InnerArm));
     innerLower.whileTrue(new InnerArmLower(m_InnerArm));
   }
-      
-
-    
-    
-
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
