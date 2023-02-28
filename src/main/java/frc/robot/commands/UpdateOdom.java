@@ -11,18 +11,21 @@ import org.photonvision.EstimatedRobotPose;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SwerveDrive;
-import frc.robot.subsystems.camera;
+import frc.robot.subsystems.Camera;
 
 public class UpdateOdom extends CommandBase {
-  camera uCamera;
+  Camera uCamera;
   SwerveDrive uSwerveDrive;
-  Boolean finished = false;
+  Boolean finished;
+  Pose3d lastpose;
   /** Creates a new UpdateOdom. */
-  public UpdateOdom(SwerveDrive mSwerveDrive, camera mCamera) {
+  public UpdateOdom(SwerveDrive mSwerveDrive, Camera mCamera) {
     uCamera = mCamera;
+    finished= false;
     uSwerveDrive = mSwerveDrive;
     addRequirements(uCamera);
     addRequirements(uSwerveDrive);
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -30,21 +33,26 @@ public class UpdateOdom extends CommandBase {
   @Override
   public void initialize() {
     // converts odometry position to pose 3d
-    Pose3d lastpose = new Pose3d(uSwerveDrive.getPose());
+    lastpose = new Pose3d(uSwerveDrive.getPose());
     //returns something, unsure if null
-    Optional<EstimatedRobotPose> newposestep1 = uCamera.poseestimate(lastpose);
-    if( newposestep1 != null){
-      EstimatedRobotPose newposestep2 = newposestep1.get();
-      Pose3d newposestep3 = newposestep2.estimatedPose;
-      uSwerveDrive.resetOdometry(newposestep3.toPose2d());
+
     }
-    finished = true;
     
-  }
+    
+  
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    Optional<EstimatedRobotPose> newposestep1 = uCamera.poseestimate(lastpose);
+    if( newposestep1.isPresent()){
+      System.out.println("There is a target");
+      EstimatedRobotPose newposestep2 = newposestep1.get();
+      Pose3d newposestep3 = newposestep2.estimatedPose;
+      uSwerveDrive.resetOdometry(newposestep3.toPose2d());
+    finished = true; 
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -53,6 +61,6 @@ public class UpdateOdom extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

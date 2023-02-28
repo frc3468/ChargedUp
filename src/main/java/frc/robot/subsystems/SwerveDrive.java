@@ -31,7 +31,7 @@ public class SwerveDrive extends SubsystemBase {
     gyro = new Pigeon2(0); // NavX connected over MXP
     // gyro.restoreFactoryDefaults(); //for Pigeon
 
-    zeroGyro();
+    zeroGyro(0);
 
     mSwerveMods = new SwerveModule[] {
         new SwerveModule(0, Constants.Swerve.FrontLeftSwerveMod.constants),
@@ -110,7 +110,7 @@ public class SwerveDrive extends SubsystemBase {
 
   }
 
-  public void zeroGyro() {
+  public void zeroGyro(double newrotation) {
     System.out.println("Y Button Pressed");
     System.out.println(gyro);
     gyro.setYaw(0);
@@ -170,5 +170,9 @@ public class SwerveDrive extends SubsystemBase {
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
+    SmartDashboard.putNumber("X", getPose().getX());
+    SmartDashboard.putNumber("y", getPose().getY());
+    SmartDashboard.putNumber("Rotation", getPose().getRotation().getRadians());
+    SmartDashboard.putNumber("gyroscope", gyro.getYaw());
   }
 }

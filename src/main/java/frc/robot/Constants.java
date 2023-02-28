@@ -112,7 +112,7 @@ public final class Constants {
  
   
     /* Swerve Profiling Values */
-    public static final double maxSpeed = 4.5; // 4.5 meters per second
+    public static final double maxSpeed = 1.35; // 4.5 meters per second
     public static final double maxAngularVelocity = 11.5;//11.5
     // var speeds = new chassisspeeds(3.0,-2.0, Math.pi);
 

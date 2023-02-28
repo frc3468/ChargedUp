@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class camera extends SubsystemBase {
+public class Camera extends SubsystemBase {
   /** Creates a new camera. */
   
   PhotonPoseEstimator  poseRefinery;
@@ -35,7 +35,7 @@ public class camera extends SubsystemBase {
   
   
 
-  public camera() {
+  public Camera() {
     layoutfailed = false;
     didISucceed = true; 
     currentfilter = "AprilTag";
@@ -152,14 +152,7 @@ public class camera extends SubsystemBase {
 
  
   public Optional<EstimatedRobotPose> poseestimate(Pose3d lastpose3d){
-
-    if(layoutfailed = false || gettargets() != null){
       poseRefinery.setReferencePose(lastpose3d);
       return poseRefinery.update();
-      
-    }
-    else{
-      return null;
-    }
   };
 }

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.BaseAuto;
+import frc.robot.autos.TestAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -45,9 +46,10 @@ public class RobotContainer {
 
    /* Subsystems */
    private final SwerveDrive s_Swerve = new SwerveDrive();
+   private final Camera m_Camera = new Camera();
   
    /* End Subsystems */
-
+   private final UpdateOdom m_UpdateOdom = new UpdateOdom(s_Swerve,m_Camera);
   /* Joystick and Controller assignments */
   /* Driver Buttons - Xbox Controller */
   /* Analog Sticks */
@@ -59,6 +61,9 @@ public class RobotContainer {
   private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kY.value);  // reset GyroPosition
   private final JoystickButton FieldDrive = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value); // Set to Field Centric
   private final JoystickButton robotCentric = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);   // Set to Robot Centric
+  // THIS IS FOR TESTING PURPOSES, I Swear to god if it gets pushed out as part of the controls, I will kill
+  private final JoystickButton resetodom = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
+
   /* Co-Driver Buttons - Dual Joysticks */
   private final int OuterArmAxis = Joystick.AxisType.kY.value;
   private final int InnerArmAxis = Joystick.AxisType.kY.value;
@@ -66,10 +71,11 @@ public class RobotContainer {
  
   /* Button Bindings - Actions taken upon button press or hold */
   private void configureButtonBindings() { 
-    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); //Y
+    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(0))); //Y
     getGyroReading.onTrue(new InstantCommand(() -> s_Swerve.GetGyroReading()));  //X
     robotCentric.onTrue(new InstantCommand(() -> s_Swerve.SetRobotCentric()));  //LEFT BUMPER
     FieldDrive.onTrue(new InstantCommand(() -> s_Swerve.SetFieldDrive()));  //RIGHT BUMPER
+    resetodom.onTrue(m_UpdateOdom);
     
   }
    /**
@@ -80,7 +86,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     // return new exampleAuto(s_Swerve);
-    return new BaseAuto(); // TODO place holder for now, replace once we have auto modes
+    return new TestAuto(s_Swerve, m_Camera); // TODO place holder for now, replace once we have auto modes
   }
 
 }
