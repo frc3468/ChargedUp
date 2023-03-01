@@ -21,9 +21,10 @@ public class TestAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new UpdateOdom(m_SwerveDrive, m_Camera).withTimeout(10),
-      new InstantCommand(() -> m_SwerveDrive.zeroGyro(m_SwerveDrive.getPose().getRotation().getRadians())),
-      new DriveToPoint(m_SwerveDrive, -0.04, 1.02)
+      // TODO: Perform the zeroGyro in automonousInit, handle UpdateOdom how you need to.
+      // new UpdateOdom(m_SwerveDrive, m_Camera).withTimeout(10),
+      // new InstantCommand(() -> m_SwerveDrive.zeroGyro(m_SwerveDrive.getPose().getRotation().getRadians())),
+      new DriveToPoint(m_SwerveDrive, 0.04, 1.02)
     );
   }
 }
