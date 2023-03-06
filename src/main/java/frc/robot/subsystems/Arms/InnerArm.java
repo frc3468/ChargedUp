@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.Arms;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxAnalogSensor;
@@ -16,17 +16,17 @@ import frc.robot.Constants.InnerArmConstants;
 
 public class InnerArm extends SubsystemBase {
 
-  private CANSparkMax m_outerMotor;
+  private CANSparkMax m_innerMotor;
   private SparkMaxPIDController m_outerPIDController;
   private SparkMaxAnalogSensor m_potentiometor;
   private double m_setPoint;
 
   /** Creates a new OuterArm. */
   public void InnerArm() {
-    m_outerMotor = new CANSparkMax(InnerArmConstants.innermotor, MotorType.kBrushless);
+    m_innerMotor = new CANSparkMax(InnerArmConstants.innermotor, MotorType.kBrushless);
      
-    m_outerPIDController = m_outerMotor.getPIDController();
-    m_potentiometor = m_outerMotor.getAnalog(SparkMaxAnalogSensor.Mode.kAbsolute);
+    m_outerPIDController = m_innerMotor.getPIDController();
+    m_potentiometor = m_innerMotor.getAnalog(SparkMaxAnalogSensor.Mode.kAbsolute);
 
     m_outerPIDController.setP(InnerArmConstants.innerP);
     m_outerPIDController.setI(InnerArmConstants.innerI);
@@ -38,7 +38,7 @@ public class InnerArm extends SubsystemBase {
 
   }
   public void raise(){
-    m_outerMotor.set(InnerArmConstants.raiseSpeed);
+    m_innerMotor.set(InnerArmConstants.raiseSpeed);
   }
   public void raiseETier() {
     m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceM, CANSparkMax.ControlType.kPosition);
@@ -53,17 +53,22 @@ public class InnerArm extends SubsystemBase {
     m_setPoint = InnerArmConstants.upPIDReferenceS;
   }
   public void lower(){
-    m_outerMotor.set(InnerArmConstants.lowerSpeed);
+    m_innerMotor.set(InnerArmConstants.lowerSpeed);
   }
   public void lowerPID() {
     m_outerPIDController.setReference(InnerArmConstants.downPIDReference, CANSparkMax.ControlType.kPosition);
     m_setPoint = InnerArmConstants.downPIDReference; 
   }
   public void stop(){
-    m_outerMotor.set(InnerArmConstants.stopSpeed);
+    m_innerMotor.set(InnerArmConstants.stopSpeed);
   }
   public boolean isAtSetPoint() {
     return (Math.abs(m_setPoint - m_potentiometor.getPosition()) <= InnerArmConstants.innerPIDTolorence);
+  }
+
+  public void raiseWithInput(double speed) {
+    System.out.println("Inner arm raised at speed: " + speed);
+    m_innerMotor.set(speed);
   }
 
   @Override

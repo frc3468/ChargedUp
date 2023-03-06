@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.Arms;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxAnalogSensor;
@@ -64,6 +64,11 @@ public class OuterArm extends SubsystemBase {
   }
   public boolean isAtSetPoint() {
     return (Math.abs(m_setPoint - m_potentiometor.getPosition()) <= OuterArmConstants.outerPIDTolorence);
+  }
+
+  public void raiseWithInput(double speed) {
+    System.out.println("Outer arm raised at speed: " + speed);
+    m_outerMotor.set(speed);
   }
 
   @Override

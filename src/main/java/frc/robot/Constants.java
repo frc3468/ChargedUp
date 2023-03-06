@@ -33,6 +33,8 @@ public final class Constants {
     public static final int OpenClaw = 0;
     public static final int CloseClaw = 1;
     public static final int lazersensor = 2;
+    public static final int overideClawOpen = 1;
+    public static final int overideClawClose = 1;
 
 
   }

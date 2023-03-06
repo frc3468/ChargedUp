@@ -10,6 +10,8 @@ import frc.robot.commands.CloseClaw;
 import frc.robot.commands.OpenClaw;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Arms.InnerArm;
+import frc.robot.subsystems.Arms.OuterArm;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,6 +40,9 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final XboxController primaryDriver = new XboxController(0);
+  private final Joystick overRideLeft = new Joystick(1);
+  private final Joystick overRideRight = new Joystick(2);
+
 
   /* Joystick and Controller assignments */
   /* Drive Controls */
@@ -62,6 +67,8 @@ public class RobotContainer {
   private final JoystickButton outerLower = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
   private final JoystickButton innerRaise = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
   private final JoystickButton innerLower = new JoystickButton(primaryDriver, XboxController.Button.kB.value);
+  private final JoystickButton expandClaw = new JoystickButton(overRideLeft, Constants.Clawconstants.overideClawOpen);
+  private final JoystickButton condenseClaw = new JoystickButton(overRideRight, Constants.Clawconstants.overideClawClose);
 
   // BACK/SELECT - Zero Gyro reading
   private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kBack.value);
@@ -74,7 +81,7 @@ public class RobotContainer {
   private final Claw m_Claw = new Claw();
   private final JoystickButton openClaw = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);
   private final JoystickButton closeClaw = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);  // Right bumper - Open/Close the claw
-  private final JoystickButton clawMovement = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);
+  
 
   /* Co-Driver Buttons - Dual Joysticks */
   private final double OuterArmAxis = Joystick.AxisType.kY.value;
@@ -90,13 +97,13 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-  //  s_Swerve.setDefaultCommand(
-  //      new TeleopSwerve(
-  //        s_Swerve,
-  //          () -> -primaryDriver.getRawAxis(translationAxis),
-  //          () -> -primaryDriver.getRawAxis(strafeAxis),
-  //          () -> -primaryDriver.getRawAxis(rotationAxis)
-  //          () -> centricToggle.getAsBoolean()));
+   s_Swerve.setDefaultCommand(
+       new TeleopSwerve(
+         s_Swerve,
+           () -> -primaryDriver.getRawAxis(translationAxis),
+           () -> -primaryDriver.getRawAxis(strafeAxis),
+           () -> -primaryDriver.getRawAxis(rotationAxis),
+           () -> zeroGyro.getAsBoolean()));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -107,9 +114,6 @@ public class RobotContainer {
   /* Button Bindings - Actions taken upon button press or hold */
   private void configureButtonBindings() { 
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); //Y
-   // centricToggle.onTrue(new InstantCommand(() -> s_Swerve.GetGyroReading()));  //X
-    autoLoad.onTrue(new InstantCommand(() -> s_Swerve.SetRobotCentric()));  //LEFT BUMPER
-    clawMovement.onTrue(new InstantCommand(() -> s_Swerve.SetFieldDrive()));  //RIGHT BUMPER
 
   //  eTier.onTrue(new ParallelCommandGroup(
   //    new OuterArmRaiseE(m_OuterArm),
@@ -140,8 +144,12 @@ public class RobotContainer {
     
     lasersense.onFalse(new CloseClaw(m_Claw));
 
+    //normal controller
     openClaw.onTrue(new OpenClaw(m_Claw));
     closeClaw.onTrue(new CloseClaw(m_Claw));
+    //override controller
+    expandClaw.onTrue(new OpenClaw(m_Claw));
+    condenseClaw.onTrue(new CloseClaw(m_Claw));
     
   }
    /**

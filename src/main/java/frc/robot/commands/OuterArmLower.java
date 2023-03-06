@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.OuterArm;
+import frc.robot.subsystems.Arms.OuterArm;
 
 public class OuterArmLower extends CommandBase {
   private OuterArm m_subsystem;
