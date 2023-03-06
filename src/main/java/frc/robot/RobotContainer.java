@@ -8,8 +8,10 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.CloseClaw;
 import frc.robot.commands.OpenClaw;
+import frc.robot.commands.arm.TeleopArm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Arms.ArmOverride;
 import frc.robot.subsystems.Arms.InnerArm;
 import frc.robot.subsystems.Arms.OuterArm;
 import edu.wpi.first.wpilibj.Joystick;
@@ -84,13 +86,14 @@ public class RobotContainer {
   
 
   /* Co-Driver Buttons - Dual Joysticks */
-  private final double OuterArmAxis = Joystick.AxisType.kY.value;
-  private final double InnerArmAxis = Joystick.AxisType.kY.value;
+  private final double outerArmAxis = Joystick.AxisType.kY.value;
+  private final double innerArmAxis = Joystick.AxisType.kY.value;
 
   /* End of Joystick and Controller assignments */
 
   /* Subsystems */
   private final SwerveDrive s_Swerve = new SwerveDrive();
+  private final ArmOverride s_ArmOverride = new ArmOverride();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -104,6 +107,10 @@ public class RobotContainer {
            () -> -primaryDriver.getRawAxis(strafeAxis),
            () -> -primaryDriver.getRawAxis(rotationAxis),
            () -> zeroGyro.getAsBoolean()));
+
+  s_ArmOverride.setDefaultCommand(
+    new TeleopArm(m_InnerArm, m_OuterArm, outerArmAxis, innerArmAxis)
+  );
 
     // Configure the button bindings
     configureButtonBindings();
@@ -150,6 +157,8 @@ public class RobotContainer {
     //override controller
     expandClaw.onTrue(new OpenClaw(m_Claw));
     condenseClaw.onTrue(new CloseClaw(m_Claw));
+
+
     
   }
    /**
