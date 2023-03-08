@@ -7,22 +7,27 @@ package frc.robot.commands.arm;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.Arms.InnerArm;
 import frc.robot.subsystems.Arms.OuterArm;
 
 public class TeleopArm extends CommandBase {
 
-  private double m_InnerOut, m_UpperOut;
+  private DoubleSupplier m_InnerOut, m_UpperOut;
 
   private InnerArm m_innerArm;
   private OuterArm m_outerArm;
 
   /** Creates a new TeleopArm. */
-  public TeleopArm(InnerArm innerArm, OuterArm outerArm, double upperOut, double innerOut) {
+  public TeleopArm(InnerArm innerArm, OuterArm outerArm, DoubleSupplier upperOut, DoubleSupplier innerOut) {
     m_innerArm = innerArm;
     m_outerArm = outerArm;
     m_InnerOut = innerOut;
     m_UpperOut = upperOut;
+
+    SubsystemBase[] armArray = {m_innerArm, m_outerArm};
+
+    addRequirements(armArray);
   }
 
   // Called when the command is initially scheduled.
@@ -32,9 +37,9 @@ public class TeleopArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(((Math.abs(m_InnerOut)>0.2) || (Math.abs(m_UpperOut)>0.2))){
-      m_innerArm.raiseWithInput(m_UpperOut*-0.3);
-      m_outerArm.raiseWithInput(m_InnerOut*-0.3);
+    if(((Math.abs(m_InnerOut.getAsDouble())>0.2) || (Math.abs(m_UpperOut.getAsDouble())>0.2))){
+      m_innerArm.raiseWithInput((m_UpperOut.getAsDouble())*-0.3);
+      m_outerArm.raiseWithInput((m_InnerOut.getAsDouble())*-0.3);
       // "Borrowed" from another team, not sure of purpose
       // m_arm.reset();
     }

@@ -10,7 +10,6 @@ import frc.robot.commands.CloseClaw;
 import frc.robot.commands.OpenClaw;
 import frc.robot.commands.arm.TeleopArm;
 import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Arms.ArmOverride;
 import frc.robot.subsystems.Arms.InnerArm;
 import frc.robot.subsystems.Arms.OuterArm;
@@ -86,8 +85,8 @@ public class RobotContainer {
   
 
   /* Co-Driver Buttons - Dual Joysticks */
-  private final double outerArmAxis = Joystick.AxisType.kY.value;
-  private final double innerArmAxis = Joystick.AxisType.kY.value;
+  private final int outerArmAxis = Joystick.AxisType.kY.value;
+  private final int innerArmAxis = Joystick.AxisType.kY.value;
 
   /* End of Joystick and Controller assignments */
 
@@ -109,11 +108,14 @@ public class RobotContainer {
            () -> zeroGyro.getAsBoolean()));
 
   s_ArmOverride.setDefaultCommand(
-    new TeleopArm(m_InnerArm, m_OuterArm, outerArmAxis, innerArmAxis)
+    new TeleopArm(m_InnerArm, m_OuterArm, 
+    () -> overRideLeft.getRawAxis(outerArmAxis), 
+    () -> overRideRight.getRawAxis(innerArmAxis))
   );
 
     // Configure the button bindings
     configureButtonBindings();
+    configureBindings();
   }
   
    /* End Subsystems */
