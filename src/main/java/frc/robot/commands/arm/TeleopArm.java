@@ -19,12 +19,11 @@ public class TeleopArm extends CommandBase {
   private OuterArm m_outerArm;
 
   /** Creates a new TeleopArm. */
-  public TeleopArm(InnerArm innerArm, OuterArm outerArm, DoubleSupplier upperOut, DoubleSupplier innerOut) {
+  public TeleopArm(InnerArm innerArm, DoubleSupplier upperOut, DoubleSupplier innerOut) {
     m_InnerOut = innerOut;
     m_UpperOut = upperOut;
 
     this.m_innerArm = innerArm;
-    this.m_outerArm = outerArm;
 
     SubsystemBase[] armArray = {m_innerArm, m_outerArm};
 

@@ -107,11 +107,11 @@ public class RobotContainer {
            () -> -primaryDriver.getRawAxis(rotationAxis),
            () -> zeroGyro.getAsBoolean()));
 
-  m_InnerArm.setDefaultCommand(
-    new TeleopArm(m_InnerArm, m_OuterArm, 
-    () -> overRideLeft.getRawAxis(outerArmAxis), 
-    () -> overRideRight.getRawAxis(innerArmAxis))
-  );
+  // m_InnerArm.setDefaultCommand(
+  //   new TeleopArm(m_InnerArm, 
+  //   () -> overRideLeft.getRawAxis(outerArmAxis), 
+  //   () -> overRideRight.getRawAxis(innerArmAxis))
+  // );
 
     // Configure the button bindings
     configureButtonBindings();
