@@ -149,9 +149,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-    Trigger lasersense = new Trigger(m_Claw::getLazerSenser);
+    //Trigger lasersense = new Trigger(m_Claw::getLazerSenser);
     
-    lasersense.onFalse(new CloseClaw(m_Claw));
+    //lasersense.onFalse(new CloseClaw(m_Claw));
 
     //normal controller
     openClaw.onTrue(new OpenClaw(m_Claw));

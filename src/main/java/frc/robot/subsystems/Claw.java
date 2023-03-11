@@ -17,11 +17,12 @@ import frc.robot.Constants.Clawconstants;
 
 public class Claw extends SubsystemBase {
   private DigitalInput lazerSensor;
-  private final Compressor comp = new Compressor(PneumaticsModuleType.REVPH);
-  private final DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 1);
+  private final Compressor comp = new Compressor(Clawconstants.ModuleID, PneumaticsModuleType.REVPH);
+  private final DoubleSolenoid solenoid = new DoubleSolenoid(Clawconstants.ModuleID, PneumaticsModuleType.REVPH, 0, 1);
   
   /** Creates a new Claw. */
   public Claw() {
+    comp.enableDigital();
     lazerSensor = new DigitalInput(Clawconstants.lazersensor);
 
   }
@@ -36,7 +37,7 @@ public class Claw extends SubsystemBase {
 }
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("Intake Sensor", !lazerSensor.get());
+   // SmartDashboard.putBoolean("Intake Sensor", !lazerSensor.get());
     // This method will be called once per scheduler run
   }
 }

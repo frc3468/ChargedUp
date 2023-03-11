@@ -30,6 +30,7 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   public static class Clawconstants {
+    public static final int ModuleID = 31;
     public static final int OpenClaw = 0;
     public static final int CloseClaw = 1;
     public static final int lazersensor = 2;
