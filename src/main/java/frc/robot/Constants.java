@@ -192,8 +192,8 @@ public final class Constants {
 }
 public static final class OuterArmConstants {
     public static final int outermotor = 13;
-    public static final int raiseSpeed = 1;
-    public static final int lowerSpeed = -1;
+    public static final double raiseSpeed = 0.3;
+    public static final double lowerSpeed = -0.3;
     public static final int stopSpeed = 0;
     public static final double outerP = 10.0;
     public static final double outerI = 0.0;

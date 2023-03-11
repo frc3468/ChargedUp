@@ -22,7 +22,7 @@ public class InnerArm extends SubsystemBase {
   private double m_setPoint;
 
   /** Creates a new OuterArm. */
-  public void InnerArm() {
+  public InnerArm() {
     m_innerMotor = new CANSparkMax(InnerArmConstants.innermotor, MotorType.kBrushless);
      
     m_outerPIDController = m_innerMotor.getPIDController();

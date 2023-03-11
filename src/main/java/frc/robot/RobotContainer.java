@@ -107,7 +107,7 @@ public class RobotContainer {
            () -> -primaryDriver.getRawAxis(rotationAxis),
            () -> zeroGyro.getAsBoolean()));
 
-  s_ArmOverride.setDefaultCommand(
+  m_InnerArm.setDefaultCommand(
     new TeleopArm(m_InnerArm, m_OuterArm, 
     () -> overRideLeft.getRawAxis(outerArmAxis), 
     () -> overRideRight.getRawAxis(innerArmAxis))
