@@ -5,9 +5,14 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.PneumaticsConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ForeArm;
+import frc.robot.subsystems.RearArm;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -20,6 +25,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final Compressor m_compressor = 
+      new Compressor(PneumaticsConstants.kModuleID,PneumaticsConstants.kModuleType);
+  
+  private final RearArm m_rearArm = new RearArm();
+  private final ForeArm m_foreArm = new ForeArm();
+  private final Claw m_claw = new Claw();
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -28,6 +40,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    m_compressor.enableDigital();
+
     // Configure the trigger bindings
     configureBindings();
   }
