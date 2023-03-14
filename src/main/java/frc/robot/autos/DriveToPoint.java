@@ -26,8 +26,8 @@ public class DriveToPoint extends SequentialCommandGroup {
     double speed = 0.2;
     System.out.print("got to movement");
 
-
-
+    // TODO: Created AutoSwerve.java and removed deadband; swapped it out for this here. 
+    // TODO: I got auto-rotation to work, I leave other movements to you, happy coding :D
     addCommands(
       new TeleopSwerve(m_Drive, () -> transformx, () -> transformy, () -> 0.0, () -> false).until(() -> Math.round(m_Drive.getPose().getX()*100)/100 == posx ||  Math.round(m_Drive.getPose().getY()*100)/100 == posy)
     );
