@@ -4,6 +4,9 @@
 
 package frc.robot.autos;
 
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.SwerveDrive;
@@ -26,7 +29,6 @@ public class DriveToPoint extends SequentialCommandGroup {
 
 
     addCommands(
-      new TeleopSwerve(m_Drive, () -> transformx*0.2, () -> transformy*0.2, () -> 0 , () -> true ).until(() -> Math.round(m_Drive.getPose().getX()*100)/100 == posx ||  Math.round(m_Drive.getPose().getY()*100)/100 == posy)
+      new TeleopSwerve(m_Drive, () -> transformx, () -> transformy, () -> 0.0, () -> false).until(() -> Math.round(m_Drive.getPose().getX()*100)/100 == posx ||  Math.round(m_Drive.getPose().getY()*100)/100 == posy)
     );
-  }
-}
+}}

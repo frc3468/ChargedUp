@@ -6,6 +6,7 @@ package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.NumDrive;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.UpdateOdom;
 import frc.robot.subsystems.Camera;
@@ -20,10 +21,13 @@ public class TestAuto extends SequentialCommandGroup {
   public TestAuto(SwerveDrive m_SwerveDrive, Camera m_Camera) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    System.out.println("Begin Add Commands");
     addCommands(
       new UpdateOdom(m_SwerveDrive, m_Camera).withTimeout(10),
       new InstantCommand(() -> m_SwerveDrive.zeroGyro(m_SwerveDrive.getPose().getRotation().getRadians())),
-      new DriveToPoint(m_SwerveDrive, -0.04, 1.02)
-    );
+      new NumDrive(m_SwerveDrive).withTimeout(0.6));
+    System.out.println("End Add Commands");
+
+    
   }
 }

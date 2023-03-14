@@ -54,8 +54,11 @@ public class RobotContainer {
   /* Driver Buttons - Xbox Controller */
   /* Analog Sticks */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
-  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+   private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  //private final int strafeAxis = 0;
+
   private final int rotationAxis = XboxController.Axis.kRightX.value;
+
   // button assignments
   private final JoystickButton getGyroReading = new JoystickButton(primaryDriver, XboxController.Button.kX.value); // get GyroPosition
   private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kY.value);  // reset GyroPosition

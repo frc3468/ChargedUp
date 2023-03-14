@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import org.photonvision.EstimatedRobotPose;
 
+import com.ctre.phoenix.sensors.Pigeon2;
+
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SwerveDrive;
@@ -50,7 +52,12 @@ public class UpdateOdom extends CommandBase {
       EstimatedRobotPose newposestep2 = newposestep1.get();
       Pose3d newposestep3 = newposestep2.estimatedPose;
       uSwerveDrive.resetOdometry(newposestep3.toPose2d());
+      System.out.println("UpdateOdom GetPose");
+      System.out.println(uSwerveDrive.getPose());
+      System.out.println("UpdateOdom GetYaw");
+      System.out.println(uSwerveDrive.getYaw());
     finished = true; 
+      System.out.println("UpdateOdom Complete");
     }
   }
 

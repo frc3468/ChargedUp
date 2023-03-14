@@ -23,8 +23,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static CTREConfigs ctreConfigs;
   private RobotContainer m_robotContainer;
-  private Camera m_camera;
-  public static Timer J_timer = new Timer();
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -64,8 +63,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-J_timer.reset();
-J_timer.start();
+
   
 
     // schedule the autonomous command (example)
