@@ -65,6 +65,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    m_driverController.leftBumper().onTrue(m_claw.openCommand());
+    m_driverController.rightBumper().onTrue(m_claw.closeCommand());
+
     m_driverController.x().onTrue(new SequentialCommandGroup(
       m_rearArm.setPositionCommand(() -> RearArmConstants.kStowSetpoint),
       m_foreArm.setPositionCommand(() -> ForeArmConstants.kStowSetpoint)
