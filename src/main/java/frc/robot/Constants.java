@@ -54,6 +54,7 @@ public final class Constants {
     public static final double kPID_IZone = 0.0;
     public static final double kPID_DFilter = 0.0;
 
+    public static final double kStopSpeed = 0.0;
     public static final double kManualForwardSpeed = 1.0;
     public static final double kManualReverseSpeed = -1.0;
     public static final double kManualScaleFactor = 1.0;
@@ -89,6 +90,7 @@ public final class Constants {
     public static final double kPID_IZone = 0.0;
     public static final double kPID_DFilter = 0.0;
 
+    public static final double kStopSpeed = 0.0;
     public static final double kManualForwardSpeed = 0.3;
     public static final double kManualReverseSpeed = -0.3;
     public static final double kManualScaleFactor = 0.5;
