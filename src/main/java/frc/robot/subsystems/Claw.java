@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PneumaticsConstants;
 import frc.robot.Constants.ClawConstants;
@@ -29,5 +30,13 @@ public class Claw extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public CommandBase openCommand() {
+    return runOnce(() -> open());
+  }
+
+  public CommandBase closeCommand() {
+    return runOnce(() -> close());
   }
 }
