@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxAnalogSensor;
 import com.revrobotics.SparkMaxPIDController;
@@ -68,11 +70,11 @@ public class ForeArm extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public CommandBase setSpeedCommand(double speed) {
-    return runEnd(() -> setSpeed(speed), () -> setSpeed(ForeArmConstants.kStopSpeed));
+  public CommandBase setSpeedCommand(DoubleSupplier speed) {
+    return runEnd(() -> setSpeed(speed.getAsDouble()), () -> setSpeed(ForeArmConstants.kStopSpeed));
   }
 
-  public CommandBase setPositionCommand(double setpoint) {
-    return run(() -> setSetpoint(setpoint)).until(() -> isAtSetpoint());
+  public CommandBase setPositionCommand(DoubleSupplier setpoint) {
+    return run(() -> setSetpoint(setpoint.getAsDouble())).until(() -> isAtSetpoint());
   }
 }
