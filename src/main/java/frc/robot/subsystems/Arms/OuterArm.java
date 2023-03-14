@@ -9,6 +9,7 @@ import com.revrobotics.SparkMaxAnalogSensor;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OuterArmConstants;
 
@@ -24,9 +25,10 @@ public class OuterArm extends SubsystemBase {
   /** Creates a new OuterArm. */
   public OuterArm() {
     m_outerMotor = new CANSparkMax(OuterArmConstants.outermotor, MotorType.kBrushless);
-     
+    m_outerMotor.setInverted(false);
     m_outerPIDController = m_outerMotor.getPIDController();
     m_potentiometor = m_outerMotor.getAnalog(SparkMaxAnalogSensor.Mode.kAbsolute);
+    m_potentiometor.setInverted(OuterArmConstants.kAnalogSensorInverted);
 
     m_outerPIDController.setP(OuterArmConstants.outerP);
     m_outerPIDController.setI(OuterArmConstants.outerI);
@@ -52,6 +54,10 @@ public class OuterArm extends SubsystemBase {
     m_outerPIDController.setReference(OuterArmConstants.upPIDReferenceS, CANSparkMax.ControlType.kPosition);
     m_setPoint = OuterArmConstants.upPIDReferenceS;
   }
+  public void raiseTravel() {
+    m_outerPIDController.setReference(OuterArmConstants.upPIDReferenceT, CANSparkMax.ControlType.kPosition);
+    m_setPoint = OuterArmConstants.upPIDReferenceT;
+  }
   public void lower(){
     m_outerMotor.set(OuterArmConstants.lowerSpeed);
   }
@@ -65,6 +71,10 @@ public class OuterArm extends SubsystemBase {
   public boolean isAtSetPoint() {
     return (Math.abs(m_setPoint - m_potentiometor.getPosition()) <= OuterArmConstants.outerPIDTolorence);
   }
+  public boolean isAtStowed() {
+    return (Math.abs(OuterArmConstants.downPIDReference - m_potentiometor.getPosition()) <= OuterArmConstants.outerPIDTolorence);
+  }
+  
 
   public void raiseWithInput(double speed) {
     System.out.println("Outer arm raised at speed: " + speed);
@@ -73,6 +83,7 @@ public class OuterArm extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("outer arm", m_potentiometor.getPosition());
     // This method will be called once per scheduler run
   }
 }

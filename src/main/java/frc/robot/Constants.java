@@ -61,12 +61,12 @@ public final class Constants {
      * The left-to-right distance between the drivetrain wheels
      * Should be measured from center to center.
      */
-    public static final double trackWidth = 0.5334; //Units.inchesToMeters(21.73);
+    public static final double trackWidth = 0.6254; //Units.inchesToMeters(24.625);
     /** 
      * The front-to-back distance between the drivetrain wheels.
      * Should be measured from center to center.
      */
-    public static final double wheelBase = 0.5334;
+    public static final double wheelBase = 0.6096; //units.inchesToMeters(24.625)
 
     public static final double wheelDiameter = Units.inchesToMeters(4.0);
     public static final double wheelCircumference = wheelDiameter * Math.PI;
@@ -193,6 +193,8 @@ public final class Constants {
 }
 public static final class OuterArmConstants {
     public static final int outermotor = 13;
+    public static final int overrideDown = 2;
+    public static final int overrideUp = 3;
     public static final double raiseSpeed = 0.3;
     public static final double lowerSpeed = -0.3;
     public static final double stopSpeed = 0.0;
@@ -206,10 +208,12 @@ public static final class OuterArmConstants {
     public static final double upPIDReferenceE = 2.6;
     public static final double upPIDReferenceM = 2.6;
     public static final double upPIDReferenceS = 2.6;
-    public static final double downPIDReference = 0.165;
+    public static final double downPIDReference = 1.80;
+    public static final double upPIDReferenceT = 1.70;
     public static final double startingConfig = 2.5;
-    public static final double outerPIDTolorence = 0.001;
-  
+    public static final double outerPIDTolorence = 0.02;
+    public static final boolean kAnalogSensorInverted = true;
+  // outer arm
   /*
    *driveMotor.restoreFactoryDefaults();
     CANSparkMaxUtil.setCANSparkMaxBusUsage(driveMotor, Usage.kAll);
@@ -232,6 +236,8 @@ public static final class OuterArmConstants {
 
 public static final class InnerArmConstants {
   public static final int innermotor = 14;
+  public static final int overrideDown = 2;
+  public static final int overrideUp = 3;
   public static final int raiseSpeed = 1;
   public static final int lowerSpeed = -1;
   public static final int stopSpeed = 0;
@@ -245,9 +251,11 @@ public static final class InnerArmConstants {
   public static final double upPIDReferenceE = 2.6;
   public static final double upPIDReferenceM = 2.6;
   public static final double upPIDReferenceS = 2.6;
-  public static final double downPIDReference = 0.165;
+  public static final double downPIDReference = 1.93;  
+  public static final double upPIDReferenceT = 1.96;
   public static final double startingConfig = 2.5;
-  public static final double innerPIDTolorence = 0.001;
-
+  public static final double innerPIDTolorence = 0.03;
+  public static final boolean kAnalogSensorInverted = true;
+//inner arm
 }
 }

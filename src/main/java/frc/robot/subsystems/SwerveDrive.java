@@ -111,7 +111,7 @@ public class SwerveDrive extends SubsystemBase {
   }
 
   public void zeroGyro() {
-    System.out.println("Y Button Pressed");
+    System.out.println("Back Button Pressed");
     System.out.println(gyro);
     gyro.setYaw(0);
   }
