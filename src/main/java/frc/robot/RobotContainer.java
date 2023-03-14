@@ -16,6 +16,7 @@ import frc.robot.subsystems.ForeArm;
 import frc.robot.subsystems.RearArm;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -64,10 +65,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_driverController.x().onTrue(
-      m_rearArm.setPositionCommand(() -> RearArmConstants.kStowSetpoint)
-      .andThen(m_foreArm.setPositionCommand(() -> ForeArmConstants.kStowSetpoint))
-    );
+    m_driverController.x().onTrue(new SequentialCommandGroup(
+      m_rearArm.setPositionCommand(() -> RearArmConstants.kStowSetpoint),
+      m_foreArm.setPositionCommand(() -> ForeArmConstants.kStowSetpoint)
+    ));
   }
 
   /**
