@@ -4,8 +4,10 @@
 
 package frc.robot;
 
+import frc.robot.Constants.ForeArmConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PneumaticsConstants;
+import frc.robot.Constants.RearArmConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Claw;
@@ -62,13 +64,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_driverController.x().onTrue(
+      m_rearArm.setPositionCommand(() -> RearArmConstants.kStowSetpoint)
+      .andThen(m_foreArm.setPositionCommand(() -> ForeArmConstants.kStowSetpoint))
+    );
   }
 
   /**
