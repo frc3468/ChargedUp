@@ -26,10 +26,12 @@ public class SwerveDrive extends SubsystemBase {
   private SwerveDriveKinematics swerveDriveKinematics;
   private Field2d field;
 
-  private boolean turtleToggle = false;
-  private double speed = Constants.Swerve.maxSpeed;
+  private boolean turtleToggle;
+  private double speed;
 
   public SwerveDrive() {
+    turtleToggle = false;
+    speed = Constants.Swerve.maxSpeed;
 
     gyro = new Pigeon2(0); // NavX connected over MXP
     // gyro.restoreFactoryDefaults(); //for Pigeon
