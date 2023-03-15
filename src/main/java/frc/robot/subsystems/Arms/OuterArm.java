@@ -25,7 +25,7 @@ public class OuterArm extends SubsystemBase {
   /** Creates a new OuterArm. */
   public OuterArm() {
     m_outerMotor = new CANSparkMax(OuterArmConstants.outermotor, MotorType.kBrushless);
-    m_outerMotor.setInverted(false);
+    m_outerMotor.setInverted(true);
     m_outerPIDController = m_outerMotor.getPIDController();
     m_potentiometor = m_outerMotor.getAnalog(SparkMaxAnalogSensor.Mode.kAbsolute);
     m_potentiometor.setInverted(OuterArmConstants.kAnalogSensorInverted);

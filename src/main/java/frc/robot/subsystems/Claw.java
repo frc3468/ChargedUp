@@ -35,6 +35,9 @@ public class Claw extends SubsystemBase {
  public boolean getLazerSenser() {
   return lazerSensor.get();
 }
+public boolean isClosed() {
+  return solenoid.get() == Value.kReverse;
+}
   @Override
   public void periodic() {
    // SmartDashboard.putBoolean("Intake Sensor", !lazerSensor.get());

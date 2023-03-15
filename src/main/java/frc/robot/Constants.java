@@ -126,6 +126,8 @@ public final class Constants {
     public static final double maxSpeed = 4.5; // 4.5 meters per second
     public static final double maxAngularVelocity = 11.5;//11.5
     // var speeds = new chassisspeeds(3.0,-2.0, Math.pi);
+    //TODO turtle mode
+    //public static final double turtleSpeed = 1.35; // 1.35 meters per second
 
     /*  Controller offset.  Alters the max output of joysticks to throttle X,Y,Turn */
     // TODO not called yet
@@ -206,10 +208,10 @@ public static final class OuterArmConstants {
     public static final double outerMin = -1.0;
     public static final double outerMax = 1.0;
     public static final double upPIDReferenceE = 2.6;
-    public static final double upPIDReferenceM = 2.6;
+    public static final double upPIDReferenceM = 1.74;
     public static final double upPIDReferenceS = 2.6;
-    public static final double downPIDReference = 1.80;
-    public static final double upPIDReferenceT = 1.70;
+    public static final double downPIDReference = 1.01;
+    public static final double upPIDReferenceT = 1.1;
     public static final double startingConfig = 2.5;
     public static final double outerPIDTolorence = 0.02;
     public static final boolean kAnalogSensorInverted = true;
@@ -249,13 +251,13 @@ public static final class InnerArmConstants {
   public static final double innerMin = -1.0;
   public static final double innerMax = 1.0;
   public static final double upPIDReferenceE = 2.6;
-  public static final double upPIDReferenceM = 2.6;
+  public static final double upPIDReferenceM = 2.09;
   public static final double upPIDReferenceS = 2.6;
-  public static final double downPIDReference = 1.93;  
-  public static final double upPIDReferenceT = 1.96;
+  public static final double downPIDReference = 2.07;  
+  public static final double upPIDReferenceT = 2.07;
   public static final double startingConfig = 2.5;
   public static final double innerPIDTolorence = 0.03;
-  public static final boolean kAnalogSensorInverted = true;
+  public static final boolean kAnalogSensorInverted = false;
 //inner arm
 }
 }

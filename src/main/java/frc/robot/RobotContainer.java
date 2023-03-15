@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -69,6 +70,10 @@ public class RobotContainer {
   private final JoystickButton expandClaw = new JoystickButton(overRideLeft, Constants.Clawconstants.overideClawOpen);
   private final JoystickButton condenseClaw = new JoystickButton(overRideRight, Constants.Clawconstants.overideClawClose);
   
+ //TODO turtle mode 
+ // X - toggle between robot- and field-centric - true is robot-centric
+ //private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+
 
   // BACK/SELECT - Zero Gyro reading
   private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kBack.value);
@@ -90,7 +95,8 @@ public class RobotContainer {
 
   //triggers
   Trigger innerStowedCheck = new Trigger(() -> m_InnerArm.isAtStowed());
-  Trigger outerStowedCheck = new Trigger(() -> m_OuterArm.isAtSetPoint());
+  Trigger outerStowedCheck = new Trigger(() -> m_OuterArm.isAtStowed());
+  Trigger closeCheck = new Trigger(() -> m_Claw.isClosed());
 
   /* Subsystems */
   private final SwerveDrive s_Swerve = new SwerveDrive();
@@ -125,9 +131,15 @@ public class RobotContainer {
   /* Button Bindings - Actions taken upon button press or hold */
   private void configureButtonBindings() { 
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); //Y
+    //TODO turtle
+    //turtleMode.onTrue(new InstantCommand(() -> s_Swerve.turtleMode()));  // X
 
-
-    home.onTrue(new SequentialCommandGroup(
+    home.and(closeCheck).onTrue(new SequentialCommandGroup(
+      new InnerArmTravel(m_InnerArm),
+      new WaitCommand(1),
+      new OuterArmTravel(m_OuterArm)
+     ));
+    home.and(closeCheck.negate()).onTrue(new SequentialCommandGroup(
       new InnerArmStowed(m_InnerArm),
       new OuterArmStowed(m_OuterArm)
     ));
@@ -165,10 +177,9 @@ public class RobotContainer {
 
     //normal controller
     openClaw.onTrue(new OpenClaw(m_Claw));
-    closeClaw.and(innerStowedCheck).and(outerStowedCheck).whileTrue(new SequentialCommandGroup(
+    closeClaw.and(innerStowedCheck).and(outerStowedCheck).onTrue(new SequentialCommandGroup(
       new CloseClaw(m_Claw),
-      new InnerArmStowed(m_InnerArm),
-      new OuterArmStowed(m_OuterArm)
+      new OuterArmTravel(m_OuterArm)
     ));
     closeClaw.and(innerStowedCheck.negate().or(outerStowedCheck.negate())).whileTrue(
       new CloseClaw(m_Claw)

@@ -36,7 +36,7 @@ public class camera extends SubsystemBase {
 
   public camera() {
     layoutfailed = false;
-    didISucceed = true; 
+    didISucceed = false; 
     currentfilter = "AprilTag";
     machineCamera = new PhotonCamera("3468"); 
     machineCamera.setDriverMode(!didISucceed);
