@@ -70,7 +70,7 @@ public class RobotContainer {
   
  //TODO turtle mode 
  // X - toggle between robot- and field-centric - true is robot-centric
- //private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+ private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
 
 
   // BACK/SELECT - Zero Gyro reading
@@ -130,7 +130,7 @@ public class RobotContainer {
   private void configureButtonBindings() { 
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); //Y
     //TODO turtle
-    //turtleMode.onTrue(new InstantCommand(() -> s_Swerve.turtleMode()));  // X
+    turtleMode.onTrue(new InstantCommand(() -> s_Swerve.turtleMode()));  // X
 
     home.and(closeCheck).onTrue(new SequentialCommandGroup(
       new InnerArmTravel(m_InnerArm),
