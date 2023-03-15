@@ -60,7 +60,7 @@ public final class Constants {
     public static final double kManualScaleFactor = 1.0;
 
     public static final double kStowSetpoint = 0.0;
-    public static final double kMoveSetpoint = 0.0;
+    public static final double kTravelSetpoint = 0.0;
     public static final double kLowSetpoint = 0.0;
     public static final double kMidSetpoint = 0.0;
     public static final double kHighSetpoint = 0.0;
@@ -96,7 +96,7 @@ public final class Constants {
     public static final double kManualScaleFactor = 0.5;
 
     public static final double kStowSetpoint = 0.0;
-    public static final double kMoveSetpoint = 0.0;
+    public static final double kTravelSetpoint = 0.0;
     public static final double kLowSetpoint = 0.0;
     public static final double kMidSetpoint = 0.0;
     public static final double kHighSetpoint = 0.0;
@@ -107,5 +107,7 @@ public final class Constants {
   public static class ClawConstants {
     public static final int kOpenPistonID = 0;
     public static final int kClosePistonID = 1;
+
+    public static final double kPistonActuationDelay = 0.25; //seconds
   }
 }

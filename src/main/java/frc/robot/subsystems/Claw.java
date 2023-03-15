@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PneumaticsConstants;
 import frc.robot.Constants.ClawConstants;
@@ -37,10 +38,10 @@ public class Claw extends SubsystemBase {
   }
 
   public CommandBase openCommand() {
-    return runOnce(() -> open());
+    return runOnce(() -> open()).andThen(Commands.waitSeconds(ClawConstants.kPistonActuationDelay));
   }
 
   public CommandBase closeCommand() {
-    return runOnce(() -> close());
+    return runOnce(() -> close()).andThen(Commands.waitSeconds(ClawConstants.kPistonActuationDelay));
   }
 }

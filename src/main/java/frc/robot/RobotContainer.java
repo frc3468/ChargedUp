@@ -9,14 +9,15 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PneumaticsConstants;
 import frc.robot.Constants.RearArmConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ForeArm;
 import frc.robot.subsystems.RearArm;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -66,35 +67,58 @@ public class RobotContainer {
    */
   private void configureBindings() {
     Trigger m_armsStowed = new Trigger(() -> 
-      m_rearArm.isAtPosition(RearArmConstants.kStowSetpoint) && m_foreArm.isAtPosition(ForeArmConstants.kStowSetpoint)
+      m_rearArm.isAtPosition(RearArmConstants.kStowSetpoint) 
+      && m_foreArm.isAtPosition(ForeArmConstants.kStowSetpoint)
     );
     Trigger m_clawClosed = new Trigger(() -> m_claw.isClosed());
 
+    /*************** DRIVER CONTROLS ****************/
+    // Open Claw
     m_driverController.leftBumper().onTrue(m_claw.openCommand());
 
-    // Close Claw Stowed, goto "Move" Position
-    m_driverController.rightBumper().and(m_armsStowed).onTrue(new SequentialCommandGroup(
-      m_claw.closeCommand(),
-      m_rearArm.setPositionCommand(() -> RearArmConstants.kMoveSetpoint),
-      m_foreArm.setPositionCommand(() -> ForeArmConstants.kMoveSetpoint)
-    ));
-
-    // Close Claw Not-Stowed
+    // Close Claw
     m_driverController.rightBumper().and(m_armsStowed.negate()).onTrue(
       m_claw.closeCommand()
     );
 
+    // Close Claw, Arm Stowed, Goto "Travel" Position
+    m_driverController.rightBumper().and(m_armsStowed).onTrue(Commands.sequence(
+      m_claw.closeCommand(),
+      m_rearArm.setPositionCommand(() -> RearArmConstants.kTravelSetpoint),
+      m_foreArm.setPositionCommand(() -> ForeArmConstants.kTravelSetpoint)
+    ));
+
     // Stow
-    m_driverController.x().and(m_clawClosed.negate()).onTrue(new SequentialCommandGroup(
+    m_driverController.x().and(m_clawClosed.negate()).onTrue(Commands.sequence(
       m_rearArm.setPositionCommand(() -> RearArmConstants.kStowSetpoint),
       m_foreArm.setPositionCommand(() -> ForeArmConstants.kStowSetpoint)
     ));
 
-    // Stow, Claw Closed, goto "Move" Position
-    m_driverController.x().and(m_clawClosed).onTrue(new SequentialCommandGroup(
-      m_rearArm.setPositionCommand(() -> RearArmConstants.kMoveSetpoint),
-      m_foreArm.setPositionCommand(() -> ForeArmConstants.kMoveSetpoint)
+    // Stow, Claw Closed, goto "Travel" Position
+    m_driverController.x().and(m_clawClosed).onTrue(Commands.sequence(
+      m_rearArm.setPositionCommand(() -> RearArmConstants.kTravelSetpoint),
+      m_foreArm.setPositionCommand(() -> ForeArmConstants.kTravelSetpoint)
     ));
+
+    // Low Position
+    m_driverController.a().onTrue(Commands.sequence(
+      m_rearArm.setPositionCommand(() -> RearArmConstants.kLowSetpoint),
+      m_foreArm.setPositionCommand(() -> ForeArmConstants.kLowSetpoint)
+    ));
+
+    // Mid Position
+    m_driverController.b().onTrue(Commands.sequence(
+      m_rearArm.setPositionCommand(() -> RearArmConstants.kMidSetpoint),
+      m_foreArm.setPositionCommand(() -> ForeArmConstants.kMidSetpoint)
+    ));
+
+    // High Position
+    m_driverController.y().onTrue(Commands.sequence(
+      m_rearArm.setPositionCommand(() -> RearArmConstants.kHighSetpoint),
+      m_foreArm.setPositionCommand(() -> ForeArmConstants.kHighSetpoint)
+    ));
+
+    
   }
 
   /**
