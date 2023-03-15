@@ -127,7 +127,7 @@ public final class Constants {
     public static final double maxAngularVelocity = 11.5;//11.5
     // var speeds = new chassisspeeds(3.0,-2.0, Math.pi);
     //TODO turtle mode
-    //public static final double turtleSpeed = 1.35; // 1.35 meters per second
+    public static final double turtleSpeed = 1.35; // 1.35 meters per second
 
     /*  Controller offset.  Alters the max output of joysticks to throttle X,Y,Turn */
     // TODO not called yet

@@ -26,6 +26,9 @@ public class SwerveDrive extends SubsystemBase {
   private SwerveDriveKinematics swerveDriveKinematics;
   private Field2d field;
 
+  private boolean turtleToggle = false;
+  private double speed = Constants.Swerve.maxSpeed;
+
   public SwerveDrive() {
 
     gyro = new Pigeon2(0); // NavX connected over MXP
@@ -52,7 +55,7 @@ public class SwerveDrive extends SubsystemBase {
             ? ChassisSpeeds.fromFieldRelativeSpeeds(
                 translation.getX(), translation.getY(), rotation, getYaw())
             : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, speed);
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
@@ -61,7 +64,7 @@ public class SwerveDrive extends SubsystemBase {
 
   /* Used by SwerveControllerCommand in Auto */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, speed);
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(desiredStates[mod.moduleNumber], false);
@@ -108,6 +111,17 @@ public class SwerveDrive extends SubsystemBase {
     mSwerveMods[2].setDesiredState(swerveModuleStates[2], true);
     mSwerveMods[3].setDesiredState(swerveModuleStates[3], true);
 
+  }
+
+  public void turtleMode() {
+    System.out.println("Turtle mode toggled");
+    turtleToggle = !turtleToggle;
+
+    if (turtleToggle) {
+      speed = Constants.Swerve.turtleSpeed;
+    } else {
+      speed = Constants.Swerve.maxSpeed;
+    }
   }
 
   public void zeroGyro() {
@@ -170,5 +184,6 @@ public class SwerveDrive extends SubsystemBase {
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
+      SmartDashboard.putBoolean("Turtled", turtleToggle);
   }
 }
