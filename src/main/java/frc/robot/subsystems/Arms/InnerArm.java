@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems.Arms;
 
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxAnalogSensor;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxLimitSwitch.Type;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,7 +24,7 @@ public class InnerArm extends SubsystemBase {
   private SparkMaxPIDController m_outerPIDController;
   private SparkMaxAnalogSensor m_potentiometor;
   private double m_setPoint;
-
+  private SparkMaxLimitSwitch breakstopper;
   /** Creates a new OuterArm. */
   public InnerArm() {
     m_innerMotor = new CANSparkMax(InnerArmConstants.innermotor, MotorType.kBrushed);
@@ -39,6 +42,7 @@ public class InnerArm extends SubsystemBase {
     m_outerPIDController.setFeedbackDevice(m_potentiometor);
 
     m_innerMotor.burnFlash();
+    breakstopper = m_innerMotor.getForwardLimitSwitch(Type.kNormallyOpen);
   }
   public void raise(){
     m_innerMotor.set(InnerArmConstants.raiseSpeed);
