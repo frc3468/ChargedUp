@@ -27,6 +27,10 @@ public class Claw extends SubsystemBase {
     m_solenoid.set(Value.kReverse);
   }
 
+  public boolean isClosed() {
+    return m_solenoid.get() == Value.kReverse;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

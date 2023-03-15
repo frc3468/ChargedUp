@@ -52,6 +52,10 @@ public class RearArm extends SubsystemBase {
     return m_motor.get();
   }
 
+  public double getPosition() {
+    return m_analogEncoder.getPosition();
+  }
+
   public void setSetpoint(double setpoint) {
     m_setpoint = setpoint;
     m_pidController.setReference(m_setpoint, RearArmConstants.kPIDControlType);
@@ -63,6 +67,10 @@ public class RearArm extends SubsystemBase {
 
   public boolean isAtSetpoint() {
     return Math.abs(m_setpoint - m_analogEncoder.getPosition()) < RearArmConstants.kPIDTolerance;
+  }
+
+  public boolean isAtPosition(double position) {
+    return Math.abs(position - m_analogEncoder.getPosition()) < RearArmConstants.kPIDTolerance;
   }
 
   @Override

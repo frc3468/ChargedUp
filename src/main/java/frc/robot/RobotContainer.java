@@ -65,12 +65,35 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_driverController.leftBumper().onTrue(m_claw.openCommand());
-    m_driverController.rightBumper().onTrue(m_claw.closeCommand());
+    Trigger m_armsStowed = new Trigger(() -> 
+      m_rearArm.isAtPosition(RearArmConstants.kStowSetpoint) && m_foreArm.isAtPosition(ForeArmConstants.kStowSetpoint)
+    );
+    Trigger m_clawClosed = new Trigger(() -> m_claw.isClosed());
 
-    m_driverController.x().onTrue(new SequentialCommandGroup(
+    m_driverController.leftBumper().onTrue(m_claw.openCommand());
+
+    // Close Claw Stowed, goto "Move" Position
+    m_driverController.rightBumper().and(m_armsStowed).onTrue(new SequentialCommandGroup(
+      m_claw.closeCommand(),
+      m_rearArm.setPositionCommand(() -> RearArmConstants.kMoveSetpoint),
+      m_foreArm.setPositionCommand(() -> ForeArmConstants.kMoveSetpoint)
+    ));
+
+    // Close Claw Not-Stowed
+    m_driverController.rightBumper().and(m_armsStowed.negate()).onTrue(
+      m_claw.closeCommand()
+    );
+
+    // Stow
+    m_driverController.x().and(m_clawClosed.negate()).onTrue(new SequentialCommandGroup(
       m_rearArm.setPositionCommand(() -> RearArmConstants.kStowSetpoint),
       m_foreArm.setPositionCommand(() -> ForeArmConstants.kStowSetpoint)
+    ));
+
+    // Stow, Claw Closed, goto "Move" Position
+    m_driverController.x().and(m_clawClosed).onTrue(new SequentialCommandGroup(
+      m_rearArm.setPositionCommand(() -> RearArmConstants.kMoveSetpoint),
+      m_foreArm.setPositionCommand(() -> ForeArmConstants.kMoveSetpoint)
     ));
   }
 
