@@ -10,6 +10,9 @@ import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Arms.ArmOverride;
 import frc.robot.subsystems.Arms.InnerArm;
 import frc.robot.subsystems.Arms.OuterArm;
+
+import javax.swing.GroupLayout.SequentialGroup;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -194,7 +197,11 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     // return new exampleAuto(s_Swerve);
-    return new BaseAuto(); // TODO place holder for now, replace once we have auto modes
+    return new SequentialCommandGroup(
+    new InstantCommand(() -> s_Swerve.zeroGyro()),
+    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1)
+
+    ); // TODO place holder for now, replace once we have auto modes
   }
 
 }
