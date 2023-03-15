@@ -53,8 +53,6 @@ public class RobotContainer {
   //
   /* Driver Buttons - Xbox Controller */
   // ABXY buttons
-  // A - Bottom shelf position
-  private final JoystickButton eTier = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
   // B - Middle shelf position
   private final JoystickButton midTier = new JoystickButton(primaryDriver, XboxController.Button.kB.value);
   // Y - Top shelf position
@@ -62,7 +60,7 @@ public class RobotContainer {
   // X - toggle between robot- and field-centric - true is robot-centric
   // private final JoystickButton centricToggle = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
   // X - Home position
-  private final JoystickButton home = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+  private final JoystickButton home = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
   private final JoystickButton outerRaise = new JoystickButton(overRideLeft, Constants.OuterArmConstants.overrideUp);
   private final JoystickButton outerLower = new JoystickButton(overRideLeft, Constants.OuterArmConstants.overrideDown);
   private final JoystickButton innerRaise = new JoystickButton(overRideRight, Constants.InnerArmConstants.overrideUp);
@@ -143,17 +141,13 @@ public class RobotContainer {
       new InnerArmStowed(m_InnerArm),
       new OuterArmStowed(m_OuterArm)
     ));
-   eTier.onTrue(new SequentialCommandGroup(
-     new InnerArmRaiseE(m_InnerArm),
-     new OuterArmRaiseE(m_OuterArm)
-     ));
    midTier.onTrue(new SequentialCommandGroup(
     new InnerArmRaiseM(m_InnerArm),
      new OuterArmRaiseM(m_OuterArm)
      ));
-   sTeir.onTrue(new SequentialCommandGroup(
-     new InnerArmRaiseS(m_InnerArm),
-     new OuterArmRaiseS(m_OuterArm)
+   sTeir.onTrue(new ParallelCommandGroup(
+    new OuterArmRaiseS(m_OuterArm),
+     new InnerArmRaiseS(m_InnerArm)
      ));
     outerRaise.whileTrue(new OuterArmRaise(m_OuterArm));
     outerLower.whileTrue(new OuterArmLower(m_OuterArm));
