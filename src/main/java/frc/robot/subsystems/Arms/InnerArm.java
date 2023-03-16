@@ -24,7 +24,7 @@ public class InnerArm extends SubsystemBase {
   private SparkMaxPIDController m_outerPIDController;
   private SparkMaxAnalogSensor m_potentiometor;
   private double m_setPoint;
-  private SparkMaxLimitSwitch breakstopper;
+  private SparkMaxLimitSwitch m_breakstopper;
   /** Creates a new OuterArm. */
   public InnerArm() {
     m_innerMotor = new CANSparkMax(InnerArmConstants.innermotor, MotorType.kBrushed);
@@ -40,9 +40,11 @@ public class InnerArm extends SubsystemBase {
     m_outerPIDController.setFF(InnerArmConstants.innerFF);
     m_outerPIDController.setOutputRange(InnerArmConstants.innerMin, InnerArmConstants.innerMax);
     m_outerPIDController.setFeedbackDevice(m_potentiometor);
-
+    m_breakstopper = m_innerMotor.getReverseLimitSwitch(Type.kNormallyOpen);
+    m_breakstopper.enableLimitSwitch(true);
     m_innerMotor.burnFlash();
-    breakstopper = m_innerMotor.getForwardLimitSwitch(Type.kNormallyOpen);
+
+
   }
   public void raise(){
     m_innerMotor.set(InnerArmConstants.raiseSpeed);

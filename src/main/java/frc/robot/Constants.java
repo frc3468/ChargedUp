@@ -210,7 +210,7 @@ public static final class OuterArmConstants {
     public static final double upPIDReferenceE = 2.6;
     public static final double upPIDReferenceM = 1.69;
     public static final double upPIDReferenceS = 1.95;
-    public static final double downPIDReference = 1.00;
+    public static final double downPIDReference = 0.96;
     public static final double upPIDReferenceT = 1.2;
     public static final double startingConfig = 2.5;
     public static final double outerPIDTolorence = 0.04;
