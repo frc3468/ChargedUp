@@ -199,7 +199,22 @@ public class RobotContainer {
     // return new exampleAuto(s_Swerve);
     return new SequentialCommandGroup(
     new InstantCommand(() -> s_Swerve.zeroGyro()),
-    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1)
+    new OpenClaw(m_Claw),
+    new CloseClaw(m_Claw), 
+    new InnerArmRaiseM(m_InnerArm),
+    new OuterArmRaiseM(m_OuterArm),
+    new InstantCommand(() -> s_Swerve.turtleMode()),
+    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
+    new OpenClaw(m_Claw),
+    new ParallelCommandGroup(
+      new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.5),
+      new SequentialCommandGroup(
+        new WaitCommand(0.2),
+        new InnerArmStowed(m_InnerArm),
+        new OuterArmStowed(m_OuterArm)
+      )
+    )
+    
 
     ); // TODO place holder for now, replace once we have auto modes
   }
