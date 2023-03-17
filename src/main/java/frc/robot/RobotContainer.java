@@ -56,6 +56,7 @@ public class RobotContainer {
   //
   /* Driver Buttons - Xbox Controller */
   // ABXY buttons
+  private final JoystickButton eTeir = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
   // B - Middle shelf position
   private final JoystickButton midTier = new JoystickButton(primaryDriver, XboxController.Button.kB.value);
   // Y - Top shelf position
@@ -63,7 +64,7 @@ public class RobotContainer {
   // X - toggle between robot- and field-centric - true is robot-centric
   // private final JoystickButton centricToggle = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
   // X - Home position
-  private final JoystickButton home = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
+  private final JoystickButton home = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
   private final JoystickButton outerRaise = new JoystickButton(overRideLeft, Constants.OuterArmConstants.overrideUp);
   private final JoystickButton outerLower = new JoystickButton(overRideLeft, Constants.OuterArmConstants.overrideDown);
   private final JoystickButton innerRaise = new JoystickButton(overRideRight, Constants.InnerArmConstants.overrideUp);
@@ -73,7 +74,7 @@ public class RobotContainer {
   
  //TODO turtle mode 
  // X - toggle between robot- and field-centric - true is robot-centric
- private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+ private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);
 
 
   // BACK/SELECT - Zero Gyro reading
@@ -135,16 +136,20 @@ public class RobotContainer {
     //TODO turtle
     turtleMode.onTrue(new InstantCommand(() -> s_Swerve.turtleMode()));  // X
 
-    home.and(closeCheck).onTrue(new SequentialCommandGroup(
+    home.and(closeCheck).onTrue(new ParallelCommandGroup(
       new InnerArmTravel(m_InnerArm),
       new WaitCommand(1),
       new OuterArmTravel(m_OuterArm)
      ));
-    home.and(closeCheck.negate()).onTrue(new SequentialCommandGroup(
+    home.and(closeCheck.negate()).onTrue(new ParallelCommandGroup(
       new InnerArmStowed(m_InnerArm),
       new OuterArmStowed(m_OuterArm)
     ));
-   midTier.onTrue(new SequentialCommandGroup(
+    eTeir.onTrue(new ParallelCommandGroup(
+    new OuterArmRaiseE(m_OuterArm),
+     new InnerArmRaiseE(m_InnerArm)
+     ));
+   midTier.onTrue(new ParallelCommandGroup(
     new InnerArmRaiseM(m_InnerArm),
      new OuterArmRaiseM(m_OuterArm)
      ));
@@ -156,17 +161,6 @@ public class RobotContainer {
     outerLower.whileTrue(new OuterArmLower(m_OuterArm));
     innerRaise.whileTrue(new InnerArmRaise(m_InnerArm));
     innerLower.whileTrue(new InnerArmLower(m_InnerArm));
-  }
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
-  private void configureBindings() {
 
     //Trigger lasersense = new Trigger(m_Claw::getLazerSenser);
     
@@ -189,6 +183,17 @@ public class RobotContainer {
 
     
   }
+  /**
+   * Use this method to define your trigger->command mappings. Triggers can be created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * predicate, or via the named factories in {@link
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
+   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * joysticks}.
+   */
+  private void configureBindings() {
+  }
    /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -201,6 +206,7 @@ public class RobotContainer {
     new InstantCommand(() -> s_Swerve.zeroGyro()),
     new OpenClaw(m_Claw),
     new CloseClaw(m_Claw), 
+    // because it's allready in a scg we don't need to make a new one
     new InnerArmRaiseM(m_InnerArm),
     new OuterArmRaiseM(m_OuterArm),
     new InstantCommand(() -> s_Swerve.turtleMode()),
@@ -209,6 +215,7 @@ public class RobotContainer {
     new ParallelCommandGroup(
       new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.5),
       new SequentialCommandGroup(
+        // as opposed to here where we do.
         new WaitCommand(0.2),
         new InnerArmStowed(m_InnerArm),
         new OuterArmStowed(m_OuterArm)

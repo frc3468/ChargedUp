@@ -50,7 +50,7 @@ public class InnerArm extends SubsystemBase {
     m_innerMotor.set(InnerArmConstants.raiseSpeed);
   }
   public void raiseETier() {
-    m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceM, CANSparkMax.ControlType.kPosition);
+    m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceE, CANSparkMax.ControlType.kPosition);
     m_setPoint = InnerArmConstants.upPIDReferenceM;
   }
   public void raiseMid() {

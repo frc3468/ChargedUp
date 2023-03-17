@@ -197,8 +197,8 @@ public static final class OuterArmConstants {
     public static final int outermotor = 13;
     public static final int overrideDown = 2;
     public static final int overrideUp = 3;
-    public static final double raiseSpeed = 0.3;
-    public static final double lowerSpeed = -0.3;
+    public static final double raiseSpeed = 0.6;
+    public static final double lowerSpeed = -0.6;
     public static final double stopSpeed = 0.0;
     public static final double outerP = 10.0;
     public static final double outerI = 0.0;
@@ -207,10 +207,10 @@ public static final class OuterArmConstants {
     public static final double outerFF = 0.0;
     public static final double outerMin = -1.0;
     public static final double outerMax = 1.0;
-    public static final double upPIDReferenceE = 2.6;
-    public static final double upPIDReferenceM = 1.69;
-    public static final double upPIDReferenceS = 1.95;
-    public static final double downPIDReference = 0.96;
+    public static final double upPIDReferenceE = 1.14;
+    public static final double upPIDReferenceM = 1.59;
+    public static final double upPIDReferenceS = 1.91;
+    public static final double downPIDReference = 0.98;
     public static final double upPIDReferenceT = 1.2;
     public static final double startingConfig = 2.5;
     public static final double outerPIDTolorence = 0.04;
@@ -250,12 +250,11 @@ public static final class InnerArmConstants {
   public static final double innerFF = 0.0;
   public static final double innerMin = -1.0;
   public static final double innerMax = 1.0;
-  public static final double upPIDReferenceE = 2.6;
-  public static final double upPIDReferenceM = 2.30;
-  public static final double upPIDReferenceS = 2.46;
-  public static final double downPIDReference = 2.27;  
-  public static final double upPIDReferenceT = 2.27;
-  public static final double startingConfig = 2.5;
+  public static final double upPIDReferenceE = 2.65; //A
+  public static final double upPIDReferenceM = 2.67; //B
+  public static final double upPIDReferenceS = 2.79; //Y
+  public static final double downPIDReference = 2.57;  //X
+  public static final double upPIDReferenceT = 2.27;  //X
   public static final double innerPIDTolorence = 0.03;
   public static final boolean kAnalogSensorInverted = false;
 //inner arm
