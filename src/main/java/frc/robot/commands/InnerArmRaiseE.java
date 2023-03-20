@@ -38,6 +38,6 @@ public class InnerArmRaiseE extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.isAtSetPoint();
+    return m_subsystem.isAtSetPoint() || m_subsystem.m_breakstopper.isPressed();
   }
 }

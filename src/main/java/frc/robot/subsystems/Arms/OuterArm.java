@@ -6,8 +6,10 @@ package frc.robot.subsystems.Arms;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxAnalogSensor;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxLimitSwitch.Type;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,6 +23,7 @@ public class OuterArm extends SubsystemBase {
   private SparkMaxPIDController m_outerPIDController;
   private SparkMaxAnalogSensor m_potentiometor;
   private double m_setPoint;
+  public SparkMaxLimitSwitch m_breakstopper;
 
   /** Creates a new OuterArm. */
   public OuterArm() {
@@ -37,7 +40,9 @@ public class OuterArm extends SubsystemBase {
     m_outerPIDController.setFF(OuterArmConstants.outerFF);
     m_outerPIDController.setOutputRange(OuterArmConstants.outerMin, OuterArmConstants.outerMax);
     m_outerPIDController.setFeedbackDevice(m_potentiometor);
-
+    m_breakstopper = m_outerMotor.getReverseLimitSwitch(Type.kNormallyOpen);
+    m_breakstopper.enableLimitSwitch(true);
+    m_outerMotor.burnFlash();
   }
   public void raise(){
     m_outerMotor.set(OuterArmConstants.raiseSpeed);

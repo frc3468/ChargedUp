@@ -24,7 +24,7 @@ public class InnerArm extends SubsystemBase {
   private SparkMaxPIDController m_outerPIDController;
   private SparkMaxAnalogSensor m_potentiometor;
   private double m_setPoint;
-  private SparkMaxLimitSwitch m_breakstopper;
+  public SparkMaxLimitSwitch m_breakstopper;
   /** Creates a new OuterArm. */
   public InnerArm() {
     m_innerMotor = new CANSparkMax(InnerArmConstants.innermotor, MotorType.kBrushed);
@@ -84,6 +84,10 @@ public class InnerArm extends SubsystemBase {
   public void raiseWithInput(double speed) {
     System.out.println("Inner arm raised at speed: " + speed);
     m_innerMotor.set(speed);
+  }
+  public void reset(){
+    
+
   }
 
   @Override
