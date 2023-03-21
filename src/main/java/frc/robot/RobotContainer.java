@@ -48,12 +48,13 @@ public class RobotContainer {
 
 
   /* Joystick and Controller assignments */
-  /* Drive Controls */
+  /* Drive Controls - Xbox Controller */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   //
+  /**************/
   /* Driver Buttons - Xbox Controller */
   // ABXY buttons
   private final JoystickButton eTeir = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
@@ -62,35 +63,58 @@ public class RobotContainer {
   // Y - Top shelf position
   private final JoystickButton sTeir = new JoystickButton(primaryDriver, XboxController.Button.kY.value);
   // X - toggle between robot- and field-centric - true is robot-centric
+
   // private final JoystickButton centricToggle = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
   // X - Home position
   private final JoystickButton home = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
-  private final JoystickButton outerRaise = new JoystickButton(overRideLeft, Constants.OuterArmConstants.overrideUp);
-  private final JoystickButton outerLower = new JoystickButton(overRideLeft, Constants.OuterArmConstants.overrideDown);
-  private final JoystickButton innerRaise = new JoystickButton(overRideRight, Constants.InnerArmConstants.overrideUp);
-  private final JoystickButton innerLower = new JoystickButton(overRideRight, Constants.InnerArmConstants.overrideDown);
-  private final JoystickButton expandClaw = new JoystickButton(overRideLeft, Constants.Clawconstants.overideClawOpen);
-  private final JoystickButton condenseClaw = new JoystickButton(overRideRight, Constants.Clawconstants.overideClawClose);
-  
- //TODO turtle mode 
- // X - toggle between robot- and field-centric - true is robot-centric
- private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);
-
-
+  // start button - Turtle Mode
+  private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);
   // BACK/SELECT - Zero Gyro reading
   private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kBack.value);
   // START - Hard brake/ auto-level for balance board
-  private final JoystickButton autoLevel = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);
-
+  
   // Bumpers and Triggers
   // Left Bumper - auto-load
-  private final JoystickButton autoLoad = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);
   private final Claw m_Claw = new Claw();
   private final JoystickButton openClaw = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);
   private final JoystickButton closeClaw = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);  // Right bumper - Open/Close the claw
   
-
+  // TODO this is assigned to Start but not invoked 
+  //private final JoystickButton autoLevel = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);
+  //private final JoystickButton autoLoad = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);
+  
+    /**************/
   /* Co-Driver Buttons - Dual Joysticks */
+ //INNER ARM - Left Joystick
+  //Axis Forward - Inner arm down
+  private final JoystickButton innerLower = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideDown);
+  //Axis Back - Inner arm up
+  private final JoystickButton innerRaise = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideUp);
+ //LEFT JOYSTICK BUTTONS
+  //Left Top Front button
+  private final JoystickButton CoDrivereTeir = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideUp);
+  //Left Top Rear button 
+  private final JoystickButton CoDriverHome = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideDown);
+ /*************/
+ //OUTER ARM - Right Joystick
+  //Axis Forward - Outer arm Down
+  private final JoystickButton outerLower = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideDown);
+  //Axis Back - Outer arm up
+  private final JoystickButton outerRaise = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideUp);
+  //Right Top Front button
+  private final JoystickButton CoDrivereMidTeir = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideUp);
+  //Right top Rear button
+  private final JoystickButton CoDrivereSTeir = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideUp);
+
+//CLAW - Left Joystick
+  private final JoystickButton expandClaw = new JoystickButton(overRideLeft, Constants.Clawconstants.overideClawOpen);
+//CLAW - Right Joystick
+  private final JoystickButton condenseClaw = new JoystickButton(overRideRight, Constants.Clawconstants.overideClawClose);
+  
+ 
+
+
+
   private int outerArmAxis = Joystick.AxisType.kY.value;
   private int innerArmAxis = Joystick.AxisType.kY.value;
   /* End of Joystick and Controller assignments */

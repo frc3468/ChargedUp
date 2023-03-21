@@ -195,8 +195,8 @@ public final class Constants {
 }
 public static final class OuterArmConstants {
     public static final int outermotor = 13;
-    public static final int overrideDown = 2;
-    public static final int overrideUp = 3;
+    public static final int overrideDown = 2; // button channel? 
+    public static final int overrideUp = 3; // button channel? 
     public static final double raiseSpeed = 1.0;
     public static final double lowerSpeed = -0.6;
     public static final double stopSpeed = 0.0;
@@ -238,8 +238,8 @@ public static final class OuterArmConstants {
 
 public static final class InnerArmConstants {
   public static final int innermotor = 14;
-  public static final int overrideDown = 2;
-  public static final int overrideUp = 3;
+  public static final int overrideDown = 2; // button channel? 
+  public static final int overrideUp = 3; // button channel? 
   public static final int raiseSpeed = 1;
   public static final int lowerSpeed = -1;
   public static final int stopSpeed = 0;
