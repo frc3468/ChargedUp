@@ -154,6 +154,8 @@ public class RobotContainer {
   
    /* End Subsystems */
 
+   /*MainDriver*/
+
   /* Button Bindings - Actions taken upon button press or hold */
   private void configureButtonBindings() { 
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); //Y
@@ -185,6 +187,30 @@ public class RobotContainer {
     outerLower.whileTrue(new OuterArmLower(m_OuterArm));
     innerRaise.whileTrue(new InnerArmRaise(m_InnerArm));
     innerLower.whileTrue(new InnerArmLower(m_InnerArm));
+
+    /*CoDriver */
+
+    CoDrivereTeir.onTrue(new ParallelCommandGroup(
+    new OuterArmRaiseE(m_OuterArm),
+     new InnerArmRaiseE(m_InnerArm)
+    ));
+    CoDrivereMidTeir.onTrue(new SequentialCommandGroup(
+    new InnerArmRaiseM(m_InnerArm).withTimeout(2),
+     new OuterArmRaiseM(m_OuterArm)
+    ));
+    CoDrivereSTeir.onTrue(new ParallelCommandGroup(
+     new OuterArmRaiseS(m_OuterArm),
+      new InnerArmRaiseS(m_InnerArm)
+    ));
+    CoDriverHome.and(closeCheck).onTrue(new SequentialCommandGroup(
+      new InnerArmTravel(m_InnerArm).withTimeout(2 ),
+      new WaitCommand(1),
+      new OuterArmTravel(m_OuterArm)
+     ));
+    CoDriverHome.and(closeCheck.negate()).onTrue(new SequentialCommandGroup(
+      new InnerArmStowed(m_InnerArm).withTimeout(2),
+      new OuterArmStowed(m_OuterArm)
+    ));
 
     //Trigger lasersense = new Trigger(m_Claw::getLazerSenser);
     
