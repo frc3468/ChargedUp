@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.TeleopArm;
+import frc.robot.commands.arm.TeleopInnerArm;
+import frc.robot.commands.arm.TeleopOuterArm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Arms.ArmOverride;
 import frc.robot.subsystems.Arms.InnerArm;
@@ -141,11 +143,22 @@ public class RobotContainer {
            () -> -primaryDriver.getRawAxis(rotationAxis),
            () -> zeroGyro.getAsBoolean()));
 
-  // m_InnerArm.setDefaultCommand(
-  //   new TeleopArm(m_InnerArm, 
-  //   () -> overRideLeft.getRawAxis(outerArmAxis), 
-  //   () -> overRideRight.getRawAxis(innerArmAxis))
-  // );
+    
+    m_InnerArm.setDefaultCommand(
+      new TeleopInnerArm(m_InnerArm, 
+      () -> overRideRight.getRawAxis(innerArmAxis))
+    );
+    
+    m_OuterArm.setDefaultCommand(
+      new TeleopOuterArm(m_OuterArm, 
+      () -> overRideLeft.getRawAxis(outerArmAxis))
+    );
+
+    // m_OuterArm.setDefaultCommand(
+    //   new TeleopArm(m_OuterArm, 
+    //   () -> overRideLeft.getRawAxis(outerArmAxis), 
+    //   () -> overRideRight.getRawAxis(innerArmAxis))
+    // );
 
     // Configure the button bindings
     configureButtonBindings();
