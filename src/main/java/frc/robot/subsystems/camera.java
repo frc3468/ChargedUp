@@ -16,6 +16,8 @@ import org.photonvision.EstimatedRobotPose;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,7 +33,7 @@ public class camera extends SubsystemBase {
   boolean didISucceed;
   AprilTagFieldLayout aLayout;
   boolean layoutfailed;
-  
+  UsbCamera secoundCamera;
   
 
   public camera() {
@@ -40,6 +42,7 @@ public class camera extends SubsystemBase {
     currentfilter = "AprilTag";
     machineCamera = new PhotonCamera("3468"); 
     machineCamera.setDriverMode(!didISucceed);
+    secoundCamera = CameraServer.startAutomaticCapture();
 
     try {
       aLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
