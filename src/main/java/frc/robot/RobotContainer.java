@@ -167,6 +167,8 @@ public class RobotContainer {
   
    /* End Subsystems */
 
+   /*MainDriver*/
+
   /* Button Bindings - Actions taken upon button press or hold */
   private void configureButtonBindings() { 
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); //Y
@@ -198,6 +200,30 @@ public class RobotContainer {
     outerLower.whileTrue(new OuterArmLower(m_OuterArm));
     innerRaise.whileTrue(new InnerArmRaise(m_InnerArm));
     innerLower.whileTrue(new InnerArmLower(m_InnerArm));
+
+    /*CoDriver */
+
+    CoDrivereTeir.onTrue(new ParallelCommandGroup(
+    new OuterArmRaiseE(m_OuterArm),
+     new InnerArmRaiseE(m_InnerArm)
+    ));
+    CoDrivereMidTeir.onTrue(new SequentialCommandGroup(
+    new InnerArmRaiseM(m_InnerArm).withTimeout(2),
+     new OuterArmRaiseM(m_OuterArm)
+    ));
+    CoDrivereSTeir.onTrue(new ParallelCommandGroup(
+     new OuterArmRaiseS(m_OuterArm),
+      new InnerArmRaiseS(m_InnerArm)
+    ));
+    CoDriverHome.and(closeCheck).onTrue(new SequentialCommandGroup(
+      new InnerArmTravel(m_InnerArm).withTimeout(2 ),
+      new WaitCommand(1),
+      new OuterArmTravel(m_OuterArm)
+     ));
+    CoDriverHome.and(closeCheck.negate()).onTrue(new SequentialCommandGroup(
+      new InnerArmStowed(m_InnerArm).withTimeout(2),
+      new OuterArmStowed(m_OuterArm)
+    ));
 
     //Trigger lasersense = new Trigger(m_Claw::getLazerSenser);
     
@@ -241,19 +267,22 @@ public class RobotContainer {
     // return new exampleAuto(s_Swerve);
     return new SequentialCommandGroup(
     new InstantCommand(() -> s_Swerve.zeroGyro()),
-    // new CloseClaw(m_Claw),  
-    // // because it's allready in a scg we don't need to make a new one
-    // new InnerArmRaiseM(m_InnerArm),
-    // new OuterArmRaiseM(m_OuterArm),
-    // new InstantCommand(() -> s_Swerve.turtleMode()),
-    // new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
-    // new OpenClaw(m_Claw),
-    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.55),
-  //   new SequentialCommandGroup(
-  //  // as opposed to here where we do.
-  //     new WaitCommand(0.2),
-  //     new InnerArmStowed(m_InnerArm),
-  //     new OuterArmStowed(m_OuterArm)
+    new CloseClaw(m_Claw),  
+    // because it's allready in a scg we don't need to make a new one
+    new InnerArmRaiseM(m_InnerArm),
+    new OuterArmRaiseM(m_OuterArm),
+    new InstantCommand(() -> s_Swerve.turtleMode()),
+    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
+    new OpenClaw(m_Claw),
+    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
+    new SequentialCommandGroup(
+   // as opposed to here where we do.
+      new WaitCommand(0.2),
+      new InnerArmStowed(m_InnerArm),
+      new OuterArmStowed(m_OuterArm)
+    ),
+    new InstantCommand(() -> s_Swerve.turtleMode()),
+    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.00),
     new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> 1.0, () -> false).withTimeout(0.25)
     
 
