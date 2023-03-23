@@ -36,6 +36,10 @@ public final class Constants {
     public static final int lazersensor = 2;
     public static final int overideClawOpen = 1;
     public static final int overideClawClose = 1;
+    public static final int LedWhite = 5;
+    public static final int LedRed = 6;
+    public static final int LedGreen = 7;
+    public static final int LedBlue = 8;
 
 
   }

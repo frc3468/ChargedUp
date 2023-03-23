@@ -15,6 +15,7 @@ import frc.robot.subsystems.Arms.OuterArm;
 
 import javax.swing.GroupLayout.SequentialGroup;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -139,6 +140,16 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     configureBindings();
+
+      //NEEDLE SWITCH FOR HUMAN STATION
+     DigitalInput swtch = new DigitalInput(0);  //Where 0 is the DIO port number
+     
+     if (!swtch.get()){
+      
+       new CloseClaw(m_Claw);
+       
+ 
+     }
   }
   
    /* End Subsystems */
@@ -258,9 +269,9 @@ public class RobotContainer {
     ),
     new InstantCommand(() -> s_Swerve.turtleMode()),
     new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.00),
-    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> 1.0, () -> false).withTimeout(0.5),
+    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
     new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
-    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> 1.0, () -> false).withTimeout(0.25)
+    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .25, () -> false).withTimeout(0.25)
     ); // TODO place holder for now, replace once we have auto modes
   }
 
