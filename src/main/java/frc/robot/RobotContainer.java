@@ -6,7 +6,9 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.TeleopArm;
-//import frc.robot.commands.arm.TeleopInnerArm;
+import frc.robot.commands.arm.TeleopInnerArm;
+//import frc.robot.commands.arm.TeleopInnerArm2;
+//import frc.robot.commands.arm.TeleopInnerarm2;
 import frc.robot.commands.arm.TeleopOuterArm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Arms.ArmOverride;
@@ -122,15 +124,20 @@ public class RobotContainer {
            () -> zeroGyro.getAsBoolean()));
 
   //JOYSTICKS  
-   /* 
+   
   m_InnerArm.setDefaultCommand(
-      new TeleopInnerArm(m_InnerArm, 
+    new TeleopInnerArm(m_InnerArm,
+  () -> overRideLeft.getRawAxis(innerArmAxis))
+  );
+ /*
+  m_InnerArm.setDefaultCommand(
+      new TeleopInnerArm2(m_InnerArm, 
       () -> overRideRight.getRawAxis(innerArmAxis))
     );  
-   */ 
+   */
     m_OuterArm.setDefaultCommand(
       new TeleopOuterArm(m_OuterArm, 
-      () -> overRideLeft.getRawAxis(outerArmAxis))
+      () -> overRideRight.getRawAxis(outerArmAxis))
     );
 
     // m_OuterArm.setDefaultCommand(

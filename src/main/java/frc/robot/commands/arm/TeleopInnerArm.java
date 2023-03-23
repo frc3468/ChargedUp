@@ -30,7 +30,7 @@ public class TeleopInnerArm extends CommandBase {
   public void execute() {
     if(((Math.abs(m_InnerAxisOutputValue.getAsDouble())>0.2))){
       
-      m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-0.3);
+      m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
       // "Borrowed" from another team, not sure of purpose
       // m_arm.reset();
     } else {

@@ -31,7 +31,7 @@ public class TeleopOuterArm extends CommandBase {
   public void execute() {
     if(((Math.abs(m_OuterAxisOutputValue.getAsDouble())>0.2))){
       
-      m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble())*-0.3);
+      m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble())*-1);//was *0.3
       // "Borrowed" from another team, not sure of purpose
       // m_arm.reset();
     } else {

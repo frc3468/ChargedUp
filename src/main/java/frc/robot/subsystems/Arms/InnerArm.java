@@ -6,6 +6,7 @@ package frc.robot.subsystems.Arms;
 
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxAnalogSensor;
 import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
@@ -22,7 +23,7 @@ public class InnerArm extends SubsystemBase {
 
   private CANSparkMax m_innerMotor;
   private SparkMaxPIDController m_outerPIDController;
-  private SparkMaxAnalogSensor m_potentiometor;
+  private SparkMaxAbsoluteEncoder m_potentiometor;
   private double m_setPoint;
   public SparkMaxLimitSwitch m_breakstopper;
   /** Creates a new OuterArm. */
@@ -30,7 +31,7 @@ public class InnerArm extends SubsystemBase {
     m_innerMotor = new CANSparkMax(InnerArmConstants.innermotor, MotorType.kBrushed);
     m_innerMotor.setInverted(true);
     m_outerPIDController = m_innerMotor.getPIDController();
-    m_potentiometor = m_innerMotor.getAnalog(SparkMaxAnalogSensor.Mode.kAbsolute);
+    m_potentiometor = m_innerMotor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle);
     m_potentiometor.setInverted(InnerArmConstants.kAnalogSensorInverted);
 
     m_outerPIDController.setP(InnerArmConstants.innerP);

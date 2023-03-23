@@ -214,10 +214,10 @@ public static final class OuterArmConstants {
     public static final double upPIDReferenceE = 0.80;
     public static final double upPIDReferenceM = 1.26;
     public static final double upPIDReferenceS = 1.51;
-    public static final double downPIDReference = 0.53;
+    public static final double downPIDReference = 0.93;
     public static final double upPIDReferenceT = 1.2;
     public static final double startingConfig = 2.5;
-    public static final double outerPIDTolorence = 0.04;
+    public static final double outerPIDTolorence = 0.01;
     public static final boolean kAnalogSensorInverted = true;
   // outer arm
   /*
@@ -257,9 +257,9 @@ public static final class InnerArmConstants {
   public static final double upPIDReferenceE = 1.26; //A
   public static final double upPIDReferenceM = 1.28; //B
   public static final double upPIDReferenceS = 1.43; //Y
-  public static final double downPIDReference = 1.25;  //X
-  public static final double upPIDReferenceT = 2.27;  //X
-  public static final double innerPIDTolorence = 0.03;
+  public static final double downPIDReference = 0.57;  //X  Stowed
+  public static final double upPIDReferenceT = 2.27;  //X  Traversal
+  public static final double innerPIDTolorence = 0.01;
   public static final boolean kAnalogSensorInverted = false;
 //inner arm
 }
