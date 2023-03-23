@@ -6,7 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.TeleopArm;
-import frc.robot.commands.arm.TeleopInnerArm;
+//import frc.robot.commands.arm.TeleopInnerArm;
 import frc.robot.commands.arm.TeleopOuterArm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Arms.ArmOverride;
@@ -122,10 +122,12 @@ public class RobotContainer {
            () -> zeroGyro.getAsBoolean()));
 
   //JOYSTICKS  
-    m_InnerArm.setDefaultCommand(
+   /* 
+  m_InnerArm.setDefaultCommand(
       new TeleopInnerArm(m_InnerArm, 
       () -> overRideRight.getRawAxis(innerArmAxis))
     );  
+   */ 
     m_OuterArm.setDefaultCommand(
       new TeleopOuterArm(m_OuterArm, 
       () -> overRideLeft.getRawAxis(outerArmAxis))
@@ -254,10 +256,11 @@ public class RobotContainer {
     return new SequentialCommandGroup(
     new InstantCommand(() -> s_Swerve.zeroGyro()),
     new CloseClaw(m_Claw),  
+    new InstantCommand(() -> s_Swerve.turtleMode()),
+    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.2),
     // because it's allready in a scg we don't need to make a new one
     new InnerArmRaiseM(m_InnerArm),
     new OuterArmRaiseM(m_OuterArm),
-    new InstantCommand(() -> s_Swerve.turtleMode()),
     new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
     new OpenClaw(m_Claw),
     new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
