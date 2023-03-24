@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.TeleopArm;
 import frc.robot.commands.arm.TeleopInnerArm;
+//import frc.robot.commands.arm.TeleopInnerArm2;
+//import frc.robot.commands.arm.TeleopInnerarm2;
 import frc.robot.commands.arm.TeleopOuterArm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Arms.ArmOverride;
@@ -15,6 +17,7 @@ import frc.robot.subsystems.Arms.OuterArm;
 
 import javax.swing.GroupLayout.SequentialGroup;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -58,67 +61,44 @@ public class RobotContainer {
   //
   /**************/
   /* Driver Buttons - Xbox Controller */
-  // ABXY buttons
-  private final JoystickButton eTeir = new JoystickButton(primaryDriver, XboxController.Button.kA.value);
-  // B - Middle shelf position
-  private final JoystickButton midTier = new JoystickButton(primaryDriver, XboxController.Button.kB.value);
-  // Y - Top shelf position
-  private final JoystickButton sTeir = new JoystickButton(primaryDriver, XboxController.Button.kY.value);
-  // X - toggle between robot- and field-centric - true is robot-centric
-
-  // private final JoystickButton centricToggle = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
-  // X - Home position
-  private final JoystickButton home = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
-  // start button - Turtle Mode
-  private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);
-  // BACK/SELECT - Zero Gyro reading
-  private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kBack.value);
-  // START - Hard brake/ auto-level for balance board
-  
-  // Bumpers and Triggers
-  // Left Bumper - auto-load
-  private final Claw m_Claw = new Claw();
-  private final JoystickButton openClaw = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);
-  private final JoystickButton closeClaw = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);  // Right bumper - Open/Close the claw
-  
-  // TODO this is assigned to Start but not invoked 
-  //private final JoystickButton autoLevel = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);
-  //private final JoystickButton autoLoad = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);
+      // ABXY buttons
+      private final JoystickButton eTeir = new JoystickButton(primaryDriver, XboxController.Button.kA.value);       // A - Traversal mode - eTeir
+      private final JoystickButton midTier = new JoystickButton(primaryDriver, XboxController.Button.kB.value);     // B - Middle shelf position
+      private final JoystickButton sTeir = new JoystickButton(primaryDriver, XboxController.Button.kY.value);       // Y - Top shelf position
+      private final JoystickButton home = new JoystickButton(primaryDriver, XboxController.Button.kX.value);        // X - Home position
+      private final JoystickButton turtleMode = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);      // start button - Turtle Mode
+      private final JoystickButton zeroGyro = new JoystickButton(primaryDriver, XboxController.Button.kBack.value);      // BACK/SELECT - Zero Gyro reading
+      // Bumpers and Triggers
+      private final Claw m_Claw = new Claw();
+      private final JoystickButton openClaw = new JoystickButton(primaryDriver, XboxController.Button.kRightBumper.value);  // Left Bumper - auto-load
+      private final JoystickButton closeClaw = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);  // Right bumper - Open/Close the claw
+   
+      // TODO this is assigned to Start but not invoked 
+      // private final JoystickButton centricToggle = new JoystickButton(primaryDriver, XboxController.Button.kX.value);
+      //private final JoystickButton autoLevel = new JoystickButton(primaryDriver, XboxController.Button.kStart.value);
+      //private final JoystickButton autoLoad = new JoystickButton(primaryDriver, XboxController.Button.kLeftBumper.value);
   
     /**************/
   /* Co-Driver Buttons - Dual Joysticks */
  //INNER ARM - Left Joystick
-  //Axis Forward - Inner arm down
-  private final JoystickButton innerLower = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideDown);
-  //Axis Back - Inner arm up
-  private final JoystickButton innerRaise = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideUp);
- //LEFT JOYSTICK BUTTONS
-  //Left Top Front button
-  private final JoystickButton CoDrivereTeir = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideUp);
-  //Left Top Rear button 
-  private final JoystickButton CoDriverHome = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideDown);
+      private int innerArmAxis = Joystick.AxisType.kY.value;
+      //private final JoystickButton innerRaise = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideUp); //Axis Back - Inner arm up
+      //private final JoystickButton innerLower = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideDown); //Axis Forward - Inner arm down
+    //LEFT JOYSTICK BUTTONS
+      private final JoystickButton CoDrivereTeir = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideUp);  //Left Top Front button
+      private final JoystickButton CoDriverHome = new JoystickButton(overRideLeft, Constants.InnerArmConstants.overrideDown);  //Left Top Rear button 
  /*************/
  //OUTER ARM - Right Joystick
-  //Axis Forward - Outer arm Down
-  private final JoystickButton outerLower = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideDown);
-  //Axis Back - Outer arm up
-  private final JoystickButton outerRaise = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideUp);
-  //Right Top Front button
-  private final JoystickButton CoDrivereMidTeir = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideUp);
-  //Right top Rear button
-  private final JoystickButton CoDrivereSTeir = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideUp);
-
-//CLAW - Left Joystick
-  private final JoystickButton expandClaw = new JoystickButton(overRideLeft, Constants.Clawconstants.overideClawOpen);
-//CLAW - Right Joystick
-  private final JoystickButton condenseClaw = new JoystickButton(overRideRight, Constants.Clawconstants.overideClawClose);
-  
- 
-
-
-
-  private int outerArmAxis = Joystick.AxisType.kY.value;
-  private int innerArmAxis = Joystick.AxisType.kY.value;
+      private int outerArmAxis = Joystick.AxisType.kY.value;
+      //private final JoystickButton outerRaise = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideUp);  //Axis Back - Outer arm up
+      //private final JoystickButton outerLower = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideDown);  //Axis Forward - Outer arm Down
+      //RIGHT JOYSTICK BUTTONS
+      private final JoystickButton CoDrivereSTeir = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideUp);  //Right top Front button
+      private final JoystickButton CoDrivereMidTeir = new JoystickButton(overRideRight, Constants.OuterArmConstants.overrideDown);  //Right top Rear button
+      // CLAW - Joystics
+      private final JoystickButton expandClaw = new JoystickButton(overRideLeft, Constants.Clawconstants.overideClawOpen);  //CLAW - Left Joystick
+      private final JoystickButton condenseClaw = new JoystickButton(overRideRight, Constants.Clawconstants.overideClawClose);  //CLAW - Right Joystick
+       
   /* End of Joystick and Controller assignments */
 
   //triggers
@@ -134,7 +114,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-
+  //XBOX CONTROLLER
    s_Swerve.setDefaultCommand(
        new TeleopSwerve(
          s_Swerve,
@@ -143,15 +123,21 @@ public class RobotContainer {
            () -> -primaryDriver.getRawAxis(rotationAxis),
            () -> zeroGyro.getAsBoolean()));
 
-    
-    m_InnerArm.setDefaultCommand(
-      new TeleopInnerArm(m_InnerArm, 
+  //JOYSTICKS  
+   
+  m_InnerArm.setDefaultCommand(
+    new TeleopInnerArm(m_InnerArm,
+  () -> overRideLeft.getRawAxis(innerArmAxis))
+  );
+ /*
+  m_InnerArm.setDefaultCommand(
+      new TeleopInnerArm2(m_InnerArm, 
       () -> overRideRight.getRawAxis(innerArmAxis))
-    );
-    
+    );  
+   */
     m_OuterArm.setDefaultCommand(
       new TeleopOuterArm(m_OuterArm, 
-      () -> overRideLeft.getRawAxis(outerArmAxis))
+      () -> overRideRight.getRawAxis(outerArmAxis))
     );
 
     // m_OuterArm.setDefaultCommand(
@@ -163,88 +149,97 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     configureBindings();
+
+      //NEEDLE SWITCH FOR HUMAN STATION
+     DigitalInput swtch = new DigitalInput(0);  //Where 0 is the DIO port number
+     
+     if (!swtch.get()){
+      
+       new CloseClaw(m_Claw);
+       
+ 
+     }
   }
   
    /* End Subsystems */
 
    /*MainDriver*/
-
-  /* Button Bindings - Actions taken upon button press or hold */
-  private void configureButtonBindings() { 
-    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); //Y
-    //TODO turtle
-    turtleMode.onTrue(new InstantCommand(() -> s_Swerve.turtleMode()));  // X
-
-    home.and(closeCheck).onTrue(new SequentialCommandGroup(
-      new InnerArmTravel(m_InnerArm).withTimeout(2 ),
-      new WaitCommand(1),
-      new OuterArmTravel(m_OuterArm)
-     ));
-    home.and(closeCheck.negate()).onTrue(new SequentialCommandGroup(
-      new InnerArmStowed(m_InnerArm).withTimeout(2),
-      new OuterArmStowed(m_OuterArm)
-    ));
-    eTeir.onTrue(new ParallelCommandGroup(
-    new OuterArmRaiseE(m_OuterArm),
-     new InnerArmRaiseE(m_InnerArm)
-     ));
-   midTier.onTrue(new SequentialCommandGroup(
-    new InnerArmRaiseM(m_InnerArm).withTimeout(2),
-     new OuterArmRaiseM(m_OuterArm)
-     ));
-   sTeir.onTrue(new ParallelCommandGroup(
-    new OuterArmRaiseS(m_OuterArm),
-     new InnerArmRaiseS(m_InnerArm)
-     ));
-    outerRaise.whileTrue(new OuterArmRaise(m_OuterArm));
-    outerLower.whileTrue(new OuterArmLower(m_OuterArm));
-    innerRaise.whileTrue(new InnerArmRaise(m_InnerArm));
-    innerLower.whileTrue(new InnerArmLower(m_InnerArm));
-
+      /* Button Bindings - Actions taken upon button press or hold */
+      private void configureButtonBindings() { 
+        //ZERO GYRO
+        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())); 
+        //TURTLE
+        turtleMode.onTrue(new InstantCommand(() -> s_Swerve.turtleMode()));  
+        //HOME
+        home.and(closeCheck).onTrue(new SequentialCommandGroup( 
+          new InnerArmTravel(m_InnerArm).withTimeout(2 ),
+          new WaitCommand(1),
+          new OuterArmTravel(m_OuterArm)
+        ));
+        home.and(closeCheck.negate()).onTrue(new SequentialCommandGroup(
+          new InnerArmStowed(m_InnerArm).withTimeout(2),
+          new OuterArmStowed(m_OuterArm)
+        ));
+        //TRAVERSAL
+        eTeir.onTrue(new ParallelCommandGroup(
+        new OuterArmRaiseE(m_OuterArm),
+        new InnerArmRaiseE(m_InnerArm)
+        ));
+        // HUMAN PLAYER / MID NODE
+        midTier.onTrue(new SequentialCommandGroup(
+        new InnerArmRaiseM(m_InnerArm).withTimeout(2),
+        new OuterArmRaiseM(m_OuterArm)
+        ));
+        // TOP NODE
+        sTeir.onTrue(new ParallelCommandGroup(
+          new OuterArmRaiseS(m_OuterArm),
+          new InnerArmRaiseS(m_InnerArm)
+          ));
+        // CLAW
+        openClaw.onTrue(new OpenClaw(m_Claw));
+        closeClaw.and(innerStowedCheck).and(outerStowedCheck).onTrue(new SequentialCommandGroup(
+          new CloseClaw(m_Claw),
+          new OuterArmTravel(m_OuterArm)
+        ));
+        closeClaw.and(innerStowedCheck.negate().or(outerStowedCheck.negate())).whileTrue(
+          new CloseClaw(m_Claw)
+        );
+          // These commands were previously tied to digital motion of the arm with the Joystick buttons
+          // outerRaise.whileTrue(new OuterArmRaise(m_OuterArm));
+          // outerLower.whileTrue(new OuterArmLower(m_OuterArm));
+          // innerRaise.whileTrue(new InnerArmRaise(m_InnerArm));
+          // innerLower.whileTrue(new InnerArmLower(m_InnerArm));
+          
     /*CoDriver */
-
-    CoDrivereTeir.onTrue(new ParallelCommandGroup(
-    new OuterArmRaiseE(m_OuterArm),
-     new InnerArmRaiseE(m_InnerArm)
-    ));
-    CoDrivereMidTeir.onTrue(new SequentialCommandGroup(
-    new InnerArmRaiseM(m_InnerArm).withTimeout(2),
-     new OuterArmRaiseM(m_OuterArm)
-    ));
-    CoDrivereSTeir.onTrue(new ParallelCommandGroup(
-     new OuterArmRaiseS(m_OuterArm),
-      new InnerArmRaiseS(m_InnerArm)
-    ));
-    CoDriverHome.and(closeCheck).onTrue(new SequentialCommandGroup(
-      new InnerArmTravel(m_InnerArm).withTimeout(2 ),
-      new WaitCommand(1),
-      new OuterArmTravel(m_OuterArm)
-     ));
-    CoDriverHome.and(closeCheck.negate()).onTrue(new SequentialCommandGroup(
-      new InnerArmStowed(m_InnerArm).withTimeout(2),
-      new OuterArmStowed(m_OuterArm)
-    ));
+    /* Button Bindings - Actions taken upon button press or hold */
+        //HOME
+        CoDriverHome.and(closeCheck).onTrue(new SequentialCommandGroup(
+        new InnerArmTravel(m_InnerArm).withTimeout(2 ),
+        new WaitCommand(1),
+        new OuterArmTravel(m_OuterArm)
+        ));
+        //TRAVERSAL
+        CoDrivereTeir.onTrue(new ParallelCommandGroup(
+        new OuterArmRaiseE(m_OuterArm),
+        new InnerArmRaiseE(m_InnerArm)
+        ));
+        //TOP NODE
+        CoDrivereSTeir.onTrue(new ParallelCommandGroup(
+        new OuterArmRaiseS(m_OuterArm),
+          new InnerArmRaiseS(m_InnerArm)
+        ));
+        //HUMAN PLAYER | MID NODE
+        CoDrivereMidTeir.onTrue(new SequentialCommandGroup(
+        new InnerArmRaiseM(m_InnerArm).withTimeout(2),
+        new OuterArmRaiseM(m_OuterArm)
+        ));
+        // CLAW
+        expandClaw.onTrue(new OpenClaw(m_Claw));
+        condenseClaw.onTrue(new CloseClaw(m_Claw));
 
     //Trigger lasersense = new Trigger(m_Claw::getLazerSenser);
-    
     //lasersense.onFalse(new CloseClaw(m_Claw));
-
-    //normal controller
-    openClaw.onTrue(new OpenClaw(m_Claw));
-    closeClaw.and(innerStowedCheck).and(outerStowedCheck).onTrue(new SequentialCommandGroup(
-      new CloseClaw(m_Claw),
-      new OuterArmTravel(m_OuterArm)
-    ));
-    closeClaw.and(innerStowedCheck.negate().or(outerStowedCheck.negate())).whileTrue(
-      new CloseClaw(m_Claw)
-    );
-
-    //override controller
-    expandClaw.onTrue(new OpenClaw(m_Claw));
-    condenseClaw.onTrue(new CloseClaw(m_Claw));
-
-
-    
+   
   }
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -268,10 +263,11 @@ public class RobotContainer {
     return new SequentialCommandGroup(
     new InstantCommand(() -> s_Swerve.zeroGyro()),
     new CloseClaw(m_Claw),  
+    new InstantCommand(() -> s_Swerve.turtleMode()),
+    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.2),
     // because it's allready in a scg we don't need to make a new one
     new InnerArmRaiseM(m_InnerArm),
     new OuterArmRaiseM(m_OuterArm),
-    new InstantCommand(() -> s_Swerve.turtleMode()),
     new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
     new OpenClaw(m_Claw),
     new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
@@ -283,10 +279,9 @@ public class RobotContainer {
     ),
     new InstantCommand(() -> s_Swerve.turtleMode()),
     new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.00),
-    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> 1.0, () -> false).withTimeout(0.25)
-   // new InstantCommand(()  S_Swerve.Gyro + 180)
-    
-
+    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
+    new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
+    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .25, () -> false).withTimeout(0.25)
     ); // TODO place holder for now, replace once we have auto modes
   }
 

@@ -11,12 +11,12 @@ import frc.robot.subsystems.Arms.InnerArm;
 
 public class TeleopInnerArm extends CommandBase {
   /** Creates a new TeleopInnerArm. */
-  private DoubleSupplier m_UpperOut;
+  private DoubleSupplier m_InnerAxisOutputValue;
   private InnerArm m_innerArm;
 
-  public TeleopInnerArm(InnerArm innerArm, DoubleSupplier upperIn) {
+  public TeleopInnerArm(InnerArm innerArm, DoubleSupplier JoystickAxisPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_UpperOut = upperIn;
+    m_InnerAxisOutputValue = JoystickAxisPosition; // UpperOut is the output value // upperIn is the input value
     m_innerArm = innerArm;
     addRequirements(m_innerArm);
   }
@@ -28,9 +28,9 @@ public class TeleopInnerArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(((Math.abs(m_UpperOut.getAsDouble())>0.2))){
+    if(((Math.abs(m_InnerAxisOutputValue.getAsDouble())>0.2))){
       
-      m_innerArm.raiseWithInput((m_UpperOut.getAsDouble())*-0.3);
+      m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
       // "Borrowed" from another team, not sure of purpose
       // m_arm.reset();
     } else {
