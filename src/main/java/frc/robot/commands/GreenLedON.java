@@ -5,12 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.LEDs;
 
-public class LedLights extends CommandBase {
-  private Claw m_subsystem;  //Claw is running the PCM, why change???
-  /** Creates a new CloseClaw. */
-  public LedLights(Claw p_subsystem) {
+public class GreenLedON extends CommandBase {
+  private LEDs m_subsystem;  //Claw is running the PCM, why change???
+  /** Creates a new LEDlights */
+  public GreenLedON(LEDs p_subsystem) {
     m_subsystem=p_subsystem;
     addRequirements(m_subsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -23,7 +23,7 @@ public class LedLights extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.Close();
+    m_subsystem.GreenLedOn();
   }
 
   // Called once the command ends or is interrupted.

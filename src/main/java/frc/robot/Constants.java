@@ -242,8 +242,8 @@ public static final class OuterArmConstants {
 
 public static final class InnerArmConstants {
   public static final int innermotor = 14;
-  public static final int overrideDown = 2; // button channel? 
-  public static final int overrideUp = 3; // button channel? 
+  public static final int overrideDown = 2; // Joystick button channel 
+  public static final int overrideUp = 3; // Joystick button channel 
   public static final int raiseSpeed = 1;
   public static final int lowerSpeed = -1;
   public static final int stopSpeed = 0;
@@ -254,11 +254,11 @@ public static final class InnerArmConstants {
   public static final double innerFF = 0.0;
   public static final double innerMin = -1.0;
   public static final double innerMax = 1.0;
-  public static final double upPIDReferenceE = 1.26; //A
-  public static final double upPIDReferenceM = 1.28; //B
-  public static final double upPIDReferenceS = 1.43; //Y
-  public static final double downPIDReference = 0.57;  //X  Stowed
-  public static final double upPIDReferenceT = 2.27;  //X  Traversal
+  public static final double PIDReferenceE = 1.26; //A 
+  public static final double PIDReferenceM = 1.28; //B Human Player
+  public static final double PIDReferenceS = 1.43; //Y Top Teir
+  public static final double PIDReferenceL = 0.57;  //X Lower Teir Not used I think
+  public static final double PIDReferenceT = 2.27;  //X  Travel
   public static final double innerPIDTolorence = 0.01;
   public static final boolean kAnalogSensorInverted = false;
 //inner arm

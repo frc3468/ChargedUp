@@ -29,7 +29,7 @@ public class TeleopOuterArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(((Math.abs(m_OuterAxisOutputValue.getAsDouble())>0.2))){
+    if((Math.abs(m_OuterAxisOutputValue.getAsDouble())>0.2) && !m_outerArm.m_breakstopper.isPressed()){
       
       m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble())*-1);//was *0.3
       // "Borrowed" from another team, not sure of purpose
@@ -48,6 +48,6 @@ public class TeleopOuterArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_outerArm.m_breakstopper.isPressed();
   }
 }

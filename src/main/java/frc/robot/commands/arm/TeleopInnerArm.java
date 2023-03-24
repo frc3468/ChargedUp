@@ -16,6 +16,8 @@ public class TeleopInnerArm extends CommandBase {
 
   public TeleopInnerArm(InnerArm innerArm, DoubleSupplier JoystickAxisPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
+
+    
     m_InnerAxisOutputValue = JoystickAxisPosition; // UpperOut is the output value // upperIn is the input value
     m_innerArm = innerArm;
     addRequirements(m_innerArm);
@@ -28,7 +30,7 @@ public class TeleopInnerArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(((Math.abs(m_InnerAxisOutputValue.getAsDouble())>0.2))){
+    if((Math.abs(m_InnerAxisOutputValue.getAsDouble())>0.2) && !m_innerArm.m_breakstopper.isPressed()){
       
       m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
       // "Borrowed" from another team, not sure of purpose
@@ -47,6 +49,8 @@ public class TeleopInnerArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_innerArm.m_breakstopper.isPressed();
   }
+
 }
+

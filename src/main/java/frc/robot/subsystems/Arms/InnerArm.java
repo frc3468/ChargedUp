@@ -51,27 +51,27 @@ public class InnerArm extends SubsystemBase {
     m_innerMotor.set(InnerArmConstants.raiseSpeed);
   }
   public void raiseETier() {
-    m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceE, CANSparkMax.ControlType.kPosition);
-    m_setPoint = InnerArmConstants.upPIDReferenceM;
+    m_outerPIDController.setReference(InnerArmConstants.PIDReferenceE, CANSparkMax.ControlType.kPosition);
+    m_setPoint = InnerArmConstants.PIDReferenceM;
   }
   public void raiseMid() {
-    m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceM, CANSparkMax.ControlType.kPosition);
-    m_setPoint = InnerArmConstants.upPIDReferenceM;
+    m_outerPIDController.setReference(InnerArmConstants.PIDReferenceM, CANSparkMax.ControlType.kPosition);
+    m_setPoint = InnerArmConstants.PIDReferenceM;
   }
   public void raiseSTier() {
-    m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceS, CANSparkMax.ControlType.kPosition);
-    m_setPoint = InnerArmConstants.upPIDReferenceS;
+    m_outerPIDController.setReference(InnerArmConstants.PIDReferenceS, CANSparkMax.ControlType.kPosition);
+    m_setPoint = InnerArmConstants.PIDReferenceS;
   }
   public void raiseTravel() {
-    m_outerPIDController.setReference(InnerArmConstants.upPIDReferenceT, CANSparkMax.ControlType.kPosition);
-    m_setPoint = InnerArmConstants.upPIDReferenceT;
+    m_outerPIDController.setReference(InnerArmConstants.PIDReferenceT, CANSparkMax.ControlType.kPosition);
+    m_setPoint = InnerArmConstants.PIDReferenceT;
   }
   public void lower(){
     m_innerMotor.set(InnerArmConstants.lowerSpeed);
   }
   public void lowerPID() {
-    m_outerPIDController.setReference(InnerArmConstants.downPIDReference, CANSparkMax.ControlType.kPosition);
-    m_setPoint = InnerArmConstants.downPIDReference; 
+    m_outerPIDController.setReference(InnerArmConstants.PIDReferenceL, CANSparkMax.ControlType.kPosition);
+    m_setPoint = InnerArmConstants.PIDReferenceL; 
   }
   public void stop(){
     m_innerMotor.set(InnerArmConstants.stopSpeed);
@@ -80,7 +80,7 @@ public class InnerArm extends SubsystemBase {
     return (Math.abs(m_setPoint - m_potentiometor.getPosition()) <= InnerArmConstants.innerPIDTolorence);
   }
   public boolean isAtStowed() {
-    return (Math.abs(InnerArmConstants.downPIDReference - m_potentiometor.getPosition()) <= InnerArmConstants.innerPIDTolorence);
+    return (Math.abs(InnerArmConstants.PIDReferenceL - m_potentiometor.getPosition()) <= InnerArmConstants.innerPIDTolorence);
   }
   public void raiseWithInput(double speed) {
     System.out.println("Inner arm raised at speed: " + speed);
