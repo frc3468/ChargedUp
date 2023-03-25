@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -205,13 +206,13 @@ public class RobotContainer {
         new RedLedOFF(m_LEDs),
         new WaitCommand(1),
         new WhiteLedON(m_LEDs)
+        ));
 
     // new GreenLedON(m_LEDs).withTimeout(.5),
     ////// new GreenLedOFF(m_LEDs),
     // new WaitCommand(1),
     // new WhiteLedON(m_LEDs).withTimeout(.5),
     // new WhiteLedOFF(m_LEDs)
-    ));
     // TURTLE
     turtleMode.onTrue(new InstantCommand(() -> s_Swerve.turtleMode()));
     // HOME
@@ -244,6 +245,7 @@ public class RobotContainer {
             new OuterArmRaiseS(m_OuterArm),
             new InnerArmRaiseS(m_InnerArm)));
     // CLAW
+    /* 
     openClaw.onTrue(
       new ParallelCommandGroup(
         new OpenClaw(m_Claw),
@@ -269,6 +271,7 @@ public class RobotContainer {
               new WhiteLedOFF(m_LEDs),
               new GreenLedON(m_LEDs))
           );
+*/
     // These commands were previously tied to digital motion of the arm with the
     // Joystick buttons
     // outerRaise.whileTrue(new OuterArmRaise(m_OuterArm));
