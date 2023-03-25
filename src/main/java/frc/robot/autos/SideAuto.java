@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-/*
+
 package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,26 +15,36 @@ import frc.robot.commands.OpenClaw;
 import frc.robot.commands.OuterArmRaiseM;
 import frc.robot.commands.OuterArmStowed;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.commands.*;
+import frc.robot.subsystems.Arms.InnerArm;
+import frc.robot.subsystems.Arms.OuterArm;
+import frc.robot.subsystems.Claw;
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SideAuto extends SequentialCommandGroup {
   /** Creates a new SideAuto. */
-  /*
+  private final SwerveDrive s_Swerve = new SwerveDrive();
+  private final Claw m_Claw = new Claw();
+  private final InnerArm m_InnerArm = new InnerArm();
+  private final OuterArm m_OuterArm = new OuterArm();
+
+
   public SideAuto() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
     new InstantCommand(() -> s_Swerve.zeroGyro()),
-    new CloseClaw(Claw),  
+    new CloseClaw(m_Claw),  
     new InstantCommand(() -> s_Swerve.turtleMode()),
     new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.2),
     // because it's allready in a scg we don't need to make a new one
-    new InnerArmRaiseM(InnerArm),
-    new OuterArmRaiseM(OuterArm),
-    new TeleopSwerve(SwerveDrive, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
-    new OpenClaw(Claw),
+    new InnerArmRaiseM(m_InnerArm),
+    new OuterArmRaiseM(m_OuterArm),
+    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
+    new OpenClaw(m_Claw),
     new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
     new SequentialCommandGroup(
    // as opposed to here where we do.
@@ -52,4 +62,3 @@ public class SideAuto extends SequentialCommandGroup {
     ;
   }
 
-*/
