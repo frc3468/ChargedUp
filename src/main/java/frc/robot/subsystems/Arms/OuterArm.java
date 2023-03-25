@@ -83,9 +83,10 @@ public class OuterArm extends SubsystemBase {
   
 
   public void raiseWithInput(double speed) {
-    System.out.println("Outer arm raised at speed: " + speed);
-    m_outerMotor.set(speed);
-  }
+    if(speed != 0) {
+     System.out.println("Outer arm raised at speed: " + speed);
+    }
+    m_outerMotor.set(speed);}
 
   @Override
   public void periodic() {

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.config.OnboardModuleStates;
 import frc.robot.Constants.Clawconstants;
+import frc.robot.Constants.LEDconstants;
 
 public class LEDs extends SubsystemBase {
 
@@ -21,22 +22,22 @@ public class LEDs extends SubsystemBase {
   private final Solenoid LedWhite = new Solenoid(
     Clawconstants.ModuleID,
     PneumaticsModuleType.REVPH,
-    Clawconstants.LedWhite
+    LEDconstants.LedWhite
   );
   private final Solenoid LedRed = new Solenoid(
     Clawconstants.ModuleID,
     PneumaticsModuleType.REVPH,
-    Clawconstants.LedRed
+    LEDconstants.LedRed
   );
   private final Solenoid LedGreen = new Solenoid(
     Clawconstants.ModuleID,
     PneumaticsModuleType.REVPH,
-    Clawconstants.LedGreen
+    LEDconstants.LedGreen
   );
   private final Solenoid LedBlue = new Solenoid(
     Clawconstants.ModuleID,
     PneumaticsModuleType.REVPH,
-    Clawconstants.LedBlue
+    LEDconstants.LedBlue
   );
 
   /** Creates new LED channels. */
@@ -53,7 +54,7 @@ public class LEDs extends SubsystemBase {
     LedGreen.set(true);
   }
 
-  public void BlueLedOn() {
+  public void BlueLedON() {
     LedBlue.set(true);
   }
 

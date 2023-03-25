@@ -83,8 +83,13 @@ public class InnerArm extends SubsystemBase {
     return (Math.abs(InnerArmConstants.PIDReferenceL - m_potentiometor.getPosition()) <= InnerArmConstants.innerPIDTolorence);
   }
   public void raiseWithInput(double speed) {
+    if (speed != 0){
+   
     System.out.println("Inner arm raised at speed: " + speed);
+    }
     m_innerMotor.set(speed);
+   
+    
   }
   public void reset(){
     
