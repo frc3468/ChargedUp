@@ -179,8 +179,8 @@ public class RobotContainer {
   
 
    // Configure the button bindings
-   //configureButtonBindings();
-  // configureBindings();
+   
+   configureButtonBindings();
  }
 
   /* End Subsystems */
@@ -328,8 +328,8 @@ public class RobotContainer {
 
    Trigger Whiskersense = new Trigger(m_Claw::whiskerSwitchClosed);
     Whiskersense.onFalse(new CloseClaw(m_Claw));
+ }
 
-  }
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be
@@ -345,8 +345,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  private void configureBindings() {
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
