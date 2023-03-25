@@ -176,7 +176,12 @@ public class RobotContainer {
             m_OuterArm,
             () -> overRideRight.getRawAxis(outerArmAxis)));
 
-  }
+  
+
+   // Configure the button bindings
+   //configureButtonBindings();
+  // configureBindings();
+ }
 
   /* End Subsystems */
 
@@ -297,6 +302,7 @@ public class RobotContainer {
             new InnerArmRaiseM(m_InnerArm).withTimeout(2),
             new OuterArmRaiseM(m_OuterArm)));
     // CLAW
+/*
     expandClaw.onTrue(
         new ParallelCommandGroup(
             new OpenClaw(m_Claw),
@@ -307,10 +313,20 @@ public class RobotContainer {
             new CloseClaw(m_Claw),
             new WhiteLedOFF(m_LEDs),
             new GreenLedON(m_LEDs)));
+*/
+            //revert          
+            expandClaw.onTrue(
+                
+                    new OpenClaw(m_Claw)
+                   );
+            condenseClaw.onTrue(
+               
+                    new CloseClaw(m_Claw));
+        
     // Trigger lasersense = new Trigger(m_Claw::getLazerSenser);
     // lasersense.onFalse(new CloseClaw(m_Claw));
 
-    Trigger Whiskersense = new Trigger(m_Claw::whiskerSwitchClosed);
+   Trigger Whiskersense = new Trigger(m_Claw::whiskerSwitchClosed);
     Whiskersense.onFalse(new CloseClaw(m_Claw));
 
   }
