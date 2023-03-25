@@ -29,6 +29,7 @@ public class TeleopOuterArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /* 
     if((Math.abs(m_OuterAxisOutputValue.getAsDouble())>0.2) && !m_outerArm.m_breakstopper.isPressed()){
       
       m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble())*-1);//was *0.3
@@ -36,8 +37,22 @@ public class TeleopOuterArm extends CommandBase {
       // m_arm.reset();
     } else {
       m_outerArm.raiseWithInput(0);
-    }
+    }*/
+    if((Math.abs(m_OuterAxisOutputValue.getAsDouble())>0.2) && !m_outerArm.m_breakstopper.isPressed()){
+    m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble())*-1);
+      // "Borrowed" from another team, not sure of purpose
+      // m_arm.reset();
+    } else { //switch is pressed
+      //m_innerArm.raiseWithInput(0);
+      if (((m_OuterAxisOutputValue.getAsDouble())*-1)>0){ // allows for forward movement, but not backward
+          m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble())*-1);
+
+      }
+      else
+      m_outerArm.raiseWithInput(0);
+
   }
+}
 
   // Called once the command ends or is interrupted.
   @Override

@@ -35,8 +35,16 @@ public class TeleopInnerArm extends CommandBase {
       m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
       // "Borrowed" from another team, not sure of purpose
       // m_arm.reset();
-    } else {
+    } else { //switch is pressed
+      //m_innerArm.raiseWithInput(0);
+      if (((m_InnerAxisOutputValue.getAsDouble())*-1)>0){ // allows for forward movement, but not backward
+        m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
+
+      }
+      else
       m_innerArm.raiseWithInput(0);
+
+      //switch is pressed, 
     }
   }
 
