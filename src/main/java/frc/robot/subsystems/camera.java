@@ -24,6 +24,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+
+// TEST IMPORTS
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.VideoMode.PixelFormat;
+
 public class camera extends SubsystemBase {
   /** Creates a new camera. */
   
@@ -33,7 +40,7 @@ public class camera extends SubsystemBase {
   boolean didISucceed;
   AprilTagFieldLayout aLayout;
   boolean layoutfailed;
-  UsbCamera secoundCamera;
+  UsbCamera armCamera;
   
 
   public camera() {
@@ -42,7 +49,36 @@ public class camera extends SubsystemBase {
     currentfilter = "AprilTag";
     machineCamera = new PhotonCamera("3468"); 
     machineCamera.setDriverMode(!didISucceed);
-    secoundCamera = CameraServer.startAutomaticCapture();
+
+
+    // // USB CAMERA TEST - METHOD 1
+
+    // // Creates UsbCamera and MjpegServer [1] and connects them
+    // armCamera = new UsbCamera("Arm Camera on WorldStar", 0);
+    // try (MjpegServer armCamServer = new MjpegServer("armcam_svr 0", 1181)) {
+    //   armCamServer.setSource(armCamera);
+    // }
+    // try (// Creates the CvSink and connects it to the UsbCamera
+    // CvSink cvSink = new CvSink("armcam_USB 0")) {
+    //   cvSink.setSource(armCamera);
+    // }
+    // // Creates the CvSource and MjpegServer [2] and connects them
+    // CvSource outputStream = new CvSource("Blur", PixelFormat.kMJPEG, 640, 480, 30);
+    // try (MjpegServer mjpegServer2 = new MjpegServer("serve_Blur", 1182)) {
+    //   mjpegServer2.setSource(outputStream);
+    // }
+
+    // USB CAMERA TEST - METHOD 2
+
+    // Creates UsbCamera and MjpegServer [1] and connects them
+    CameraServer.startAutomaticCapture();
+
+    // Creates the CvSink and connects it to the UsbCamera
+    CvSink cvSink = CameraServer.getVideo();
+
+    // Creates the CvSource and MjpegServer [2] and connects them
+    CvSource outputStream = CameraServer.putVideo("Le Arm Camera", 640, 480);
+
 
     try {
       aLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);

@@ -53,7 +53,6 @@ public class Claw extends SubsystemBase {
 
   public boolean whiskerSwitchClosed() {
     return whiskerSwitch.get();
-
   }
 
   @Override
