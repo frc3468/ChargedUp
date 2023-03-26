@@ -44,7 +44,7 @@ public class TeleopOuterArm extends CommandBase {
       // m_arm.reset();
     } else { //switch is pressed
       //m_innerArm.raiseWithInput(0);
-      if (((m_OuterAxisOutputValue.getAsDouble())*-1)>0){ // allows for forward movement, but not backward
+      if (((m_OuterAxisOutputValue.getAsDouble())*-1)>0 && m_outerArm.m_breakstopper.isPressed()){ // allows for forward movement, but not backward
           m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble())*-1);
 
       }

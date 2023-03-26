@@ -17,7 +17,6 @@ public class TeleopInnerArm extends CommandBase {
   public TeleopInnerArm(InnerArm innerArm, DoubleSupplier JoystickAxisPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
 
-    
     m_InnerAxisOutputValue = JoystickAxisPosition; // UpperOut is the output value // upperIn is the input value
     m_innerArm = innerArm;
     addRequirements(m_innerArm);
@@ -25,28 +24,25 @@ public class TeleopInnerArm extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if((Math.abs(m_InnerAxisOutputValue.getAsDouble())>0.2) && !m_innerArm.m_breakstopper.isPressed()){
-      
-      m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
+    if ((Math.abs(m_InnerAxisOutputValue.getAsDouble()) > 0.2) && !m_innerArm.m_breakstopper.isPressed()) {
+
+      m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble()) * -1);
+
       // "Borrowed" from another team, not sure of purpose
       // m_arm.reset();
-    } else { //switch is pressed
-      //m_innerArm.raiseWithInput(0);
-      if (((m_InnerAxisOutputValue.getAsDouble())*-1)>0){ // allows for forward movement, but not backward
-        m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
-
-      }
-      else
+    } else // switch is pressed
       m_innerArm.raiseWithInput(0);
-
-      //switch is pressed, 
-    }
   }
+
+  // m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
+
+  // switch is pressed,
 
   // Called once the command ends or is interrupted.
   @Override
@@ -61,4 +57,3 @@ public class TeleopInnerArm extends CommandBase {
   }
 
 }
-

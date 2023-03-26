@@ -31,17 +31,20 @@ import edu.wpi.first.math.geometry.Translation3d;
 public final class Constants {
   // Setpoints For fast update of arm setpoints
   // Home
-  private static final double InnerArmHome = 99;
-  private static final double OuterArmHome = 99;
+  private static final double InnerArmHome = .55;
+  private static final double OuterArmHome = .20;
   // travel
-  private static final double InnerArmTravel = 99;
-  private static final double OuterArmTravel = 99;
-  // Human Player - Middle Node
-  private static final double InnerArmMid = 99;
-  private static final double OuterArmMid = 99;
+  private static final double InnerArmTravel = .55;
+  private static final double OuterArmTravel = .20;
+  // Middle Node
+  private static final double InnerArmMid = .56;
+  private static final double OuterArmMid = .21;
+  // Human Player
+  private static final double InnerArmHuman = .57;
+  private static final double OuterArmHuman = .22;
   // top Node
-  private static final double InnerArmTop = 1.51;
-  private static final double OuterArmTop = 99;
+  private static final double InnerArmTop = .58;
+  private static final double OuterArmTop = .23;
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
@@ -239,9 +242,10 @@ public final class Constants {
     public static final double upPIDReferenceS = OuterArmTop;// 1.51
     public static final double downPIDReference = OuterArmTravel;// 0.93;
     public static final double upPIDReferenceT = OuterArmTravel;// 1.2;
+    public static final double upPIDReferenceH = OuterArmHuman;
     public static final double startingConfig = 2.5;
     public static final double outerPIDTolorence = 0.01;
-    public static final boolean kAnalogSensorInverted = true;
+    public static final boolean kAnalogSensorInverted = false;
     // outer arm
     /*
      * driveMotor.restoreFactoryDefaults();
@@ -270,6 +274,7 @@ public final class Constants {
     public static final int innermotor = 14;
     public static final int overrideDown = 2; // Joystick button channel
     public static final int overrideUp = 3; // Joystick button channel
+    public static final int overrideHuman = 5; // Joystick button channel
     public static final int raiseSpeed = 1;
     public static final int lowerSpeed = -1;
     public static final int stopSpeed = 0;
@@ -285,6 +290,7 @@ public final class Constants {
     public static final double PIDReferenceS = InnerArmTop;// 1.43; //Y Top Teir
     public static final double PIDReferenceL = InnerArmTravel;// 0.57; //X Lower Teir Not used I think
     public static final double PIDReferenceT = InnerArmTravel;// 2.27; //X Travel
+    public static final double PIDReferenceH = InnerArmHuman;
     public static final double innerPIDTolorence = 0.01;
     public static final boolean kAnalogSensorInverted = false;
     // inner arm

@@ -29,7 +29,7 @@ public class OuterArm extends SubsystemBase {
   /** Creates a new OuterArm. */
   public OuterArm() {
     m_outerMotor = new CANSparkMax(OuterArmConstants.outermotor, MotorType.kBrushless);
-    m_outerMotor.setInverted(true);
+    m_outerMotor.setInverted(false);
     m_outerPIDController = m_outerMotor.getPIDController();
     m_potentiometor = m_outerMotor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle);
     m_potentiometor.setInverted(OuterArmConstants.kAnalogSensorInverted);
@@ -62,6 +62,10 @@ public class OuterArm extends SubsystemBase {
   }
   public void raiseTravel() {
     m_outerPIDController.setReference(OuterArmConstants.upPIDReferenceT, CANSparkMax.ControlType.kPosition);
+    m_setPoint = OuterArmConstants.upPIDReferenceT;
+  }
+  public void raiseHuman() {
+    m_outerPIDController.setReference(OuterArmConstants.upPIDReferenceH, CANSparkMax.ControlType.kPosition);
     m_setPoint = OuterArmConstants.upPIDReferenceT;
   }
   public void lower(){

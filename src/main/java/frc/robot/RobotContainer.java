@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
+import frc.robot.commands.Setpoints.InnerArmRaiseH;
+import frc.robot.commands.Setpoints.OuterArmRaiseH;
 import frc.robot.commands.arm.TeleopInnerArm;
 //import frc.robot.commands.arm.TeleopInnerArm2;
 //import frc.robot.commands.arm.TeleopInnerarm2;
@@ -106,12 +108,15 @@ public class RobotContainer {
   // private final JoystickButton innerLower = new JoystickButton(overRideLeft,
   // Constants.InnerArmConstants.overrideDown); //Axis Forward - Inner arm down
   // LEFT JOYSTICK BUTTONS
-  private final JoystickButton CoDrivereTeir = new JoystickButton(
+  private final JoystickButton CoDriverETeir = new JoystickButton(
       overRideLeft,
       Constants.InnerArmConstants.overrideUp); // Left Top Front button
   private final JoystickButton CoDriverHome = new JoystickButton(
       overRideLeft,
       Constants.InnerArmConstants.overrideDown); // Left Top Rear button
+    private final JoystickButton CoDriverH = new JoystickButton(
+    overRideLeft,
+    Constants.InnerArmConstants.overrideHuman); // Left Top Rear button
   /*************/
   // OUTER ARM - RIGHT JOYSTICK
   private int outerArmAxis = Joystick.AxisType.kY.value;
@@ -193,18 +198,18 @@ public class RobotContainer {
     zeroGyro.onTrue(new SequentialCommandGroup(
         new InstantCommand(() -> s_Swerve.zeroGyro()),
         new WhiteLedON(m_LEDs).withTimeout(.25),
-        new WaitCommand(.25),
+        new WaitCommand(.1),
         new WhiteLedOFF(m_LEDs),
         new BlueLedON(m_LEDs).withTimeout(.25),
-        new WaitCommand(.25),
+        new WaitCommand(.1),
         new BlueLedOFF(m_LEDs),
         new GreenLedON(m_LEDs).withTimeout(.25),
-        new WaitCommand(.25),
+        new WaitCommand(.1),
         new GreenLedOFF(m_LEDs),
         new RedLedON(m_LEDs).withTimeout(.25),
-        new WaitCommand(.25),
+        new WaitCommand(.1),
         new RedLedOFF(m_LEDs),
-        new WaitCommand(1),
+        new WaitCommand(.25),
         new WhiteLedON(m_LEDs)
         ));
 
@@ -214,7 +219,14 @@ public class RobotContainer {
     // new WhiteLedON(m_LEDs).withTimeout(.5),
     // new WhiteLedOFF(m_LEDs)
     // TURTLE
-    turtleMode.onTrue(new InstantCommand(() -> s_Swerve.turtleMode()));
+    turtleMode.onTrue(
+    new SequentialCommandGroup(  
+    new InstantCommand(() -> s_Swerve.turtleMode()),
+    new WhiteLedOFF(m_LEDs),
+    new BlueLedON(m_LEDs),
+    new RedLedON(m_LEDs)
+    ) 
+        );
     // HOME
     home
         .and(closeCheck)
@@ -290,7 +302,7 @@ public class RobotContainer {
                 new WaitCommand(1),
                 new OuterArmTravel(m_OuterArm)));
     // TRAVERSAL
-    CoDrivereTeir.onTrue(
+    CoDriverETeir.onTrue(
         new ParallelCommandGroup(
             new OuterArmRaiseE(m_OuterArm),
             new InnerArmRaiseE(m_InnerArm)));
@@ -304,33 +316,51 @@ public class RobotContainer {
         new SequentialCommandGroup(
             new InnerArmRaiseM(m_InnerArm).withTimeout(2),
             new OuterArmRaiseM(m_OuterArm)));
+    CoDriverH.onTrue(
+        new ParallelCommandGroup(
+            new InnerArmRaiseH(m_InnerArm),
+            new OuterArmRaiseH(m_OuterArm)));
+    
     // CLAW
-/*
-    expandClaw.onTrue(
-        new ParallelCommandGroup(
-            new OpenClaw(m_Claw),
-            new GreenLedOFF(m_LEDs),
-            new WhiteLedON(m_LEDs)));
-    condenseClaw.onTrue(
-        new ParallelCommandGroup(
-            new CloseClaw(m_Claw),
-            new WhiteLedOFF(m_LEDs),
-            new GreenLedON(m_LEDs)));
-*/
-            //revert          
+        
             expandClaw.onTrue(
-                
-                    new OpenClaw(m_Claw)
-                   );
+                new SequentialCommandGroup(
+                    new OpenClaw(m_Claw),
+                    new GreenLedOFF(m_LEDs),       
+                               
+new WhiteLedON(m_LEDs)                
+                                       )
+                );
+            
+
+
+
+
+
             condenseClaw.onTrue(
-               
-                    new CloseClaw(m_Claw));
+                new SequentialCommandGroup(
+                    new CloseClaw(m_Claw),
+                    new WhiteLedOFF(m_LEDs),
+                    new RedLedOFF(m_LEDs),
+                    new BlueLedOFF(m_LEDs),
+                    new GreenLedON(m_LEDs)
+
+                    ));
         
     // Trigger lasersense = new Trigger(m_Claw::getLazerSenser);
     // lasersense.onFalse(new CloseClaw(m_Claw));
 
    Trigger Whiskersense = new Trigger(m_Claw::whiskerSwitchClosed);
-    Whiskersense.onFalse(new CloseClaw(m_Claw));
+    Whiskersense.onFalse(
+        new SequentialCommandGroup(
+            new CloseClaw(m_Claw),
+            new WhiteLedOFF(m_LEDs),
+            new BlueLedOFF(m_LEDs),
+            new RedLedOFF(m_LEDs),
+            new GreenLedON(m_LEDs)
+             ));
+
+                    
  }
 
 
@@ -355,34 +385,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    // return new exampleAuto(s_Swerve);
-    return new SequentialCommandGroup(
-        new InstantCommand(() -> s_Swerve.zeroGyro()),
-        new CloseClaw(m_Claw),
-        new InstantCommand(() -> s_Swerve.turtleMode()),
-        new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0, () -> false)
-            .withTimeout(.2),
-        // because it's allready in a scg we don't need to make a new one
-        new InnerArmRaiseM(m_InnerArm),
-        new OuterArmRaiseM(m_OuterArm),
-        new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0, () -> false)
-            .withTimeout(1),
-        new OpenClaw(m_Claw),
-        new TeleopSwerve(s_Swerve, () -> -5.0, () -> 0.0, () -> 0.0, () -> false)
-            .withTimeout(0.55),
-        new SequentialCommandGroup(
-            // as opposed to here where we do.
-            new WaitCommand(0.2),
-            new InnerArmStowed(m_InnerArm),
-            new OuterArmStowed(m_OuterArm)),
-        new InstantCommand(() -> s_Swerve.turtleMode()),
-        new TeleopSwerve(s_Swerve, () -> -5.0, () -> 0.0, () -> 0.0, () -> false)
-            .withTimeout(1.00),
-        new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false)
-            .withTimeout(0.5),
-        new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
-        new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .25, () -> false)
-            .withTimeout(0.25)); // TODO place holder for now, replace once we have auto modes
+    return null;
   }
 }
