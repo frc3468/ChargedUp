@@ -329,14 +329,9 @@ public class RobotContainer {
                     new GreenLedOFF(m_LEDs),       
                                
 new WhiteLedON(m_LEDs)                
-                                       )
+ )
                 );
-            
-
-
-
-
-
+ 
             condenseClaw.onTrue(
                 new SequentialCommandGroup(
                     new CloseClaw(m_Claw),

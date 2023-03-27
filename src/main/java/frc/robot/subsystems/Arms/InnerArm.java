@@ -29,7 +29,7 @@ public class InnerArm extends SubsystemBase {
   /** Creates a new OuterArm. */
   public InnerArm() {
     m_innerMotor = new CANSparkMax(InnerArmConstants.innermotor, MotorType.kBrushed);
-    m_innerMotor.setInverted(true);
+    m_innerMotor.setInverted(false);
     m_outerPIDController = m_innerMotor.getPIDController();
     m_potentiometor = m_innerMotor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle);
     m_potentiometor.setInverted(InnerArmConstants.kAnalogSensorInverted);

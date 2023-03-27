@@ -39,13 +39,13 @@ public class TeleopOuterArm extends CommandBase {
       m_outerArm.raiseWithInput(0);
     }*/
     if((Math.abs(m_OuterAxisOutputValue.getAsDouble())>0.2) && !m_outerArm.m_breakstopper.isPressed()){
-    m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble())*-1);
+    m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble()));
       // "Borrowed" from another team, not sure of purpose
       // m_arm.reset();
     } else { //switch is pressed
       //m_innerArm.raiseWithInput(0);
-      if (((m_OuterAxisOutputValue.getAsDouble())*-1)>0 && m_outerArm.m_breakstopper.isPressed()){ // allows for forward movement, but not backward
-          m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble())*-1);
+      if (((m_OuterAxisOutputValue.getAsDouble())*-1)>0){ // allows for forward movement, but not backward
+          m_outerArm.raiseWithInput((m_OuterAxisOutputValue.getAsDouble()));
 
       }
       else
