@@ -230,9 +230,9 @@ public final class Constants {
     public static final double raiseSpeed = 1.0;
     public static final double lowerSpeed = -0.6;
     public static final double stopSpeed = 0.0;
-    public static final double outerP = 10.0;
-    public static final double outerI = 0.01;
-    public static final double outerD = 0.0;
+    public static final double outerP = 9;
+    public static final double outerI = 1;
+    public static final double outerD = 0.3;
     public static final double outerIZone = 0.0;
     public static final double outerFF = 0.0;
     public static final double outerMin = -1.0;
@@ -278,9 +278,9 @@ public final class Constants {
     public static final int raiseSpeed = 1;
     public static final int lowerSpeed = -1;
     public static final int stopSpeed = 0;
-    public static final double innerP = 20.0;
-    public static final double innerI = 0.1;
-    public static final double innerD = 0.1;
+    public static final double innerP = 9.0;
+    public static final double innerI = 1;
+    public static final double innerD = 0.3;
     public static final double innerIZone = 0.0;
     public static final double innerFF = 0.0;
     public static final double innerMin = -1.0;
