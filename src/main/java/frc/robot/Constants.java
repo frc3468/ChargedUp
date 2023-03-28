@@ -31,17 +31,17 @@ import edu.wpi.first.math.geometry.Translation3d;
 public final class Constants {
   // Setpoints For fast update of arm setpoints
   // Home
-  private static final double InnerArmHome = .577;
-  private static final double OuterArmHome = .60;
+  private static final double InnerArmHome = .582;
+  private static final double OuterArmHome = .462;
   // travel
-  private static final double InnerArmTravel = .541;
-  private static final double OuterArmTravel = .467;
+  private static final double InnerArmTravel = .572;
+  private static final double OuterArmTravel = .540;
   // Middle Node
-  private static final double InnerArmMid = .577;
-  private static final double OuterArmMid = .666;
+  private static final double InnerArmMid = .572;
+  private static final double OuterArmMid = .678;
   // Human Player
-  private static final double InnerArmHuman = .532; //.577 acutal location  test in progress
-  private static final double OuterArmHuman = .714;  //.666 actual location
+  private static final double InnerArmHuman = .572; //.577 acutal location  test in progress
+  private static final double OuterArmHuman = .678;  //.666 actual location
   // top Node
   private static final double InnerArmTop = .506;
   private static final double OuterArmTop = .801;
@@ -230,9 +230,9 @@ public final class Constants {
     public static final double raiseSpeed = 1.0;
     public static final double lowerSpeed = -0.6;
     public static final double stopSpeed = 0.0;
-    public static final double outerP = 9;
-    public static final double outerI = 1;
-    public static final double outerD = 0.3;
+    public static final double outerP = 60;
+    public static final double outerI = 0.04;
+    public static final double outerD = 0.05;
     public static final double outerIZone = 0.0;
     public static final double outerFF = 0.0;
     public static final double outerMin = -1.0;
@@ -244,7 +244,7 @@ public final class Constants {
     public static final double upPIDReferenceT = OuterArmTravel;// 1.2;
     public static final double upPIDReferenceH = OuterArmHuman;
     public static final double startingConfig = 2.5;
-    public static final double outerPIDTolorence = 0.005;
+    public static final double outerPIDTolorence = 0.001;
     public static final boolean kAnalogSensorInverted = false;
     // outer arm
     /*
@@ -272,15 +272,15 @@ public final class Constants {
 
   public static final class InnerArmConstants {
     public static final int innermotor = 14;
-    public static final int overrideDown = 2; // Joystick button channel
+    public static final int overrideDown = 4; // Joystick button channel
     public static final int overrideUp = 3; // Joystick button channel
     public static final int overrideHuman = 5; // Joystick button channel
     public static final int raiseSpeed = 1;
     public static final int lowerSpeed = -1;
     public static final int stopSpeed = 0;
-    public static final double innerP = 9.0;
-    public static final double innerI = 1;
-    public static final double innerD = 0.3;
+    public static final double innerP = 10;
+    public static final double innerI = 0.03;
+    public static final double innerD = 0.2;
     public static final double innerIZone = 0.0;
     public static final double innerFF = 0.0;
     public static final double innerMin = -1.0;
@@ -292,7 +292,7 @@ public final class Constants {
     public static final double PIDReferenceT = InnerArmTravel;// 2.27; //X Travel
     public static final double PIDReferenceH = InnerArmHuman;
     public static final double innerPIDTolorence = 0.002;
-    public static final boolean kAnalogSensorInverted = false;
+    public static final boolean kAnalogSensorInverted = true;
     // inner arm
   }
 }

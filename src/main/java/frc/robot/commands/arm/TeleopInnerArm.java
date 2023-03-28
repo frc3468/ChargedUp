@@ -30,14 +30,19 @@ public class TeleopInnerArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ((Math.abs(m_InnerAxisOutputValue.getAsDouble()) > 0.2) && !m_innerArm.m_breakstopper.isPressed()) {
+
+    if ((Math.abs(m_InnerAxisOutputValue.getAsDouble()) > 0.2) 
+    // && !m_innerArm.m_breakstopper.isPressed()
+    ) {
 
       m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble()));
+    }
 
-      // "Borrowed" from another team, not sure of purpose
-      // m_arm.reset();
-    } else // switch is pressed
+    // "Borrowed" from another team, not sure of purpose
+    // m_arm.reset();
+    else { // switch is pressed
       m_innerArm.raiseWithInput(0);
+    }
   }
 
   // m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
@@ -53,7 +58,8 @@ public class TeleopInnerArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_innerArm.m_breakstopper.isPressed();
+    return false;
+    // m_innerArm.m_breakstopper.isPressed();
   }
 
 }

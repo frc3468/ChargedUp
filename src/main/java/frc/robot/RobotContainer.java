@@ -228,19 +228,10 @@ public class RobotContainer {
     ) 
         );
     // HOME
-    home
-        .and(closeCheck)
-        .onTrue(
-            new SequentialCommandGroup(
-                new InnerArmTravel(m_InnerArm).withTimeout(2),
-                new WaitCommand(1),
+    home.onTrue(
+            new ParallelCommandGroup(
+                new InnerArmTravel(m_InnerArm),
                 new OuterArmTravel(m_OuterArm)));
-    home
-        .and(closeCheck.negate())
-        .onTrue(
-            new SequentialCommandGroup(
-                new InnerArmStowed(m_InnerArm).withTimeout(2),
-                new OuterArmStowed(m_OuterArm)));
     // TRAVERSAL
     eTeir.onTrue(
         new ParallelCommandGroup(
@@ -294,32 +285,29 @@ public class RobotContainer {
     /* CoDriver */
     /* Button Bindings - Actions taken upon button press or hold */
     // HOME
-    CoDriverHome
-        .and(closeCheck)
-        .onTrue(
-            new SequentialCommandGroup(
-                new InnerArmTravel(m_InnerArm).withTimeout(2),
-                new WaitCommand(1),
-                new OuterArmTravel(m_OuterArm)));
+    CoDriverHome.onTrue(
+            new ParallelCommandGroup(
+                new InnerArmTravel(m_InnerArm),
+                new OuterArmTravel(m_OuterArm)).withTimeout(5));
     // TRAVERSAL
     CoDriverETeir.onTrue(
         new ParallelCommandGroup(
             new OuterArmRaiseE(m_OuterArm),
-            new InnerArmRaiseE(m_InnerArm)));
+            new InnerArmRaiseE(m_InnerArm)).withTimeout(5));
     // TOP NODE
     CoDrivereSTeir.onTrue(
         new ParallelCommandGroup(
             new OuterArmRaiseS(m_OuterArm),
-            new InnerArmRaiseS(m_InnerArm)));
+            new InnerArmRaiseS(m_InnerArm)).withTimeout(5));
     // HUMAN PLAYER | MID NODE
     CoDrivereMidTeir.onTrue(
         new SequentialCommandGroup(
-            new InnerArmRaiseM(m_InnerArm).withTimeout(2),
-            new OuterArmRaiseM(m_OuterArm)));
+            new InnerArmRaiseM(m_InnerArm),
+            new OuterArmRaiseM(m_OuterArm)).withTimeout(5));
     CoDriverH.onTrue(
         new ParallelCommandGroup(
             new InnerArmRaiseH(m_InnerArm),
-            new OuterArmRaiseH(m_OuterArm)));
+            new OuterArmRaiseH(m_OuterArm)).withTimeout(5));
     
     // CLAW
         
