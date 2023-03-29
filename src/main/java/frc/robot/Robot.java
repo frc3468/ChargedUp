@@ -77,9 +77,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
  //   m_autonomousCommand = autoChoser.getSelected();
-J_timer.reset();
-J_timer.start();
-  
+  //J_timer.reset();
+  //J_timer.start();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

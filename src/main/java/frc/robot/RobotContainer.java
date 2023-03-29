@@ -8,6 +8,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -30,9 +31,12 @@ import frc.robot.subsystems.Claw;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.BaseAuto;
+import frc.robot.autos.MiddleAuto;
+import frc.robot.autos.SideAuto;
 import frc.robot.commands.arm.TeleopArm;
 import javax.lang.model.util.ElementScanner14;
 import javax.swing.GroupLayout.SequentialGroup;
+import frc.robot.autos.GoDistance;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -44,6 +48,10 @@ import javax.swing.GroupLayout.SequentialGroup;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+    //creates auto command groups 
+    
+    // creates sendable chooser object!
+    private SendableChooser<Command> autochooser = new SendableChooser<>();
 
   private final InnerArm m_InnerArm = new InnerArm();
   private final OuterArm m_OuterArm = new OuterArm();
@@ -151,11 +159,16 @@ public class RobotContainer {
   /* Subsystems */
   private final SwerveDrive s_Swerve = new SwerveDrive();
   private final ArmOverride s_ArmOverride = new ArmOverride();
-
+  private final SideAuto m_SideAuto = new SideAuto(s_Swerve, m_Claw, m_InnerArm, m_OuterArm);
+  private final MiddleAuto m_MiddleAuto = new MiddleAuto(s_Swerve, m_Claw, m_InnerArm, m_OuterArm);
+  private final GoDistance m_godistance = new GoDistance(s_Swerve);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    autochooser.setDefaultOption("SideAuto", m_SideAuto);
+    autochooser.addOption("Mid auto", m_MiddleAuto);
+    autochooser.addOption("Test-distance", m_godistance);
     // XBOX CONTROLLER
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
@@ -368,6 +381,6 @@ new WhiteLedON(m_LEDs)
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return autochooser.getSelected();
   }
 }
