@@ -35,7 +35,7 @@ public class TeleopInnerArm extends CommandBase {
     // && !m_innerArm.m_breakstopper.isPressed()
     ) {
 
-      m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble()));
+      m_innerArm.raiseWithInput((m_InnerAxisOutputValue.getAsDouble())*-1);
     }
 
     // "Borrowed" from another team, not sure of purpose
