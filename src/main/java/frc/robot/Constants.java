@@ -31,20 +31,20 @@ import edu.wpi.first.math.geometry.Translation3d;
 public final class Constants {
   // Setpoints For fast update of arm setpoints
   // Home
-  private static final double InnerArmHome = .582;
-  private static final double OuterArmHome = .462;
+  private static final double InnerArmHome = .422;
+  private static final double OuterArmHome = .466;
   // travel
-  private static final double InnerArmTravel = .572;
-  private static final double OuterArmTravel = .540;
+  private static final double InnerArmTravel = .436;
+  private static final double OuterArmTravel = .536;
   // Middle Node
-  private static final double InnerArmMid = .572;
-  private static final double OuterArmMid = .678;
+  private static final double InnerArmMid = .422;
+  private static final double OuterArmMid = .669;
   // Human Player
-  private static final double InnerArmHuman = .572; //.577 acutal location  test in progress
-  private static final double OuterArmHuman = .678;  //.666 actual location
+  private static final double InnerArmHuman = .422; //.577 acutal location  test in progress
+  private static final double OuterArmHuman = .669;  //.666 actual location
   // top Node
   private static final double InnerArmTop = .506;
-  private static final double OuterArmTop = .801;
+  private static final double OuterArmTop = .821;
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
@@ -79,6 +79,9 @@ public final class Constants {
 
   // Joystick deadband. Filters out stick drift
   public static final class Swerve {
+    public static final double rabitRotate = 0.7;
+    public static final double turtleRotate = 0.1;
+
     public static final double stickDeadband = 0.1;
     /* GYRO Constants */
     // Declare Gyro location on CANbus
@@ -230,9 +233,9 @@ public final class Constants {
     public static final double raiseSpeed = 1.0;
     public static final double lowerSpeed = -0.6;
     public static final double stopSpeed = 0.0;
-    public static final double outerP = 60;
-    public static final double outerI = 0.04;
-    public static final double outerD = 0.05;
+    public static final double outerP = 90;
+    public static final double outerI = 0.0;
+    public static final double outerD = 0;
     public static final double outerIZone = 0.0;
     public static final double outerFF = 0.0;
     public static final double outerMin = -1.0;
@@ -278,9 +281,9 @@ public final class Constants {
     public static final int raiseSpeed = 1;
     public static final int lowerSpeed = -1;
     public static final int stopSpeed = 0;
-    public static final double innerP = 10;
-    public static final double innerI = 0.03;
-    public static final double innerD = 0.2;
+    public static final double innerP = 100;
+    public static final double innerI = 0;
+    public static final double innerD = 0;
     public static final double innerIZone = 0.0;
     public static final double innerFF = 0.0;
     public static final double innerMin = -1.0;
