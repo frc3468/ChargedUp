@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -386,34 +387,35 @@ new WhiteLedON(m_LEDs)
     // 0 is side auto, 1 is mid auto
     if(s_Swerve.automode == 0){
         return new SequentialCommandGroup(
-            new InstantCommand(() -> s_Swerve.zeroGyro()), 
-            new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
+            new InstantCommand(() -> s_Swerve.zeroGyro()),
+            //TIMEOUT IS NOT WORKING, BODGEEEE
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false), new WaitCommand(1)).withTimeout(1),
             // because it's allready in a scg we don't need to make a new one
             new InnerArmRaiseM(m_InnerArm),
             new OuterArmRaiseM(m_OuterArm),
-            new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.5),
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false), new WaitCommand(0.5)).withTimeout(.5),
             new OpenClaw(m_Claw),
-            new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
+            new ParallelRaceGroup( new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false), new WaitCommand(0.55)).withTimeout(0.55),
             new SequentialCommandGroup(
            // as opposed to here where we do.
               new WaitCommand(0.2),
               new InnerArmStowed(m_InnerArm),
               new OuterArmStowed(m_OuterArm)
             ),
-            new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.00),
-            new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false), new WaitCommand(1)).withTimeout(1.00),
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false), new WaitCommand(0.5)).withTimeout(0.5),
             new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
-            new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .25, () -> false).withTimeout(0.25)
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .25, () -> false), new WaitCommand(0.25)).withTimeout(0.25)
         );}
         else if(s_Swerve.automode == 1){
             return new SequentialCommandGroup(new InstantCommand(() -> s_Swerve.zeroGyro()),  
-            new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.2),
+            new ParallelRaceGroup( new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false), new WaitCommand(0.2)).withTimeout(.2),
             // because it's allready in a scg we don't need to make a new one
             new InnerArmRaiseM(m_InnerArm),
             new OuterArmRaiseM(m_OuterArm),
-            new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.5),
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false), new WaitCommand(0.5)).withTimeout(.5),
             new OpenClaw(m_Claw),
-            new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.2),
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false), new WaitCommand(0.2)).withTimeout(0.2),
             new SequentialCommandGroup(
            // as opposed to here where we do.
               new WaitCommand(0.2),
@@ -421,12 +423,12 @@ new WhiteLedON(m_LEDs)
               new OuterArmStowed(m_OuterArm)
             ),
             new InstantCommand(() -> s_Swerve.turtleMode()),
-            new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(2.3),
-            new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false), new WaitCommand(2.3)).withTimeout(2.3),
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false), new WaitCommand(0.5)).withTimeout(0.5),
             new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
             new WaitCommand(2.7),
-            new TeleopSwerve(s_Swerve, () -> -5.0, () -> 0, () -> 0, () -> false).withTimeout(0.55),
-            new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .2, () -> false).withTimeout(0.5));
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve, () -> -5.0, () -> 0, () -> 0, () -> false), new WaitCommand(0.55)).withTimeout(0.55),
+            new ParallelRaceGroup(new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .2, () -> false), new WaitCommand(0.5)).withTimeout(0.5));
         }
         else {
             return new WaitCommand(1);
