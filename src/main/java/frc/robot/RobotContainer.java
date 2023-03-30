@@ -363,6 +363,26 @@ new WhiteLedON(m_LEDs)
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return new SequentialCommandGroup(    new InstantCommand(() -> s_Swerve.zeroGyro()),
+    new CloseClaw(m_Claw),  
+    new InstantCommand(() -> s_Swerve.turtleMode()),
+    new TeleopSwerve(s_Swerve, () -> -0.3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(0.2),
+    // because it's allready in a scg we don't need to make a new one
+    new InnerArmRaiseM(m_InnerArm),
+    new OuterArmRaiseM(m_OuterArm),
+    new TeleopSwerve(s_Swerve, () -> 0.3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(0.7),
+    new OpenClaw(m_Claw),
+    new TeleopSwerve(s_Swerve,() -> -3.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
+    new SequentialCommandGroup(
+   // as opposed to here where we do.
+      new WaitCommand(0.2),
+      new InnerArmStowed(m_InnerArm),
+      new OuterArmStowed(m_OuterArm)
+    ),
+    new InstantCommand(() -> s_Swerve.turtleMode()),
+    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.00),
+    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
+    new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
+    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .25, () -> false).withTimeout(0.25));
   }
 }
