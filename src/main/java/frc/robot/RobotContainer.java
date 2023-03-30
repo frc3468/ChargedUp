@@ -8,7 +8,10 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -52,6 +55,7 @@ public class RobotContainer {
     
     // creates sendable chooser object!
     private SendableChooser<Command> autochooser = new SendableChooser<>();
+
 
   private final InnerArm m_InnerArm = new InnerArm();
   private final OuterArm m_OuterArm = new OuterArm();
@@ -159,16 +163,19 @@ public class RobotContainer {
   /* Subsystems */
   private final SwerveDrive s_Swerve = new SwerveDrive();
   private final ArmOverride s_ArmOverride = new ArmOverride();
-  private final SideAuto m_SideAuto = new SideAuto(s_Swerve, m_Claw, m_InnerArm, m_OuterArm);
-  private final MiddleAuto m_MiddleAuto = new MiddleAuto(s_Swerve, m_Claw, m_InnerArm, m_OuterArm);
-  private final GoDistance m_godistance = new GoDistance(s_Swerve);
+  private final changeautomode m_SideAuto = new changeautomode(s_Swerve, 0);
+  private final changeautomode m_MiddleAuto = new changeautomode(s_Swerve, 1);
+  // 0 is side auto, 1 is mid auto, you can replace as need be but it's a bodgey fix.
+  // while yes a bool could be possible I sure freaking hope we cna get more than 2
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    
+    SmartDashboard.putData("auto", autochooser);
     autochooser.setDefaultOption("SideAuto", m_SideAuto);
     autochooser.addOption("Mid auto", m_MiddleAuto);
-    autochooser.addOption("Test-distance", m_godistance);
+
     // XBOX CONTROLLER
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
@@ -306,7 +313,7 @@ public class RobotContainer {
     CoDrivereSTeir.onTrue(
         new ParallelCommandGroup(
             new OuterArmRaiseS(m_OuterArm),
-            new InnerArmRaiseS(m_InnerArm)).withTimeout(1));
+            new InnerArmRaiseS(m_InnerArm)).withTimeout(2));
     // HUMAN PLAYER | MID NODE
     CoDrivereMidTeir.onTrue(
         new ParallelCommandGroup(
@@ -376,6 +383,58 @@ new WhiteLedON(m_LEDs)
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autochooser.getSelected();
+    // 0 is side auto, 1 is mid auto
+    if(s_Swerve.automode == 0){
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> s_Swerve.zeroGyro()), 
+            new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
+            // because it's allready in a scg we don't need to make a new one
+            new InnerArmRaiseM(m_InnerArm),
+            new OuterArmRaiseM(m_OuterArm),
+            new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.5),
+            new OpenClaw(m_Claw),
+            new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
+            new SequentialCommandGroup(
+           // as opposed to here where we do.
+              new WaitCommand(0.2),
+              new InnerArmStowed(m_InnerArm),
+              new OuterArmStowed(m_OuterArm)
+            ),
+            new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.00),
+            new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
+            new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
+            new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .25, () -> false).withTimeout(0.25)
+        );}
+        else if(s_Swerve.automode == 1){
+            return new SequentialCommandGroup(new InstantCommand(() -> s_Swerve.zeroGyro()),  
+            new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.2),
+            // because it's allready in a scg we don't need to make a new one
+            new InnerArmRaiseM(m_InnerArm),
+            new OuterArmRaiseM(m_OuterArm),
+            new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.5),
+            new OpenClaw(m_Claw),
+            new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.2),
+            new SequentialCommandGroup(
+           // as opposed to here where we do.
+              new WaitCommand(0.2),
+              new InnerArmStowed(m_InnerArm),
+              new OuterArmStowed(m_OuterArm)
+            ),
+            new InstantCommand(() -> s_Swerve.turtleMode()),
+            new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(2.3),
+            new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
+            new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
+            new WaitCommand(2.7),
+            new TeleopSwerve(s_Swerve, () -> -5.0, () -> 0, () -> 0, () -> false).withTimeout(0.55),
+            new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .2, () -> false).withTimeout(0.5));
+        }
+        else {
+            return new WaitCommand(1);
+        }
+
+    }
+   // return autochooser.getSelected();
+   
+   
   }
-}
+

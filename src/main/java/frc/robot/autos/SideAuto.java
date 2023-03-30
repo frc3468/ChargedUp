@@ -40,14 +40,12 @@ public class SideAuto extends SequentialCommandGroup {
     m_InnerArm = p_innerarm;
     m_OuterArm = p_outerarm;
     addCommands(
-    new InstantCommand(() -> s_Swerve.zeroGyro()),
-    new CloseClaw(m_Claw),  
-    new InstantCommand(() -> s_Swerve.turtleMode()),
-    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.2),
+    new InstantCommand(() -> s_Swerve.zeroGyro()), 
+    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
     // because it's allready in a scg we don't need to make a new one
     new InnerArmRaiseM(m_InnerArm),
     new OuterArmRaiseM(m_OuterArm),
-    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(1),
+    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.5),
     new OpenClaw(m_Claw),
     new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
     new SequentialCommandGroup(
@@ -56,7 +54,6 @@ public class SideAuto extends SequentialCommandGroup {
       new InnerArmStowed(m_InnerArm),
       new OuterArmStowed(m_OuterArm)
     ),
-    new InstantCommand(() -> s_Swerve.turtleMode()),
     new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.00),
     new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
     new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro

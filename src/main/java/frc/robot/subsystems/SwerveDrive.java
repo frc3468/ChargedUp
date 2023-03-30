@@ -25,11 +25,13 @@ public class SwerveDrive extends SubsystemBase {
   private SwerveModule[] mSwerveMods;
   private SwerveDriveKinematics swerveDriveKinematics;
   private Field2d field;
+  public  int automode;
 
   private boolean turtleToggle;
   private double speed;
 
   public SwerveDrive() {
+    automode = 0;
     turtleToggle = false;
     speed = Constants.Swerve.maxSpeed;
 
@@ -159,6 +161,10 @@ public class SwerveDrive extends SubsystemBase {
       positions[mod.moduleNumber] = mod.getPosition();
     }
     return positions;
+  }
+  public void changeautomode(int newmode){
+    // THIS IS BODGE, FOR FUTURE TEAMS PLEASE DO NOT REFRENCE THIS AWFUL PIECE OF GARBAGE.
+    automode = newmode;
   }
 
   public Rotation2d getYaw() {

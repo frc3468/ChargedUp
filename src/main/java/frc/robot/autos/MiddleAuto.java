@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.autos;
-
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -39,16 +39,14 @@ public class MiddleAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> s_Swerve.zeroGyro()),
-    new CloseClaw(m_Claw),  
-    new InstantCommand(() -> s_Swerve.turtleMode()),
+    new InstantCommand(() -> s_Swerve.zeroGyro()),  
     new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.2),
     // because it's allready in a scg we don't need to make a new one
     new InnerArmRaiseM(m_InnerArm),
     new OuterArmRaiseM(m_OuterArm),
-    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.2),
+    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(.5),
     new OpenClaw(m_Claw),
-    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
+    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.2),
     new SequentialCommandGroup(
    // as opposed to here where we do.
       new WaitCommand(0.2),
@@ -56,7 +54,7 @@ public class MiddleAuto extends SequentialCommandGroup {
       new OuterArmStowed(m_OuterArm)
     ),
     new InstantCommand(() -> s_Swerve.turtleMode()),
-    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(2.00),
+    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(2.3),
     new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
     new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
     new WaitCommand(2.7),
