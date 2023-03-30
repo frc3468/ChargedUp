@@ -8,6 +8,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -30,9 +31,12 @@ import frc.robot.subsystems.Claw;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.BaseAuto;
+import frc.robot.autos.MiddleAuto;
+import frc.robot.autos.SideAuto;
 import frc.robot.commands.arm.TeleopArm;
 import javax.lang.model.util.ElementScanner14;
 import javax.swing.GroupLayout.SequentialGroup;
+import frc.robot.autos.GoDistance;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -44,6 +48,10 @@ import javax.swing.GroupLayout.SequentialGroup;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+    //creates auto command groups 
+    
+    // creates sendable chooser object!
+    private SendableChooser<Command> autochooser = new SendableChooser<>();
 
   private final InnerArm m_InnerArm = new InnerArm();
   private final OuterArm m_OuterArm = new OuterArm();
@@ -151,11 +159,16 @@ public class RobotContainer {
   /* Subsystems */
   private final SwerveDrive s_Swerve = new SwerveDrive();
   private final ArmOverride s_ArmOverride = new ArmOverride();
-
+  private final SideAuto m_SideAuto = new SideAuto(s_Swerve, m_Claw, m_InnerArm, m_OuterArm);
+  private final MiddleAuto m_MiddleAuto = new MiddleAuto(s_Swerve, m_Claw, m_InnerArm, m_OuterArm);
+  private final GoDistance m_godistance = new GoDistance(s_Swerve);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    autochooser.setDefaultOption("SideAuto", m_SideAuto);
+    autochooser.addOption("Mid auto", m_MiddleAuto);
+    autochooser.addOption("Test-distance", m_godistance);
     // XBOX CONTROLLER
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
@@ -363,26 +376,6 @@ new WhiteLedON(m_LEDs)
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new SequentialCommandGroup(    new InstantCommand(() -> s_Swerve.zeroGyro()),
-    new CloseClaw(m_Claw),  
-    new InstantCommand(() -> s_Swerve.turtleMode()),
-    new TeleopSwerve(s_Swerve, () -> -0.3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(0.2),
-    // because it's allready in a scg we don't need to make a new one
-    new InnerArmRaiseM(m_InnerArm),
-    new OuterArmRaiseM(m_OuterArm),
-    new TeleopSwerve(s_Swerve, () -> 0.3, () -> 0.0, () -> 0.0 , () -> false).withTimeout(0.7),
-    new OpenClaw(m_Claw),
-    new TeleopSwerve(s_Swerve,() -> -3.0,() -> 0.0,() ->0.0, () -> false).withTimeout(0.55),
-    new SequentialCommandGroup(
-   // as opposed to here where we do.
-      new WaitCommand(0.2),
-      new InnerArmStowed(m_InnerArm),
-      new OuterArmStowed(m_OuterArm)
-    ),
-    new InstantCommand(() -> s_Swerve.turtleMode()),
-    new TeleopSwerve(s_Swerve,() -> -5.0,() -> 0.0,() ->0.0, () -> false).withTimeout(1.00),
-    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .5, () -> false).withTimeout(0.5),
-    new InstantCommand(() -> s_Swerve.zeroGyro()), // 180 the Gyro
-    new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> .25, () -> false).withTimeout(0.25));
+    return autochooser.getSelected();
   }
 }

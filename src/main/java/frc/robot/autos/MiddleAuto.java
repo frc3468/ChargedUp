@@ -23,12 +23,18 @@ import frc.robot.subsystems.Arms.OuterArm;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class MiddleAuto extends SequentialCommandGroup {
-  private final SwerveDrive s_Swerve = new SwerveDrive();
-  private final Claw m_Claw = new Claw();
-  private final InnerArm m_InnerArm = new InnerArm();
-  private final OuterArm m_OuterArm = new OuterArm();
+  private final SwerveDrive s_Swerve;
+  private final Claw m_Claw;
+  private final InnerArm m_InnerArm;
+  private final OuterArm m_OuterArm;
   /** Creates a new MiddleAuto. */
-  public MiddleAuto() {
+  public MiddleAuto(SwerveDrive p_swerve, Claw p_claw, InnerArm p_innerarm, OuterArm p_outerarm) {
+    s_Swerve = p_swerve;
+    m_Claw = p_claw;
+    m_InnerArm = p_innerarm;
+    m_OuterArm = p_outerarm;
+
+
     
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
