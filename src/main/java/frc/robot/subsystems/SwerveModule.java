@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -69,6 +70,10 @@ public class SwerveModule {
 
   }
 
+  public void SetDriveIdle(IdleMode Idle){
+    driveMotor.setIdleMode(Idle);
+  }
+
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
     // Custom optimize command, since default WPILib optimize assumes continuous controller which
     // REV and CTRE are not
@@ -109,6 +114,8 @@ public class SwerveModule {
   private void configDriveMotor() {
     driveMotor.restoreFactoryDefaults();
     CANSparkMaxUtil.setCANSparkMaxBusUsage(driveMotor, Usage.kAll);
+    driveMotor.setOpenLoopRampRate(.1);
+    driveMotor.setClosedLoopRampRate(.1);
     driveMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
     driveMotor.setInverted(Constants.Swerve.driveInvert);
     driveMotor.setIdleMode(Constants.Swerve.driveNeutralMode);

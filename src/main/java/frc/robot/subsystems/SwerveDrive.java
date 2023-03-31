@@ -4,6 +4,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -28,10 +30,10 @@ public class SwerveDrive extends SubsystemBase {
   public  int automode;
 
   private boolean turtleToggle;
-  private double speed;
+  public double speed;
 
   public SwerveDrive() {
-    automode = 0;
+   // automode = 0;
     turtleToggle = false;
     speed = Constants.Swerve.maxSpeed;
 
@@ -129,9 +131,15 @@ public class SwerveDrive extends SubsystemBase {
 
     if (turtleToggle) {
       speed = Constants.Swerve.turtleSpeed;
+      for (SwerveModule mod: mSwerveMods) {
+        mod.SetDriveIdle(IdleMode.kBrake);
+      };
     } else {
       speed = Constants.Swerve.maxSpeed;
-    }
+      for (SwerveModule mod: mSwerveMods) {
+        mod.SetDriveIdle(IdleMode.kBrake);
+    };
+  }
   }
 
   public void zeroGyro() {

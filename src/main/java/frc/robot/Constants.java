@@ -46,6 +46,7 @@ public final class Constants {
   private static final double InnerArmTop = .506;
   private static final double OuterArmTop = .821;
 
+  private static final int autoWhiskerDisable = 1;
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
