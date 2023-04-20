@@ -162,7 +162,7 @@ public class RobotContainer {
 
     /* Subsystems */
     private final SwerveDrive s_Swerve = new SwerveDrive();
-    private int automode = 0;
+    private int automode = 3;
     private final ArmOverride s_ArmOverride = new ArmOverride();
     private final changeautomode m_SideAuto = new changeautomode(s_Swerve, 0);
     private final changeautomode m_MiddleAuto = new changeautomode(s_Swerve, 1);
@@ -510,11 +510,11 @@ public class RobotContainer {
                             // new CloseClaw(m_Claw).withTimeout(.2),
                             new OuterArmTravel(m_OuterArm)),
                     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
-                    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0, () -> false).withTimeout(1.7),
-                    new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25)
+                    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0, () -> false).withTimeout(1.5),
+                    new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.1),
                     // new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () ->
                     // false).withTimeout(.1),
-                //     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> .5, () -> false).withTimeout(1.5),
+                   new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> .5, () -> false).withTimeout(.3)
                 //     new InstantCommand(() -> s_Swerve.zeroGyro())
 
             // new WaitCommand(.6),
@@ -526,15 +526,15 @@ public class RobotContainer {
             );
         } else if (automode == 1) {
              return new SequentialCommandGroup(
-                    new InstantCommand(() -> s_Swerve.zeroGyro()),
+                    new InstantCommand(() -> s_Swerve.zeroGyro180()),
                     new InstantCommand(() -> s_Swerve.turtleMode()),
-                    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.5),
+                    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.5),
                     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
                     new ParallelCommandGroup(
                             new InnerArmRaiseM(m_InnerArm).withTimeout(0.5),
                             new OuterArmRaiseM(m_OuterArm)),
                     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
-                    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.7),
+                    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.7),
                     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
                     new ParallelCommandGroup(
                             new OuterArmRaiseS(m_OuterArm).withTimeout(1),
@@ -542,22 +542,22 @@ public class RobotContainer {
                     new OpenClaw(m_Claw));
         } else if (automode == 2) {
              return new SequentialCommandGroup(
-                    new InstantCommand(() -> s_Swerve.zeroGyro()),
+                    new InstantCommand(() -> s_Swerve.zeroGyro180()),
                     new InstantCommand(() -> s_Swerve.turtleMode()),
-                    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.5),
+                    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.5),
                     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
                     new ParallelCommandGroup(
                             new InnerArmRaiseM(m_InnerArm).withTimeout(0.5),
                             new OuterArmRaiseM(m_OuterArm)),
                     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
-                    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.7),
+                    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.7),
                     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
                     new ParallelCommandGroup(
                             new OuterArmRaiseS(m_OuterArm).withTimeout(1),
                             new InnerArmRaiseS(m_InnerArm).withTimeout(2)),
                     new OpenClaw(m_Claw),
                     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
-                    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.7),
+                    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0, () -> false).withTimeout(1.2),
                     new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
                     // new CloseClaw(m_Claw),
                     new ParallelCommandGroup(
@@ -568,7 +568,43 @@ public class RobotContainer {
 
                             // new CloseClaw(m_Claw).withTimeout(.2),
                             new OuterArmTravel(m_OuterArm)));
-        } else {
+        } 
+        else if(automode == 3) {
+                return new SequentialCommandGroup(
+                    new InstantCommand(() -> s_Swerve.zeroGyro180()),
+                    new InstantCommand(() -> s_Swerve.turtleMode()),
+                    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.5),
+                    new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
+                    new ParallelCommandGroup(
+                            new InnerArmRaiseM(m_InnerArm).withTimeout(0.5),
+                            new OuterArmRaiseM(m_OuterArm)),
+                    new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
+                    new TeleopSwerve(s_Swerve, () -> -3, () -> 0.0, () -> 0.0, () -> false).withTimeout(.7),
+                    new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
+                    new ParallelCommandGroup(
+                            new OuterArmRaiseS(m_OuterArm).withTimeout(1),
+                            new InnerArmRaiseS(m_InnerArm).withTimeout(2)),
+                    new OpenClaw(m_Claw),
+                    new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
+                    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0, () -> false).withTimeout(1.3),
+                    new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
+                    // new CloseClaw(m_Claw),
+                    new ParallelCommandGroup(
+                            new InnerArmRaiseM(m_InnerArm).withTimeout(0.5),
+                            new OuterArmRaiseM(m_OuterArm)),
+                    new ParallelCommandGroup(
+                            new InnerArmTravel(m_InnerArm).withTimeout(2),
+
+                            // new CloseClaw(m_Claw).withTimeout(.2),
+                            new OuterArmTravel(m_OuterArm)),
+                    new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25),
+                    new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0, () -> false).withTimeout(1.5),
+                    new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.1),
+                    // new TeleopSwerve(s_Swerve, () -> 3, () -> 0.0, () -> 0.0 , () ->
+                    // false).withTimeout(.1),
+                   new InstantCommand(() -> s_Swerve.turtleMode()));
+        }
+        else {
             return new SequentialCommandGroup(
                 new TeleopSwerve(s_Swerve, () -> 0, () -> 0.0, () -> 0.0, () -> false).withTimeout(.25));
         }
