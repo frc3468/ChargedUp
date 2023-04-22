@@ -59,6 +59,7 @@ public class RobotContainer {
 
     private final InnerArm m_InnerArm = new InnerArm();
     private final OuterArm m_OuterArm = new OuterArm();
+    public static final SwerveDrive Drive = new SwerveDrive();
 
     // The robot's subsystems and commands are defined here...
     private final XboxController primaryDriver = new XboxController(0);
